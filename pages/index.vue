@@ -1,5 +1,4 @@
 <template>
-  <h1 class="text-cyan-700">{{ title }}</h1>
   <StravaConnect></StravaConnect>
 </template>
 <script setup>

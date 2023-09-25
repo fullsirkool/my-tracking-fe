@@ -1,13 +1,8 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  css: ["@/assets/css/style.css"],
-
-  postcss: {
-    plugins: {
-      tailwindcss: {},
-      autoprefixer: {},
-    },
-  },
+  devtools: { enabled: true },
+  pages: { enabled: true },
+  modules: ["@nuxt/ui"],
   runtimeConfig: {
     public: {
       STRAVA_CLIENT_ID: process.env.STRAVA_CLIENT_ID,
