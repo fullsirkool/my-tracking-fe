@@ -1,7 +1,10 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  ssr: false,
   devtools: { enabled: true },
-  pages: { enabled: true },
+  pages: true,
+  css: ['~/assets/main.css'],
+  components: { global: true, dirs: ['~/components'] },
   modules: ["@nuxt/ui"],
   runtimeConfig: {
     public: {
