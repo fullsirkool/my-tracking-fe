@@ -1,5 +1,7 @@
 <template>
-  <h1 class="text-cyan-700">{{ title }}</h1>
+  <div class="text-center">
+    <h1 class="text-cyan-700">{{ title }}</h1>
+  </div>
 </template>
 <script setup>
 const { query } = useRoute();
@@ -18,6 +20,6 @@ const exchangeToken = async () => {
 
 exchangeToken();
 
-const title = ref("Exchange Token");
+const title = ref("Thanks for signing. App will be available soon!");
 </script>
 <style></style>
