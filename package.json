@@ -16,6 +16,7 @@
   "dependencies": {
     "@nuxt/ui": "^2.8.1",
     "apexcharts": "^3.42.0",
+    "dayjs-nuxt": "^1.2.3",
     "vue3-apexcharts": "^1.4.4"
   }
 }

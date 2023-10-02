@@ -3,9 +3,9 @@ export default defineNuxtConfig({
   ssr: false,
   devtools: { enabled: true },
   pages: true,
-  css: ['~/assets/main.css'],
-  components: { global: true, dirs: ['~/components'] },
-  modules: ["@nuxt/ui"],
+  css: ["~/assets/main.css"],
+  components: { global: true, dirs: ["~/components"] },
+  modules: ["@nuxt/ui", "dayjs-nuxt"],
   runtimeConfig: {
     public: {
       STRAVA_CLIENT_ID: process.env.STRAVA_CLIENT_ID,
