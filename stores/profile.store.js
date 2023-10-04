@@ -23,7 +23,7 @@ export const useProfileStore = defineStore("profile", {
           date: this.chartDate.toISOString(),
         },
       });
-      this.series = data;
+      this.series = data.value;
     },
   },
 });
