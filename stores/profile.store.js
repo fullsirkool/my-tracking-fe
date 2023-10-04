@@ -18,12 +18,16 @@ export const useProfileStore = defineStore("profile", {
       await this.fetchSeries()
     },
     async fetchSeries() {
-      const { data } = await useFetch(`${BASE_URL}/activity/monthly`, {
-        params: {
-          date: this.chartDate.toISOString(),
-        },
-      });
-      this.series = data;
+      try {
+        const { data } = await useFetch(`${BASE_URL}/activity/monthly`, {
+          params: {
+            date: this.chartDate.toISOString(),
+          },
+        });
+        this.series = data.value;
+      } catch (error) {
+        console.log(error)
+      }
     },
   },
 });
