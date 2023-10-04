@@ -91,7 +91,8 @@ const options = ref({
 
 const getChartSeries = computed(() => {
   const seriesData = [...series.value];
-  const data =  Array.from({ length: numberOfDate(chartDate.value) }, (_, index) => {
+  console.log('getChartSeries', series.value)
+  const data =  Array.from({ length: numberOfDate() }, (_, index) => {
     if (!seriesData.length) {
       return 0;
     }
