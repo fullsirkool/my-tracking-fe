@@ -70,16 +70,9 @@
   </UContainer>
 </template>
 <script setup>
-const runtimeConfig = useRuntimeConfig();
-const { BASE_URL } = runtimeConfig.public;
-const { data } = await useAsyncData("activities", () =>
-  $fetch(`${BASE_URL}/activity/monthly`, {
-    params: {
-      date: new Date().toISOString(),
-    },
-  })
-);
-console.log(data._rawValue)
+import { useProfileStore } from '~/stores/profile.store';
+const store = useProfileStore()
+const { data } = await useAsyncData('user', () => store.fetchSeries())
 </script>
 <style scoped>
 .profile-header {

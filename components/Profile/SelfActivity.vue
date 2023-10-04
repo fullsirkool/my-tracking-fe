@@ -20,16 +20,26 @@
       />
     </div>
     <apexchart
-      :key="series"
+      :key="getChartSeries"
       height="300"
       width="100%"
-      :options="options"
-      :series="series"
+      :options="getOptions"
+      :series="getChartSeries"
     ></apexchart>
   </UCard>
 </template>
 <script setup lang="ts">
+import { storeToRefs } from "pinia";
+import { useProfileStore } from "@/stores/profile.store";
 const dayjs = useDayjs();
+
+//STORE//
+
+const profileStore = useProfileStore();
+const { handleChangeMonth } = profileStore;
+const { chartDate, series } = storeToRefs(profileStore);
+
+//END STORE//
 
 const options = ref({
   chart: {
@@ -53,6 +63,7 @@ const options = ref({
   stroke: {
     curve: "straight",
     color: "#FEBC04",
+    width: 2,
   },
   colors: ["#FEBC04", "#E91E63", "#9C27B0"],
   fill: {
@@ -70,44 +81,52 @@ const options = ref({
     },
   },
   xaxis: {
-    categories: [1, 2, 3, 4, 5, 6],
+    categories: [],
   },
   yaxis: {
     forceNiceScale: true,
     min: 0,
   },
 });
-const series = ref([
-  {
-    name: "Team 1",
-    data: [5, 6, 5, 6, 9, 7],
-  },
-]);
 
-const date = ref(dayjs(new Date()));
+const getChartSeries = computed(() => {
+  const seriesData = [...series.value];
+  console.log('getChartSeries', series.value)
+  const data =  Array.from({ length: numberOfDate() }, (_, index) => {
+    if (!seriesData.length) {
+      return 0;
+    }
+
+    if (new Date(seriesData[0].startDate).getDate() !== index + 1) {
+      return 0;
+    }
+
+    const item = seriesData.shift();
+    return (item.distance / 1000).toFixed(2);
+  });
+  return [
+    {
+      name: "activities",
+      data: data,
+    },
+  ];
+});
+
+const getOptions = computed(() => {
+  const completeOptions = {
+    ...options.value,
+    xaxis: {
+      categories: Array.from(
+        { length: numberOfDate(chartDate.value) },
+        (_, index) => index + 1
+      ),
+    },
+  };
+  return completeOptions;
+});
 
 // COMPUTED //
-
 const getMonthDisplay = computed(() => {
-  return date.value.format("MM/YYYY");
+  return dayjs(chartDate.value).format("MM/YYYY");
 });
-
-const getNumberOfDays = computed(() => {
-  return numberOfDate();
-});
-
-// METHODS //
-const handleChangeMonth = (sign: string) => {
-  date.value =
-    sign === "+" ? date.value.add(1, "month") : date.value.subtract(1, "month");
-};
-
-// WATCH //
-watch(
-  () => date.value,
-  (newVal) => {
-    console.log(newVal);
-    //call api here
-  }
-);
 </script>
