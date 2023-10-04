@@ -69,7 +69,18 @@
     </div>
   </UContainer>
 </template>
-<script setup></script>
+<script setup>
+const runtimeConfig = useRuntimeConfig();
+const { BASE_URL } = runtimeConfig.public;
+const { data } = await useAsyncData("activities", () =>
+  $fetch(`${BASE_URL}/activity/monthly`, {
+    params: {
+      date: new Date().toISOString(),
+    },
+  })
+);
+console.log(data._rawValue)
+</script>
 <style scoped>
 .profile-header {
   background: rgb(255, 244, 79);
