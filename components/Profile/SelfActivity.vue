@@ -1,5 +1,5 @@
 <template>
-  <UCard>
+  <UCard class="rounded-2xl bg-[#f5f5f5] h-[400px]">
     <div class="flex items-center justify-center gap-4">
       <UButton
         icon="i-heroicons-chevron-left"
@@ -9,7 +9,7 @@
         variant="solid"
         @click="handleChangeMonth('-')"
       />
-      <h2 class="font-bold">Biểu đồ hoạt động tháng {{ getMonthDisplay }}</h2>
+      <h2 class="font-bold">{{ getMonthDisplay }}</h2>
       <UButton
         icon="i-heroicons-chevron-right"
         size="xs"
@@ -37,7 +37,7 @@ const dayjs = useDayjs();
 
 const profileStore = useProfileStore();
 const { handleChangeMonth } = profileStore;
-const { chartDate, series } = storeToRefs(profileStore);
+const { chartDate, activities } = storeToRefs(profileStore);
 
 //END STORE//
 
@@ -89,8 +89,10 @@ const options = ref({
   },
 });
 
+// COMPUTED //
+
 const getChartSeries = computed(() => {
-  const seriesData = [...series.value];
+  const seriesData = [...activities.value];
   const data =  Array.from({ length: numberOfDate(chartDate.value) }, (_, index) => {
     if (!seriesData.length) {
       return 0;
@@ -124,8 +126,7 @@ const getOptions = computed(() => {
   return completeOptions;
 });
 
-// COMPUTED //
 const getMonthDisplay = computed(() => {
-  return dayjs(chartDate.value).format("MM/YYYY");
+  return `Biểu đồ hoạt động tháng ${dayjs(chartDate.value).format("MM/YYYY")}`;
 });
 </script>

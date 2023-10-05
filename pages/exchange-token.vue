@@ -9,13 +9,15 @@ const runtimeConfig = useRuntimeConfig();
 const { BASE_URL } = runtimeConfig.public;
 const { code } = query;
 
+const accessToken = useCookie("access-token");
+
 const exchangeToken = async () => {
   const url = `${BASE_URL}/auth/signin/${code}`;
-  const res = await useFetch(url, {
+  const { data } = await useFetch(url, {
     method: "post",
   });
-  console.log("exchangeToken data", res);
-  return res;
+  const { accessToken, refreshToken } = data;
+  accessToken.value = accessToken;
 };
 
 exchangeToken();

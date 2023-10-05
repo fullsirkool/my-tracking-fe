@@ -63,16 +63,32 @@
     </div>
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
       <div class="col-span-2">
-        <profile-self-activity></profile-self-activity>
+        <USkeleton
+          v-show="isLoadingActivities"
+          class="h-[400px] w-full"
+          :ui="{ rounded: 'rounded-2xl' }"
+        />
+        <profile-self-activity v-show="!isLoadingActivities"></profile-self-activity>
       </div>
-      <div class="col-span-1 bg-[#f5f5f5]">CALENDAR</div>
+      <div class="col-span-1">
+        <USkeleton
+          v-show="isLoadingActivities"
+          class="h-[400px] w-full"
+          :ui="{ rounded: 'rounded-2xl' }"
+        />
+        <profile-activity-calendar
+          v-show="!isLoadingActivities"
+        ></profile-activity-calendar>
+      </div>
     </div>
   </UContainer>
 </template>
 <script setup>
-import { useProfileStore } from '~/stores/profile.store';
-const store = useProfileStore()
-const { data } = await useAsyncData('user', () => store.fetchSeries())
+import { storeToRefs } from "pinia";
+import { useProfileStore } from "~/stores/profile.store";
+const store = useProfileStore();
+const { isLoadingActivities } = storeToRefs(store);
+const { data } = await useAsyncData("user", () => store.fetchActivities());
 </script>
 <style scoped>
 .profile-header {
