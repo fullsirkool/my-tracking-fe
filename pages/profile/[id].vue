@@ -88,7 +88,9 @@ import { storeToRefs } from "pinia";
 import { useProfileStore } from "~/stores/profile.store";
 const store = useProfileStore();
 const { isLoadingActivities } = storeToRefs(store);
-const { data } = await useAsyncData("user", () => store.fetchActivities());
+const { params } = useRoute();
+const { id } = params;
+const { data } = await useAsyncData("user", () => store.fetchActivities(id));
 </script>
 <style scoped>
 .profile-header {
