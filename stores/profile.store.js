@@ -9,6 +9,7 @@ export const useProfileStore = defineStore("profile", {
     activities: [],
     isLoadingActivities: false,
     stravaId: null,
+    user: {},
   }),
   actions: {
     async handleChangeMonth(sign) {
@@ -43,6 +44,22 @@ export const useProfileStore = defineStore("profile", {
           },
         });
         this.activities = data.value;
+        this.isLoadingActivities = false;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async fetchUserInfo(stravaId) {
+      try {
+        if (this.isLoadingActivities) {
+          return;
+        }
+        this.isLoadingActivities = true;
+        if (stravaId) {
+          this.stravaId = stravaId;
+        }
+        const { data } = await useFetch(`${BASE_URL}/user/${stravaId}`);
+        this.user = data.value;
         this.isLoadingActivities = false;
       } catch (error) {
         console.log(error);

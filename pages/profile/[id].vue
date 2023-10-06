@@ -49,13 +49,13 @@
         class="absolute rounded-full bg-white -translate-x-2/4 translate-y-2/4 z-[1] left-2/4 bottom-0"
       >
         <img
-          src="https://dgalywyr863hv.cloudfront.net/pictures/athletes/80656719/22257455/1/medium.jpg"
+          :src="user.profile"
           class="h-44 w-44 rounded-full border-[5px] border-solid border-[white]"
         />
       </div>
     </div>
     <div class="mt-24 text-center">
-      <h1 class="font-bold text-2xl">Tên Nè Hihi</h1>
+      <h1 class="font-bold text-2xl">{{ getFullName }}</h1>
       <div class="flex gap-3 items-center mx-auto my-2 w-fit">
         <CommonStravaIcon></CommonStravaIcon>
         <h3 class="text-md">Strava ID: {{ `9930596816` }}</h3>
@@ -87,10 +87,14 @@
 import { storeToRefs } from "pinia";
 import { useProfileStore } from "~/stores/profile.store";
 const store = useProfileStore();
-const { isLoadingActivities } = storeToRefs(store);
+const { isLoadingActivities, user } = storeToRefs(store);
 const { params } = useRoute();
 const { id } = params;
-const { data } = await useAsyncData("user", () => store.fetchActivities(id));
+const { data } = await useAsyncData("user", () =>
+  Promise.all([store.fetchActivities(id), store.fetchUserInfo(id)])
+);
+
+const getFullName = computed(() => `${user.value.firstName} ${user.value.lastName}`);
 </script>
 <style scoped>
 .profile-header {
