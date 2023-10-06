@@ -56,6 +56,9 @@ const options = ref({
       color: "#000",
       opacity: 0.35,
     },
+    tools: {
+      download: false,
+    },
   },
   dataLabels: {
     enabled: false,
@@ -93,7 +96,7 @@ const options = ref({
 
 const getChartSeries = computed(() => {
   const seriesData = [...activities.value];
-  const data =  Array.from({ length: numberOfDate(chartDate.value) }, (_, index) => {
+  const data = Array.from({ length: numberOfDate(chartDate.value) }, (_, index) => {
     if (!seriesData.length) {
       return 0;
     }

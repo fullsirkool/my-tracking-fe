@@ -9,7 +9,7 @@ const runtimeConfig = useRuntimeConfig();
 const { BASE_URL } = runtimeConfig.public;
 const { code } = query;
 
-const accessToken = useCookie("access-token");
+const accessTokenCookie = useCookie("access-token");
 
 const exchangeToken = async () => {
   const url = `${BASE_URL}/auth/signin/${code}`;
@@ -17,7 +17,7 @@ const exchangeToken = async () => {
     method: "post",
   });
   const { accessToken, refreshToken } = data;
-  accessToken.value = accessToken;
+  accessTokenCookie.value = accessToken;
 };
 
 exchangeToken();
