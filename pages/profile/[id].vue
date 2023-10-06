@@ -58,10 +58,10 @@
       <h1 class="font-bold text-2xl">{{ getFullName }}</h1>
       <div class="flex gap-3 items-center mx-auto my-2 w-fit">
         <CommonStravaIcon></CommonStravaIcon>
-        <h3 class="text-md">Strava ID: {{ `9930596816` }}</h3>
+        <h3 class="text-md">Strava ID: {{ user.stravaId }}</h3>
       </div>
     </div>
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-10">
       <div class="col-span-2">
         <USkeleton
           v-show="isLoadingActivities"
@@ -90,9 +90,8 @@ const store = useProfileStore();
 const { isLoadingActivities, user } = storeToRefs(store);
 const { params } = useRoute();
 const { id } = params;
-const { data } = await useAsyncData("user", () =>
-  Promise.all([store.fetchActivities(id), store.fetchUserInfo(id)])
-);
+await useAsyncData("activity", () => store.fetchActivities(id));
+await useAsyncData("user", () => store.fetchUserInfo(id));
 
 const getFullName = computed(() => `${user.value.firstName} ${user.value.lastName}`);
 </script>
