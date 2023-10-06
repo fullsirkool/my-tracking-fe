@@ -16,6 +16,7 @@ const exchangeToken = async () => {
   const { data } = await useFetch(url, {
     method: "post",
   });
+  console.log(data);
   const { accessToken, refreshToken } = data;
   accessTokenCookie.value = accessToken;
 };
