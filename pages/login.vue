@@ -1,5 +1,5 @@
 <template>
-  <UContainer>HELLO</UContainer>
+  <UContainer><CommonStravaConnect></CommonStravaConnect></UContainer>
 </template>
 <script setup>
 const title = ref("Index Page");

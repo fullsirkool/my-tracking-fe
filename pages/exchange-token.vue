@@ -4,6 +4,9 @@
   </div>
 </template>
 <script setup>
+import { useUserStore } from "~/stores/userStore";
+const { setUser } = useUserStore();
+
 const { query } = useRoute();
 const runtimeConfig = useRuntimeConfig();
 const { BASE_URL } = runtimeConfig.public;
@@ -21,6 +24,8 @@ const exchangeToken = async () => {
   const { accessToken, refreshToken, user } = data.value;
   accessTokenCookie.value = accessToken;
   refreshTokenCookie.value = refreshToken;
+  setUser(user);
+  window.red
 };
 
 exchangeToken();
