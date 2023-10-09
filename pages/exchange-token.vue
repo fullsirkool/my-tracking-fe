@@ -5,7 +5,8 @@
 </template>
 <script setup>
 import { useUserStore } from "~/stores/userStore";
-const { setUser } = useUserStore();
+const userStore = useUserStore();
+const { setUser } = userStore;
 
 const { query } = useRoute();
 const runtimeConfig = useRuntimeConfig();
@@ -25,7 +26,8 @@ const exchangeToken = async () => {
   accessTokenCookie.value = accessToken;
   refreshTokenCookie.value = refreshToken;
   setUser(user);
-  window.red
+  console.log("userStore", userStore.user);
+  navigateTo("/profile");
 };
 
 exchangeToken();
