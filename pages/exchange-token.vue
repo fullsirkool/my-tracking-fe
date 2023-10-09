@@ -26,8 +26,9 @@ const exchangeToken = async () => {
   accessTokenCookie.value = accessToken;
   refreshTokenCookie.value = refreshToken;
   setUser(user);
+  console.log("userStore", JSON.stringify(user));
+  console.log("userStore 2", JSON.stringify(user.value));
   localStorage.setItem("user-info", JSON.stringify(user));
-  console.log("userStore", user.value);
   navigateTo("/profile");
 };
 
