@@ -5,7 +5,7 @@ const { BASE_URL } = runtimeConfig.public;
 
 export const useProfileStore = defineStore("profile", () => {
   const chartDate = ref(new Date());
-  const activities: Array = ref([]);
+  const activities = ref<any[]>([]);
   const stravaId: any = ref(null);
   const user = ref({});
 

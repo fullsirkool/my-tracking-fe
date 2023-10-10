@@ -91,7 +91,7 @@ const getBlocks = computed(() => {
       };
     }
 
-    if (new Date(cloneActivities[0].startDate).getDate() !== count + 1) {
+    if (new Date(`${cloneActivities[0].startdate}`).getDate() !== count + 1) {
       return {
         title: ++count,
         hasActivities: false,

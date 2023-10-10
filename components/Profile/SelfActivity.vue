@@ -1,13 +1,31 @@
 <template>
   <UCard class="rounded-2xl bg-[#f5f5f5] h-[400px]">
     <div class="flex items-center justify-center gap-4">
-      <UButton icon="i-heroicons-chevron-left" size="xs" :ui="{ rounded: 'rounded-full' }" color="white" variant="solid"
-        @click="handleChangeMonth('-')" />
+      <UButton
+        icon="i-heroicons-chevron-left"
+        size="xs"
+        :ui="{ rounded: 'rounded-full' }"
+        color="white"
+        variant="solid"
+        @click="handleChangeMonth('-')"
+      />
       <h2 class="font-bold">{{ getMonthDisplay }}</h2>
-      <UButton icon="i-heroicons-chevron-right" size="xs" :ui="{ rounded: 'rounded-full' }" color="white" variant="solid"
-        @click="handleChangeMonth('+')" />
+      <UButton
+        icon="i-heroicons-chevron-right"
+        size="xs"
+        :ui="{ rounded: 'rounded-full' }"
+        color="white"
+        variant="solid"
+        @click="handleChangeMonth('+')"
+      />
     </div>
-    <apexchart :key="chartRenderKey" height="300" width="100%" :options="getOptions" :series="getChartSeries"></apexchart>
+    <apexchart
+      :key="chartRenderKey"
+      height="300"
+      width="100%"
+      :options="getOptions"
+      :series="getChartSeries"
+    ></apexchart>
   </UCard>
 </template>
 <script setup lang="ts">
@@ -22,7 +40,7 @@ const { handleChangeMonth } = profileStore;
 const { chartDate, activities } = storeToRefs(profileStore);
 
 //END STORE//
-const chartRenderKey = ref(0)
+const chartRenderKey = ref(0);
 
 const options = ref({
   chart: {
@@ -84,13 +102,13 @@ const getChartSeries = computed(() => {
       return 0;
     }
 
-    if (new Date(seriesData[0].startDate).getDate() !== index + 1) {
+    if (new Date(`${seriesData[0].startdate}`).getDate() !== index + 1) {
       return 0;
     }
-
     const item = seriesData.shift();
     return (item.distance / 1000).toFixed(2);
   });
+  console.log("getChartSeries", data);
   return [
     {
       name: "activities",
@@ -99,9 +117,12 @@ const getChartSeries = computed(() => {
   ];
 });
 
-watch(() => activities.value, () => {
-  chartRenderKey.value++
-})
+watch(
+  () => activities.value,
+  () => {
+    chartRenderKey.value++;
+  }
+);
 
 const getOptions = computed(() => {
   const completeOptions = {
