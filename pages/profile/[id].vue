@@ -8,40 +8,22 @@
           class="w-fit grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 font-semibold"
         >
           <div
-            class="w-fit rounded-2xl text-center p-3 border-[1px] bg-white border-none text-gray-700"
+            class="rounded-2xl text-center p-3 border-[1px] bg-white border-none text-gray-700"
           >
-            <p class="text-red-500 text-xl font-bold">168.0</p>
+            <p class="text-red-500 text-xl font-bold">{{ totalDistance }}</p>
             Khoảng cách (km)
           </div>
           <div
-            class="w-fit rounded-2xl text-center p-3 border-[1px] bg-white border-none text-gray-700"
+            class="rounded-2xl text-center p-3 border-[1px] bg-white border-none text-gray-700"
           >
-            <p class="text-red-500 text-xl font-bold">168.0</p>
-            Khoảng cách (km)
+            <p class="text-red-500 text-xl font-bold">{{ getPaceMinute }}</p>
+            Pace
           </div>
           <div
-            class="w-fit rounded-2xl text-center p-3 border-[1px] bg-white border-none text-gray-700"
+            class="rounded-2xl text-center p-3 border-[1px] bg-white border-none text-gray-700"
           >
-            <p class="text-red-500 text-xl font-bold">168.0</p>
-            Khoảng cách (km)
-          </div>
-          <div
-            class="w-fit rounded-2xl text-center p-3 border-[1px] bg-white border-none text-gray-700"
-          >
-            <p class="text-red-500 text-xl font-bold">168.0</p>
-            Khoảng cách (km)
-          </div>
-          <div
-            class="w-fit rounded-2xl text-center p-3 border-[1px] bg-white border-none text-gray-700"
-          >
-            <p class="text-red-500 text-xl font-bold">168.0</p>
-            Khoảng cách (km)
-          </div>
-          <div
-            class="w-fit rounded-2xl text-center p-3 border-[1px] bg-white border-none text-gray-700"
-          >
-            <p class="text-red-500 text-xl font-bold">168.0</p>
-            Khoảng cách (km)
+            <p class="text-red-500 text-xl font-bold">{{ count }}</p>
+            Số lần chạy
           </div>
         </div>
       </UCard>
@@ -72,6 +54,8 @@
   </UContainer>
 </template>
 <script setup>
+const runtimeConfig = useRuntimeConfig();
+const { BASE_URL } = runtimeConfig.public;
 import { storeToRefs } from "pinia";
 import { useProfileStore } from "~/stores/profile.store";
 const store = useProfileStore();
@@ -80,8 +64,21 @@ const { params } = useRoute();
 const { id } = params;
 await useAsyncData("user", () => store.fetchUserInfo(+id));
 await useAsyncData("activity", () => store.fetchActivities());
+const { data } = await useAsyncData("statistic", () =>
+  $fetch(`${BASE_URL}/activity/statistics/${id}`)
+);
+
+console.log(data._rawValue);
+const avgPace = ref(data._rawValue.pace.toFixed(2));
+const totalDistance = ref((data._rawValue.distance / 1000).toFixed(2));
+const count = ref(data._rawValue.count);
 
 const getFullName = computed(() => `${user.value.firstName} ${user.value.lastName}`);
+const getPaceMinute = computed(() => {
+  const minutes = Math.floor(avgPace.value / 1);
+  const seconds = (avgPace.value % 1) * 60;
+  return `${minutes}:${seconds.toFixed(0)}`;
+});
 </script>
 <style scoped>
 .profile-header {
