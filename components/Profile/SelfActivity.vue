@@ -1,31 +1,17 @@
 <template>
-  <UCard class="rounded-2xl bg-[#f5f5f5] h-[400px]">
-    <div class="flex items-center justify-center gap-4">
-      <UButton
-        icon="i-heroicons-chevron-left"
-        size="xs"
-        :ui="{ rounded: 'rounded-full' }"
-        color="white"
-        variant="solid"
-        @click="handleChangeMonth('-')"
-      />
-      <h2 class="font-bold">{{ getMonthDisplay }}</h2>
-      <UButton
-        icon="i-heroicons-chevron-right"
-        size="xs"
-        :ui="{ rounded: 'rounded-full' }"
-        color="white"
-        variant="solid"
-        @click="handleChangeMonth('+')"
-      />
+  <UCard class="rounded-2xl bg-[#f5f5f5] h-[400px] overflow-auto relative pt-8">
+    <div class="flex items-center justify-center gap-4 absolute top-5 -translate-x-2/4 left-2/4">
+      <UButton icon="i-heroicons-chevron-left" size="xs" :ui="{ rounded: 'rounded-full' }" color="white" variant="solid"
+        @click="handleChangeMonth('-')" />
+      <h2 class="font-bold hidden md:block">{{ getMonthDisplay }}</h2>
+      <h2 class="font-bold block md:hidden">{{ getShortMonthDisplay }}</h2>
+      <UButton icon="i-heroicons-chevron-right" size="xs" :ui="{ rounded: 'rounded-full' }" color="white" variant="solid"
+        @click="handleChangeMonth('+')" />
     </div>
-    <apexchart
-      :key="chartRenderKey"
-      height="300"
-      width="100%"
-      :options="getOptions"
-      :series="getChartSeries"
-    ></apexchart>
+    <div class="min-w-[800px] lg:min-w-max pr-6 lg:pr-0">
+      <apexchart :key="chartRenderKey" height="300" :options="getOptions" :series="getChartSeries">
+      </apexchart>
+    </div>
   </UCard>
 </template>
 <script setup lang="ts">
@@ -139,5 +125,9 @@ const getOptions = computed(() => {
 
 const getMonthDisplay = computed(() => {
   return `Biểu đồ hoạt động tháng ${dayjs(chartDate.value).format("MM/YYYY")}`;
+});
+
+const getShortMonthDisplay = computed(() => {
+  return `Tháng ${dayjs(chartDate.value).format("MM/YYYY")}`;
 });
 </script>
