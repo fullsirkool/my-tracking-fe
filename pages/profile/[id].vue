@@ -5,7 +5,7 @@
         class="flex justify-center p-10 pb-20 profile-header border-none rounded-3xl"
       >
         <div
-          class="w-fit grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 font-semibold"
+          class="w-fit grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 font-semibold"
         >
           <div
             class="rounded-2xl text-center p-3 border-[1px] bg-white border-none text-gray-700"
@@ -24,6 +24,12 @@
           >
             <p class="text-red-500 text-xl font-bold">{{ count }}</p>
             Số lần chạy
+          </div>
+          <div
+            class="rounded-2xl text-center p-3 border-[1px] bg-white border-none text-gray-700"
+          >
+            <p class="text-red-500 text-xl font-bold">{{ getTotalRuningMinute }}</p>
+            Thời Gian (Giờ)
           </div>
         </div>
       </UCard>
@@ -72,11 +78,17 @@ console.log(data._rawValue);
 const avgPace = ref(data._rawValue.pace.toFixed(2));
 const totalDistance = ref((data._rawValue.distance / 1000).toFixed(2));
 const count = ref(data._rawValue.count);
+const totalMovingTime = ref((data._rawValue.totalMovingTime / 3600).toFixed(2));
 
 const getFullName = computed(() => `${user.value.firstName} ${user.value.lastName}`);
 const getPaceMinute = computed(() => {
   const minutes = Math.floor(avgPace.value / 1);
   const seconds = (avgPace.value % 1) * 60;
+  return `${minutes}:${seconds.toFixed(0)}`;
+});
+const getTotalRuningMinute = computed(() => {
+  const minutes = Math.floor(totalMovingTime.value / 1);
+  const seconds = (totalMovingTime.value % 1) * 60;
   return `${minutes}:${seconds.toFixed(0)}`;
 });
 </script>
