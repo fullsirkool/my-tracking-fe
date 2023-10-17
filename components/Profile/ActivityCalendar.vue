@@ -1,5 +1,5 @@
 <template>
-  <UCard class="rounded-2xl bg-[#f5f5f5] h-[400px]">
+  <UCard class="rounded-2xl bg-[#f5f5f5] h-[400px]" style="box-shadow: none;">
     <div class="flex items-center justify-center gap-4 pb-4">
       <UButton
         icon="i-heroicons-chevron-left"
