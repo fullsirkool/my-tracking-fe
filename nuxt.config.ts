@@ -6,6 +6,9 @@ export default defineNuxtConfig({
   css: ["~/assets/main.css"],
   components: { global: true, dirs: ["~/components"] },
   modules: ["@nuxt/ui", "dayjs-nuxt", "@pinia/nuxt"],
+  colorMode: {
+    preference: "light",
+  },
   runtimeConfig: {
     public: {
       STRAVA_CLIENT_ID: process.env.STRAVA_CLIENT_ID,
