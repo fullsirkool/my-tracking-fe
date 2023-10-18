@@ -13,8 +13,14 @@ const runtimeConfig = useRuntimeConfig();
 const { BASE_URL } = runtimeConfig.public;
 const { code } = query;
 
-const accessTokenCookie = useCookie("access-token");
-const refreshTokenCookie = useCookie("refresh-token");
+const accessTokenExpireTime = dayjs(new Date()).add(12, "hour");
+const refreshTokenExpireTime = dayjs(new Date()).add(1, "year");
+const accessTokenCookie = useCookie("access-token", {
+  expires: accessTokenExpireTime,
+});
+const refreshTokenCookie = useCookie("refresh-token", {
+  expires: refreshTokenExpireTime,
+});
 
 const exchangeToken = async () => {
   const url = `${BASE_URL}/auth/signin/${code}`;
