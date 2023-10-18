@@ -11,8 +11,8 @@ export const useUserStore = defineStore("user", () => {
   };
 
   const initValue = async () => {
-    const accessTokenExpireTime = dayjs(new Date()).add(12, "hour");
-    const refreshTokenExpireTime = dayjs(new Date()).add(1, "year");
+    const accessTokenExpireTime = dayjs(new Date()).add(12, "hour").toDate();
+    const refreshTokenExpireTime = dayjs(new Date()).add(1, "year").toDate();
     const accessTokenCookie = useCookie("access-token", {
       expires: accessTokenExpireTime,
     });

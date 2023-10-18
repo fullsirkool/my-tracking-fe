@@ -14,8 +14,8 @@ const runtimeConfig = useRuntimeConfig();
 const { BASE_URL } = runtimeConfig.public;
 const { code } = query;
 
-const accessTokenExpireTime = dayjs(new Date()).add(12, "hour");
-const refreshTokenExpireTime = dayjs(new Date()).add(1, "year");
+const accessTokenExpireTime = dayjs(new Date()).add(12, "hour").toDate();
+const refreshTokenExpireTime = dayjs(new Date()).add(1, "year").toDate();
 const accessTokenCookie = useCookie("access-token", {
   expires: accessTokenExpireTime,
 });
