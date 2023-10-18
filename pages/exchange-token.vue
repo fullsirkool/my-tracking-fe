@@ -5,6 +5,7 @@
 </template>
 <script setup>
 import { useUserStore } from "~/stores/userStore";
+const dayjs = useDayjs();
 const userStore = useUserStore();
 const { setUser } = userStore;
 
