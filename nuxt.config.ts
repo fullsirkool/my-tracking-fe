@@ -5,7 +5,7 @@ export default defineNuxtConfig({
   pages: true,
   css: ["~/assets/main.css"],
   components: { global: true, dirs: ["~/components"] },
-  modules: ["@nuxt/ui", "dayjs-nuxt", "@pinia/nuxt"],
+  modules: ["@nuxt/ui", "dayjs-nuxt", "@pinia/nuxt", "nuxt-lodash"],
   colorMode: {
     preference: "light",
   },
