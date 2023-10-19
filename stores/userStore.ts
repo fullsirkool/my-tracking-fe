@@ -24,13 +24,9 @@ export const useUserStore = defineStore("user", () => {
     }
 
     if (!accessTokenCookie.value) {
-      const { data } = await useFetch(`${BASE_URL}/activity/monthly`, {
-        method: "POST",
-        body: {
-          refreshToken: refreshTokenCookie.value,
-        },
-      });
-      const { accessToken, refreshToken } = data.value;
+      const { accessToken, refreshToken } = await recallToken(
+        refreshTokenCookie.value
+      );
       accessTokenCookie.value = accessToken;
       refreshTokenCookie.value = refreshToken;
     }
@@ -41,11 +37,15 @@ export const useUserStore = defineStore("user", () => {
     }
   };
 
-  const recallToken = async () => {
+  const recallToken = async (refreshToken: string) => {
     const { data } = await useFetch(`${BASE_URL}/auth/renew`, {
       method: "POST",
-      body: {},
+      body: {
+        refreshToken: refreshToken,
+      },
     });
+
+    return data;
   };
 
   initValue();
