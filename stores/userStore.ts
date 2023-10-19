@@ -1,7 +1,6 @@
 import { defineStore } from "pinia";
 const runtimeConfig = useRuntimeConfig();
 const { BASE_URL } = runtimeConfig.public;
-const dayjs = useDayjs();
 
 export const useUserStore = defineStore("user", () => {
   const user = ref({});
@@ -11,8 +10,12 @@ export const useUserStore = defineStore("user", () => {
   };
 
   const initValue = async () => {
-    const accessTokenExpireTime = dayjs(new Date()).add(12, "hour").toDate();
-    const refreshTokenExpireTime = dayjs(new Date()).add(1, "year").toDate();
+    const accessTokenExpireTime = new Date(
+      new Date().getTime() + 12 * 60 * 60 * 1000
+    );
+    const refreshTokenExpireTime = new Date(new Date());
+    refreshTokenExpireTime.setFullYear(new Date().getFullYear() + 1);
+
     const accessTokenCookie = useCookie("access-token", {
       expires: accessTokenExpireTime,
     });
