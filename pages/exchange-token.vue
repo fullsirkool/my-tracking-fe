@@ -25,7 +25,7 @@ const refreshTokenCookie = useCookie("refresh-token", {
 const exchangeToken = async () => {
   const data = await authRepository.signIn(code)
   console.log('exchangeToken', data)
-  const { accessToken, refreshToken, user } = data.value;
+  const { accessToken, refreshToken, user } = data;
   accessTokenCookie.value = accessToken;
   refreshTokenCookie.value = refreshToken;
   setUser(user);
