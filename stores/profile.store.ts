@@ -1,13 +1,14 @@
 import { defineStore } from "pinia";
-
-const runtimeConfig = useRuntimeConfig();
-const { BASE_URL } = runtimeConfig.public;
+import activityRepository from "~/repository/activity.repository";
+import userRepository from "~/repository/user.repository";
+import { DailyActivityDto } from "~/types/dto/activity.dto";
+import { UserClaims } from "~/types/dto/user.dto";
 
 export const useProfileStore = defineStore("profile", () => {
   const chartDate = ref(new Date());
-  const activities = ref<any[]>([]);
-  const stravaId: any = ref(null);
-  const user = ref({});
+  const activities = ref<DailyActivityDto[] | null>([]);
+  const stravaId = ref<string>("");
+  const user = ref<UserClaims | null>(null);
 
   const handleChangeMonth = async (sign: string) => {
     if (sign === "+") {
@@ -27,13 +28,11 @@ export const useProfileStore = defineStore("profile", () => {
   };
   const fetchActivities = async () => {
     try {
-      const { data } = await useFetch(`${BASE_URL}/activity/monthly`, {
-        params: {
-          date: chartDate.value.toISOString(),
-          stravaId: stravaId.value,
-        },
+      const data = await activityRepository.fetchMonthlyActivities({
+        date: chartDate.value.toISOString(),
+        stravaId: stravaId.value,
       });
-      activities.value = data.value;
+      activities.value = data;
     } catch (error) {
       console.log(error);
     }
@@ -43,8 +42,8 @@ export const useProfileStore = defineStore("profile", () => {
       if (id) {
         stravaId.value = id;
       }
-      const { data } = await useFetch(`${BASE_URL}/user/${stravaId.value}`);
-      user.value = data.value;
+      const data = await userRepository.fetchUserInfo(stravaId.value);
+      user.value = data;
     } catch (error) {
       console.log(error);
     }

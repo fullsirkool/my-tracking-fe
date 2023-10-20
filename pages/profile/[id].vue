@@ -1,45 +1,28 @@
 <template>
   <UContainer>
     <div class="relative">
-      <UCard
-        class="flex justify-center p-10 pb-20 profile-header border-none rounded-3xl"
-      >
-        <div
-          class="w-fit grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 font-semibold"
-        >
-          <div
-            class="rounded-2xl text-center p-3 border-[1px] bg-white border-none text-gray-700"
-          >
+      <UCard class="flex justify-center p-10 pb-20 profile-header border-none rounded-3xl">
+        <div class="w-fit grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 font-semibold">
+          <div class="rounded-2xl text-center p-3 border-[1px] bg-white border-none text-gray-700">
             <p class="text-red-500 text-xl font-bold">{{ totalDistance }}</p>
             Khoảng cách (km)
           </div>
-          <div
-            class="rounded-2xl text-center p-3 border-[1px] bg-white border-none text-gray-700"
-          >
+          <div class="rounded-2xl text-center p-3 border-[1px] bg-white border-none text-gray-700">
             <p class="text-red-500 text-xl font-bold">{{ getPaceMinute }}</p>
             Pace
           </div>
-          <div
-            class="rounded-2xl text-center p-3 border-[1px] bg-white border-none text-gray-700"
-          >
+          <div class="rounded-2xl text-center p-3 border-[1px] bg-white border-none text-gray-700">
             <p class="text-red-500 text-xl font-bold">{{ count }}</p>
             Số lần chạy
           </div>
-          <div
-            class="rounded-2xl text-center p-3 border-[1px] bg-white border-none text-gray-700"
-          >
+          <div class="rounded-2xl text-center p-3 border-[1px] bg-white border-none text-gray-700">
             <p class="text-red-500 text-xl font-bold">{{ getTotalRuningMinute }}</p>
             Thời Gian (Giờ)
           </div>
         </div>
       </UCard>
-      <div
-        class="absolute rounded-full bg-white -translate-x-2/4 translate-y-2/4 z-[1] left-2/4 bottom-0"
-      >
-        <img
-          :src="user.profile"
-          class="h-44 w-44 rounded-full border-[5px] border-solid border-[white]"
-        />
+      <div class="absolute rounded-full bg-white -translate-x-2/4 translate-y-2/4 z-[1] left-2/4 bottom-0">
+        <img :src="user.profile" class="h-44 w-44 rounded-full border-[5px] border-solid border-[white]" />
       </div>
     </div>
     <div class="mt-24 text-center">
@@ -63,6 +46,7 @@
 const runtimeConfig = useRuntimeConfig();
 const { BASE_URL } = runtimeConfig.public;
 import { storeToRefs } from "pinia";
+import activityRepository from "~/repository/activity.repository";
 import { useProfileStore } from "~/stores/profile.store";
 const store = useProfileStore();
 const { user } = storeToRefs(store);
@@ -71,14 +55,13 @@ const { id } = params;
 await useAsyncData("user", () => store.fetchUserInfo(+id));
 await useAsyncData("activity", () => store.fetchActivities());
 const { data } = await useAsyncData("statistic", () =>
-  $fetch(`${BASE_URL}/activity/statistics/${id}`)
+  activityRepository.fetchStatistics(id)
 );
 
-console.log(data._rawValue);
-const avgPace = ref(data._rawValue.pace.toFixed(2));
-const totalDistance = ref((data._rawValue.distance / 1000).toFixed(2));
-const count = ref(data._rawValue.count);
-const totalMovingTime = ref((data._rawValue.totalMovingTime / 3600).toFixed(2));
+const avgPace = ref(data.data.pace.toFixed(2));
+const totalDistance = ref((data.data.distance / 1000).toFixed(2));
+const count = ref(data.data.count);
+const totalMovingTime = ref((data.data.totalMovingTime / 3600).toFixed(2));
 
 const getFullName = computed(() => `${user.value.firstName} ${user.value.lastName}`);
 const getPaceMinute = computed(() => {
@@ -95,10 +78,8 @@ const getTotalRuningMinute = computed(() => {
 <style scoped>
 .profile-header {
   background: rgb(255, 244, 79);
-  background: radial-gradient(
-    circle,
-    rgba(255, 244, 79, 1) 0%,
-    rgba(224, 81, 49, 1) 100%
-  );
+  background: radial-gradient(circle,
+      rgba(255, 244, 79, 1) 0%,
+      rgba(224, 81, 49, 1) 100%);
 }
 </style>

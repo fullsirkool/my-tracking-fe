@@ -4,14 +4,13 @@
   </div>
 </template>
 <script setup>
+import authRepository from "~/repository/auth.repository";
 import { useUserStore } from "~/stores/userStore";
 const dayjs = useDayjs();
 const userStore = useUserStore();
 const { setUser } = userStore;
 
 const { query } = useRoute();
-const runtimeConfig = useRuntimeConfig();
-const { BASE_URL } = runtimeConfig.public;
 const { code } = query;
 
 const accessTokenExpireTime = dayjs(new Date()).add(12, "hour").toDate();
@@ -24,10 +23,8 @@ const refreshTokenCookie = useCookie("refresh-token", {
 });
 
 const exchangeToken = async () => {
-  const url = `${BASE_URL}/auth/signin/${code}`;
-  const { data } = await useFetch(url, {
-    method: "post",
-  });
+  const data = await authRepository.signIn(code)
+  console.log('exchangeToken', data)
   const { accessToken, refreshToken, user } = data.value;
   accessTokenCookie.value = accessToken;
   refreshTokenCookie.value = refreshToken;

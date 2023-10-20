@@ -110,15 +110,17 @@
 </template>
 <script setup lang="ts">
 import type { FormError, FormSubmitEvent } from '@nuxt/ui/dist/runtime/types'
-
-const runtimeConfig = useRuntimeConfig();
-const { BASE_URL } = runtimeConfig.public;
+import challengeRepository from '~/repository/challenge.repository';
+import { ChallengeUtitlitiesDto } from '~/types/dto/challenge.dto';
+;
 const dayjs = useDayjs()
 
-const { data } = await useAsyncData(
+const { data } = await useAsyncData<ChallengeUtitlitiesDto | null>(
   'utilities',
-  () => $fetch(`${BASE_URL}/challenge/utilities`)
+  () => challengeRepository.fetchUtilities(),
 )
+
+console.log('async data', data.value)
 
 const tabs = ref([{
   label: 'Challenge',
@@ -128,8 +130,8 @@ const tabs = ref([{
   slot: 'rules',
 }])
 
-const getStates = computed(() => Object.keys((data.value as any).states))
-const getTypes = computed(() => Object.keys((data.value as any).types))
+const getStates = computed(() => data?.value?.states || [])
+const getTypes = computed(() => data?.value?.types || [])
 const startDateLabel = computed(() => {
   return dayjs(state.value.startDate).format("ddd, MMM DD, YYYY")
 })
