@@ -189,10 +189,10 @@ const validate = (state: any): FormError[] => {
   }
 
   if (state.enableMinDistance && !state.minDistance) {
-    errors.push({ path: 'distance', message: 'Min distance required' })
+    errors.push({ path: 'distance', message: 'Required' })
   }
   if (state.enableMaxDistance && !state.maxDistance) {
-    errors.push({ path: 'distance', message: 'Max distance required' })
+    errors.push({ path: 'distance', message: 'Required' })
   }
 
 
