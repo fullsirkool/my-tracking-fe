@@ -17,6 +17,7 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
 import { useProfileStore } from "@/stores/profile.store";
+import { DailyActivityDto } from "~/types/dto/activity.dto";
 const dayjs = useDayjs();
 
 //STORE//
@@ -82,13 +83,14 @@ const options = ref({
 // COMPUTED //
 
 const getChartSeries = computed(() => {
-  const seriesData = [...activities.value];
+  const seriesData: DailyActivityDto[] = [...activities.value];
+  console.log('getChartSeries before', seriesData)
   const data = Array.from({ length: numberOfDate(chartDate.value) }, (_, index) => {
     if (!seriesData.length) {
       return 0;
     }
 
-    if (new Date(`${seriesData[0].startdate}`).getDate() !== index + 1) {
+    if (new Date(`${seriesData[0].startDateLocal}`).getDate() !== index + 1) {
       return 0;
     }
     const item = seriesData.shift();

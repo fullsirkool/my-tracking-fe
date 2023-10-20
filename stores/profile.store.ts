@@ -33,6 +33,7 @@ export const useProfileStore = defineStore("profile", () => {
         stravaId: stravaId.value,
       });
       activities.value = data;
+      console.log("fetchActivities", activities.value, data);
     } catch (error) {
       console.log(error);
     }
