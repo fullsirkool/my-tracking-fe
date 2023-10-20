@@ -43,8 +43,6 @@
   </UContainer>
 </template>
 <script setup>
-const runtimeConfig = useRuntimeConfig();
-const { BASE_URL } = runtimeConfig.public;
 import { storeToRefs } from "pinia";
 import activityRepository from "~/repository/activity.repository";
 import { useProfileStore } from "~/stores/profile.store";
@@ -58,10 +56,10 @@ const { data } = await useAsyncData("statistic", () =>
   activityRepository.fetchStatistics(id)
 );
 
-const avgPace = ref(data.data.pace.toFixed(2));
-const totalDistance = ref((data.data.distance / 1000).toFixed(2));
-const count = ref(data.data.count);
-const totalMovingTime = ref((data.data.totalMovingTime / 3600).toFixed(2));
+const avgPace = ref(data.pace.toFixed(2));
+const totalDistance = ref((data.distance / 1000).toFixed(2));
+const count = ref(data.count);
+const totalMovingTime = ref((data.totalMovingTime / 3600).toFixed(2));
 
 const getFullName = computed(() => `${user.value.firstName} ${user.value.lastName}`);
 const getPaceMinute = computed(() => {
