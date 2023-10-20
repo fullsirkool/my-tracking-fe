@@ -7,7 +7,7 @@
           <template #header>
             <h1 class="font-semibold"> Create Challenge</h1>
           </template>
-          <div class="h-[350px]">
+          <div class="h-[400px]">
             <UTabs :items="tabs">
               <template #challenge="{ item }">
                 <div>
@@ -17,8 +17,8 @@
                   <UFormGroup class="py-2" label="Challenge Status" name="status">
                     <USelect v-model="state.status" :options="getStates" />
                   </UFormGroup>
-                  <UFormGroup class="py-2" label="Challenge Type" name="type">
-                    <USelect v-model="state.type" :options="getTypes" />
+                  <UFormGroup class="py-2" label="Challenge Type" name="challengeType">
+                    <USelect v-model="state.challengeType" :options="getTypes" />
                   </UFormGroup>
                   <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <UFormGroup class="py-2" label="Start At" name="startDate">
@@ -109,18 +109,11 @@
   </div>
 </template>
 <script setup lang="ts">
-import type { FormError, FormSubmitEvent } from '@nuxt/ui/dist/runtime/types'
+import type { FormError, FormSubmitEvent } from '@nuxt/ui/dist/runtime/types';
 import challengeRepository from '~/repository/challenge.repository';
-import { ChallengeUtitlitiesDto } from '~/types/dto/challenge.dto';
-;
+import { CreateChallengeDto } from "~/types/dto/challenge.dto";
+import { ChallengeStatus, ChallengeType } from '~/types/enum/challenge.enum';
 const dayjs = useDayjs()
-
-const { data } = await useAsyncData<ChallengeUtitlitiesDto | null>(
-  'utilities',
-  () => challengeRepository.fetchUtilities(),
-)
-
-console.log('async data', data.value)
 
 const tabs = ref([{
   label: 'Challenge',
@@ -130,8 +123,8 @@ const tabs = ref([{
   slot: 'rules',
 }])
 
-const getStates = computed(() => data?.value?.states || [])
-const getTypes = computed(() => data?.value?.types || [])
+const getStates = computed(() => Object.values(ChallengeStatus))
+const getTypes = computed(() => Object.values(ChallengeType))
 const startDateLabel = computed(() => {
   return dayjs(state.value.startDate).format("ddd, MMM DD, YYYY")
 })
@@ -142,7 +135,7 @@ const endDateLabel = computed(() => {
 const state = ref({
   title: '',
   status: getStates.value[0],
-  type: getTypes.value[0],
+  challengeType: getTypes.value[0],
   startDate: new Date(),
   endDate: new Date(),
   ruleTitle: '',
@@ -160,11 +153,14 @@ const isOpen = ref(false)
 
 const validate = (state: any): FormError[] => {
   const errors = []
-  if (!state.status) {
-    errors.push({ path: 'email', message: 'Required' })
+  if (!state.title) {
+    errors.push({ path: 'title', message: 'Required' })
   }
-  if (!state.type) {
-    errors.push({ path: 'type', message: 'Required' })
+  if (!state.status) {
+    errors.push({ path: 'status', message: 'Required' })
+  }
+  if (!state.challengeType) {
+    errors.push({ path: 'challengeType', message: 'Required' })
   }
 
   if (!state.startDate) {
@@ -193,10 +189,10 @@ const validate = (state: any): FormError[] => {
   }
 
   if (state.enableMinDistance && !state.minDistance) {
-    errors.push({ path: 'minDistance', message: 'Required' })
+    errors.push({ path: 'distance', message: 'Min distance required' })
   }
   if (state.enableMaxDistance && !state.maxDistance) {
-    errors.push({ path: 'maxDistance', message: 'Required' })
+    errors.push({ path: 'distance', message: 'Max distance required' })
   }
 
 
@@ -210,6 +206,52 @@ const validate = (state: any): FormError[] => {
 async function submit(event: FormSubmitEvent<any>) {
   // Do something with data
   console.log(event.data)
+  const {
+    title,
+    status,
+    challengeType,
+    startDate,
+    endDate,
+    ruleTitle,
+    minPace,
+    maxPace,
+    enableMinPace,
+    enableMaxPace,
+    minDistance,
+    maxDistance,
+    enableMinDistance,
+    enableMaxDistance,
+  } = event.data
+  const payload: CreateChallengeDto = {
+    title, startDate,
+    endDate, ruleTitle, status,
+    challengeType,
+    minPace,
+    maxPace,
+    minDistance: minDistance * 1000,
+    maxDistance: maxDistance * 1000,
+  }
+
+  if (!ruleTitle) {
+    delete payload.ruleTitle
+  }
+  if (!enableMinPace) {
+    delete payload.minPace
+  }
+  if (!enableMinPace) {
+    delete payload.minPace
+  }
+  if (!enableMaxPace) {
+    delete payload.maxPace
+  }
+  if (!enableMinDistance) {
+    delete payload.minDistance
+  }
+  if (!enableMaxDistance) {
+    delete payload.maxDistance
+  }
+
+  await challengeRepository.createChallenge(payload)
 }
 </script>
 <style scoped></style>
