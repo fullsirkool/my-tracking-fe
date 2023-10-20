@@ -56,10 +56,10 @@ const { data } = await useAsyncData("statistic", () =>
   activityRepository.fetchStatistics(id)
 );
 
-const avgPace = ref(data.pace.toFixed(2));
-const totalDistance = ref((data.distance / 1000).toFixed(2));
-const count = ref(data.count);
-const totalMovingTime = ref((data.totalMovingTime / 3600).toFixed(2));
+const avgPace = ref(data.value.pace.toFixed(2));
+const totalDistance = ref((data.value.distance / 1000).toFixed(2));
+const count = ref(data.value.count);
+const totalMovingTime = ref((data.value.totalMovingTime / 3600).toFixed(2));
 
 const getFullName = computed(() => `${user.value.firstName} ${user.value.lastName}`);
 const getPaceMinute = computed(() => {
