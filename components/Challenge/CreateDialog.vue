@@ -40,6 +40,11 @@
                       </UPopover>
                     </UFormGroup>
                   </div>
+                  <UFormGroup class="py-2" label="Image Upload" name="file">
+                    <UPopover :popper="{ placement: 'bottom-start' }">
+                      <UInput type="file" v-model="state.file" />
+                    </UPopover>
+                  </UFormGroup>
                 </div>
               </template>
               <template #rules="{ item }">
@@ -147,6 +152,7 @@ const state = ref({
   maxDistance: "",
   enableMinDistance: true,
   enableMaxDistance: true,
+  file: ""
 })
 
 const isOpen = ref(false)
