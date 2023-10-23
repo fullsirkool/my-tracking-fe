@@ -118,6 +118,11 @@ import challengeRepository from '~/repository/challenge.repository';
 import fileRepository from '~/repository/file.repository';
 import { CreateChallengeDto } from "~/types/dto/challenge.dto";
 import { ChallengeStatus, ChallengeType } from '~/types/enum/challenge.enum';
+
+definePageMeta({
+  middleware: ["authentication"],
+});
+
 const steps = ref([
   { key: "information", title: "Information" },
   { key: "rules", title: "Rules" },
