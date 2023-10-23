@@ -69,34 +69,33 @@
               </div>
             </div>
           </UFormGroup>
-          <UFormGroup class="py-2" label="" name="distance">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label for="" class="font-medium text-gray-700 text-sm">Min Distance</label>
-                <div class="flex gap-2 items-center">
-                  <UInput v-model="state.minDistance" name="input" placeholder="Min Distance"
-                    :disabled="!state.enableMinDistance || selectedStep.key === 'review'">
-                    <template #trailing>
-                      <span class="text-gray-400 text-sm">km(s)</span>
-                    </template>
-                  </UInput>
-                  <UCheckbox v-model="state.enableMinDistance" :disabled="selectedStep.key === 'review'" />
-                </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+            <UFormGroup class="py-2" label="Min Distance" name="minDistance">
+              <div class="flex gap-2 items-center">
+                <UInput v-model="state.minDistance" name="input" placeholder="Min Distance"
+                  :disabled="!state.enableMinDistance || selectedStep.key === 'review'">
+                  <template #trailing>
+                    <span class="text-gray-400 text-sm">km(s)</span>
+                  </template>
+                </UInput>
+                <UCheckbox v-model="state.enableMinDistance" :disabled="selectedStep.key === 'review'" />
               </div>
-              <div>
-                <label for="" class="font-medium text-gray-700 text-sm">Max Distance</label>
-                <div class="flex gap-2 items-center">
-                  <UInput v-model="state.maxDistance" name="input" placeholder="Max Distance"
-                    :disabled="!state.enableMaxDistance || selectedStep.key === 'review'">
-                    <template #trailing>
-                      <span class="text-gray-400 text-sm">km(s)</span>
-                    </template>
-                  </UInput>
-                  <UCheckbox v-model="state.enableMaxDistance" :disabled="selectedStep.key === 'review'" />
-                </div>
+            </UFormGroup>
+
+            <UFormGroup class="py-2" label="Max Distance" name="maxDistance">
+              <div class="flex gap-2 items-center">
+                <UInput v-model="state.maxDistance" name="input" placeholder="Max Distance"
+                  :disabled="!state.enableMaxDistance || selectedStep.key === 'review'">
+                  <template #trailing>
+                    <span class="text-gray-400 text-sm">km(s)</span>
+                  </template>
+                </UInput>
+                <UCheckbox v-model="state.enableMaxDistance" :disabled="selectedStep.key === 'review'" />
               </div>
-            </div>
-          </UFormGroup>
+            </UFormGroup>
+
+          </div>
         </div>
 
         <div class="flex items-center justify-center mt-10">
@@ -208,16 +207,17 @@ const validate = (state: any): FormError[] => {
   }
 
   if (state.enableMinDistance && !state.minDistance) {
-    errors.push({ path: 'distance', message: 'Required' })
+    errors.push({ path: 'minDistance', message: 'Required' })
   }
   if (state.enableMaxDistance && !state.maxDistance) {
-    errors.push({ path: 'distance', message: 'Required' })
+    errors.push({ path: 'maxDistance', message: 'Required' })
   }
 
 
   if (state.enableMinDistance && state.enableMaxDistance && state.minDistance && state.maxDistance) {
     if (+state.minDistance >= +state.maxDistance) {
-      errors.push({ path: 'distance', message: 'Max distance must greater than min distance' })
+      errors.push({ path: 'minDistance', message: 'Min distance must less than max distance' })
+      errors.push({ path: 'maxDistance', message: 'Max distance must greater than min distance' })
     }
   }
   return errors
