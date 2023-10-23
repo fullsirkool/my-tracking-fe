@@ -11,11 +11,11 @@ export interface Challenge {
   status: ChallengeStatus;
 }
 
-
 export interface CreateChallengeDto {
   title: string;
   startDate: Date;
   endDate: Date;
+  image: string | null | undefined;
   ruleTitle: string | undefined;
   minPace: number | undefined;
   maxPace: number | undefined;

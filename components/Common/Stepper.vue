@@ -34,7 +34,7 @@ const valueIndex = computed(() => props.steps.findIndex(item => item.key === pro
 </script>
 <style>
 :root {
-  --circle-size: clamp(1.5rem, 5vw, 4rem);
+  --circle-size: clamp(1.5rem, 5vw, 3rem);
   --spacing: clamp(0.25rem, 2vw, 0.5rem);
 }
 
@@ -49,7 +49,7 @@ const valueIndex = computed(() => props.steps.findIndex(item => item.key === pro
   text-align: center;
 
   &:before {
-    --size: 4rem;
+    --size: 3rem;
     content: "";
     display: block;
     width: var(--circle-size);
@@ -76,7 +76,7 @@ const valueIndex = computed(() => props.steps.findIndex(item => item.key === pro
 
 .c-stepper__item.active-cicle {
   &:before {
-    --size: 4rem;
+    --size: 3rem;
     content: "";
     display: block;
     width: var(--circle-size);

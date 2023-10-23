@@ -1,12 +1,12 @@
 <template>
-  <VDatePicker v-model="date" :attributes="attrs" />
+    <VDatePicker v-model="date" :attributes="attrs" />
 </template>
 <script setup lang="ts">
 const props = defineProps({
   modelValue: {
     type: Date,
     default: null
-  }
+  },
 })
 const emit = defineEmits(['update:model-value', 'close'])
 const attrs = ref([
