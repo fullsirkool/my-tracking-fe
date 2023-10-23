@@ -220,7 +220,7 @@ const validate = (state: any): FormError[] => {
 
 const uploadImgage = async () => {
   if (state.value.file) {
-    return fileRepository.upload({ file: state.value.file })
+    return fileRepository.upload(state.value.file)
   }
 }
 

@@ -30,7 +30,7 @@ const exchangeToken = async () => {
   refreshTokenCookie.value = refreshToken;
   setUser(user);
   localStorage.setItem("user-info", JSON.stringify(user));
-  navigateTo("/profile");
+  navigateTo("/challenges");
 };
 
 exchangeToken();
