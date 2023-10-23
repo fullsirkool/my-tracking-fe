@@ -41,7 +41,7 @@
           </div>
           <div class="col-span-12 sm:col-span-4">
             <UFormGroup class="py-2" label="Image Upload" name="file">
-              <UInput type="file" v-model="state.file" :disabled="selectedStep.key === 'review'" />
+              <input type="file" @change="(e) => handleSelectFile(e)" :disabled="selectedStep.key === 'review'" />
             </UFormGroup>
           </div>
         </div>
@@ -218,9 +218,13 @@ const validate = (state: any): FormError[] => {
   return errors
 }
 
+const handleSelectFile = (event: any) => {
+  state.value.file = event.target.files[0]
+}
+
 const uploadImgage = async () => {
   if (state.value.file) {
-    return fileRepository.upload(state.value.file)
+    return await fileRepository.upload(state.value.file)
   }
 }
 
