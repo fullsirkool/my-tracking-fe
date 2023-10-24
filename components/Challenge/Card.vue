@@ -8,7 +8,7 @@
       <h3 class="mt-1 text-md flex items-center gap-2">{{ $t("join") }}
         <UIcon name="i-heroicons-arrow-right-20-solid" />
       </h3>
-      <h3 class="mt-1 text-md flex items-center gap-2">{{ $t("share") }}
+      <h3 class="mt-1 text-md flex items-center gap-2" @click="handleShareChallenge">{{ $t("share") }}
         <UIcon name="i-heroicons-share-20-solid" />
       </h3>
     </div>
@@ -21,6 +21,11 @@ const props = defineProps({
     default: () => ({})
   }
 })
+
+const handleShareChallenge = () => {
+  const copyText = props.challenge.id
+  navigator.clipboard.writeText(copyText);
+}
 </script>
 <style>
 .challenge-card {
@@ -50,4 +55,5 @@ const props = defineProps({
     }
   }
 
-}</style>
+}
+</style>
