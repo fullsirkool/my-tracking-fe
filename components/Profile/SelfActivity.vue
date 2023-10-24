@@ -19,6 +19,7 @@ import { storeToRefs } from "pinia";
 import { useProfileStore } from "@/stores/profile.store";
 import { DailyActivityDto } from "~/types/dto/activity.dto";
 const dayjs = useDayjs();
+const { t } = useI18n()
 
 //STORE//
 
@@ -84,7 +85,6 @@ const options = ref({
 
 const getChartSeries = computed(() => {
   const seriesData: DailyActivityDto[] = [...activities.value];
-  console.log('getChartSeries before', seriesData)
   const data = Array.from({ length: numberOfDate(chartDate.value) }, (_, index) => {
     if (!seriesData.length) {
       return 0;
@@ -96,7 +96,6 @@ const getChartSeries = computed(() => {
     const item = seriesData.shift();
     return (item.distance / 1000).toFixed(2);
   });
-  console.log("getChartSeries", data);
   return [
     {
       name: "activities",
@@ -126,10 +125,10 @@ const getOptions = computed(() => {
 });
 
 const getMonthDisplay = computed(() => {
-  return `Biểu đồ hoạt động tháng ${dayjs(chartDate.value).format("MM/YYYY")}`;
+  return `${t('monthly_activities_chart')} ${dayjs(chartDate.value).format("MM/YYYY")}`;
 });
 
 const getShortMonthDisplay = computed(() => {
-  return `Tháng ${dayjs(chartDate.value).format("MM/YYYY")}`;
+  return `${dayjs(chartDate.value).format("YYYY, MMMM")}`;
 });
 </script>

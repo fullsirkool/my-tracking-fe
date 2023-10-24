@@ -11,9 +11,30 @@ export default defineNuxtConfig({
     "@pinia/nuxt",
     "nuxt-lodash",
     "@samk-dev/nuxt-vcalendar",
+    "@nuxtjs/i18n",
   ],
   colorMode: {
     preference: "light",
+  },
+  i18n: {
+    /* module options */
+    langDir: "locales",
+    strategy: "no_prefix",
+    locales: [
+      {
+        code: "en-US",
+        iso: "en-US",
+        name: "English(US)",
+        file: "en-US.json",
+      },
+      {
+        code: "vi-VN",
+        iso: "vi-VN",
+        name: "Tiếng Việt",
+        file: "vi-VN.json",
+      },
+    ],
+    defaultLocale: "en-US",
   },
   runtimeConfig: {
     public: {

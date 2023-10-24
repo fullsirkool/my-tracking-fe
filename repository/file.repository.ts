@@ -6,7 +6,6 @@ export default {
     const url = `${BASE_URL}/file/upload`;
     const formData = new FormData();
     formData.append("file", file);
-    console.log("file", file);
     const { data } = await useFetch<string>(url, {
       method: "post",
       body: formData,

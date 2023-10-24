@@ -5,19 +5,19 @@
         <div class="w-fit grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 font-semibold">
           <div class="rounded-2xl text-center p-3 border-[1px] bg-white border-none text-gray-700">
             <p class="text-red-500 text-xl font-bold">{{ totalDistance }}</p>
-            Khoảng cách (km)
+            {{ $t('distance') }} (km)
           </div>
           <div class="rounded-2xl text-center p-3 border-[1px] bg-white border-none text-gray-700">
             <p class="text-red-500 text-xl font-bold">{{ getPaceMinute }}</p>
-            Pace
+            {{ $t('pace') }}
           </div>
           <div class="rounded-2xl text-center p-3 border-[1px] bg-white border-none text-gray-700">
             <p class="text-red-500 text-xl font-bold">{{ count }}</p>
-            Số lần chạy
+            {{ $t('activities') }}
           </div>
           <div class="rounded-2xl text-center p-3 border-[1px] bg-white border-none text-gray-700">
             <p class="text-red-500 text-xl font-bold">{{ getTotalRuningMinute }}</p>
-            Thời Gian (Giờ)
+            {{ $t('time') }}({{ $t('hours') }})
           </div>
         </div>
       </UCard>
@@ -29,7 +29,7 @@
       <h1 class="font-bold text-2xl">{{ getFullName }}</h1>
       <div class="flex gap-3 items-center mx-auto my-2 w-fit">
         <CommonStravaIcon></CommonStravaIcon>
-        <h3 class="text-md">Strava ID: {{ user.stravaId }}</h3>
+        <h3 class="text-md">{{ $t('strava_id') }}: {{ user.stravaId }}</h3>
       </div>
     </div>
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-10">

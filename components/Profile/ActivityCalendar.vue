@@ -1,23 +1,11 @@
 <template>
   <UCard class="rounded-2xl bg-[#f5f5f5] h-[400px]" style="box-shadow: none;">
     <div class="flex items-center justify-center gap-4 pb-4">
-      <UButton
-        icon="i-heroicons-chevron-left"
-        size="xs"
-        :ui="{ rounded: 'rounded-full' }"
-        color="white"
-        variant="solid"
-        @click="handleChangeMonth('-')"
-      />
+      <UButton icon="i-heroicons-chevron-left" size="xs" :ui="{ rounded: 'rounded-full' }" color="white" variant="solid"
+        @click="handleChangeMonth('-')" />
       <h2 class="font-bold">{{ getMonthDisplay }}</h2>
-      <UButton
-        icon="i-heroicons-chevron-right"
-        size="xs"
-        :ui="{ rounded: 'rounded-full' }"
-        color="white"
-        variant="solid"
-        @click="handleChangeMonth('+')"
-      />
+      <UButton icon="i-heroicons-chevron-right" size="xs" :ui="{ rounded: 'rounded-full' }" color="white" variant="solid"
+        @click="handleChangeMonth('+')" />
     </div>
     <div class="grid grid-cols-7 text-center">
       <div v-for="day in daysInWeek" class="font-bold h-14">{{ day }}</div>
@@ -41,6 +29,7 @@
 import { storeToRefs } from "pinia";
 import { useProfileStore } from "@/stores/profile.store";
 const dayjs = useDayjs();
+const { t } = useI18n()
 
 //STORE//
 
@@ -108,6 +97,6 @@ const getBlocks = computed(() => {
   });
 });
 const getMonthDisplay = computed(() => {
-  return `Tháng ${dayjs(chartDate.value).format("MM/YYYY")}`;
+  return `${dayjs(chartDate.value).format("YYYY, MMMM")}`;
 });
 </script>

@@ -1,23 +1,23 @@
 <template>
   <UContainer>
-    <h1 class="font-semibold text-2xl"> Create Challenge</h1>
+    <h1 class="font-semibold text-2xl">{{ $t('create_challenge') }}</h1>
     <CommonStepper v-model="selectedStep" :steps="steps"></CommonStepper>
     <div class="grid grid-cols-12">
       <div class="col-span-2 hidden sm:block"></div>
       <UForm :validate="validate" :state="state" @submit="submit" class="col-span-12 sm:col-span-8">
         <div v-show="['information', 'review'].includes(selectedStep.key)" class="grid grid-cols-12 gap-4">
           <div class="col-span-12 sm:col-span-8">
-            <UFormGroup class="py-2" label="Challenge Title" name="title">
+            <UFormGroup class="py-2" :label="$t('challenge_title')" name="title">
               <UInput v-model="state.title" :disabled="selectedStep.key === 'review'" />
             </UFormGroup>
-            <UFormGroup class="py-2" label="Challenge Status" name="status">
+            <UFormGroup class="py-2" :label="$t('challenge_status')" name="status">
               <USelect v-model="state.status" :options="getStates" :disabled="selectedStep.key === 'review'" />
             </UFormGroup>
-            <UFormGroup class="py-2" label="Challenge Type" name="challengeType">
+            <UFormGroup class="py-2" :label="$t('challenge_type')" name="challengeType">
               <USelect v-model="state.challengeType" :options="getTypes" :disabled="selectedStep.key === 'review'" />
             </UFormGroup>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <UFormGroup class="py-2" label="Start At" name="startDate">
+              <UFormGroup class="py-2" :label="$t('start_at')" name="startDate">
                 <UPopover :popper="{ placement: 'bottom-start' }" class="w-fit">
                   <UButton variant="outline" icon="i-heroicons-calendar-days-20-solid" :label="startDateLabel"
                     :disabled="selectedStep.key === 'review'" />
@@ -27,7 +27,7 @@
                   </template>
                 </UPopover>
               </UFormGroup>
-              <UFormGroup class="py-2" label="End At" name="endDate">
+              <UFormGroup class="py-2" :label="$t('end_at')" name="endDate">
                 <UPopover :popper="{ placement: 'bottom-start' }" class="w-fit">
                   <UButton variant="outline" icon="i-heroicons-calendar-days-20-solid" :label="endDateLabel"
                     :disabled="selectedStep.key === 'review'" />
@@ -40,19 +40,19 @@
             </div>
           </div>
           <div class="col-span-12 sm:col-span-4">
-            <UFormGroup class="py-2" label="Image Upload" name="file">
+            <UFormGroup class="py-2" :label="$t('image_upload')" name="file">
               <input type="file" @change="(e) => handleSelectFile(e)" :disabled="selectedStep.key === 'review'" />
             </UFormGroup>
           </div>
         </div>
         <div v-show="['rules', 'review'].includes(selectedStep.key)">
-          <UFormGroup class="py-2" label="Rule Title" name="ruleTitle">
+          <UFormGroup class="py-2" :label="$t('rule_title')" name="ruleTitle">
             <UInput v-model="state.ruleTitle" :disabled="selectedStep.key === 'review'" />
           </UFormGroup>
           <UFormGroup name="pace">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 py-2">
               <div>
-                <label for="" class="font-medium text-gray-700 text-sm">Min Pace</label>
+                <label for="" class="font-medium text-gray-700 text-sm">{{ $t('min_pace') }}</label>
                 <div class="flex gap-2 items-center">
                   <CommonHourInput v-model="state.minPace"
                     :disabled="!state.enableMinPace || selectedStep.key === 'review'"></CommonHourInput>
@@ -60,7 +60,7 @@
                 </div>
               </div>
               <div>
-                <label for="" class="font-medium text-gray-700 text-sm">Max Pace</label>
+                <label for="" class="font-medium text-gray-700 text-sm">{{ $t('max_pace') }}</label>
                 <div class="flex gap-2 items-center">
                   <CommonHourInput v-model="state.maxPace"
                     :disabled="!state.enableMaxPace || selectedStep.key === 'review'"></CommonHourInput>
@@ -71,7 +71,7 @@
           </UFormGroup>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
-            <UFormGroup class="py-2" label="Min Distance" name="minDistance">
+            <UFormGroup class="py-2" :label="$t('min_distance')" name="minDistance">
               <div class="flex gap-2 items-center">
                 <UInput v-model="state.minDistance" name="input" placeholder="Min Distance"
                   :disabled="!state.enableMinDistance || selectedStep.key === 'review'">
@@ -83,7 +83,7 @@
               </div>
             </UFormGroup>
 
-            <UFormGroup class="py-2" label="Max Distance" name="maxDistance">
+            <UFormGroup class="py-2" :label="$t('max_distance')" name="maxDistance">
               <div class="flex gap-2 items-center">
                 <UInput v-model="state.maxDistance" name="input" placeholder="Max Distance"
                   :disabled="!state.enableMaxDistance || selectedStep.key === 'review'">
@@ -100,8 +100,8 @@
 
         <div class="flex items-center justify-center mt-10">
 
-          <UButton v-show="selectedStep.key === 'review'" size="xl" type="submit" variant="solid">
-            Submit
+          <UButton v-show="selectedStep.key === 'review'" :label="$t('create_challenge')" size="xl" type="submit" variant="solid">
+
           </UButton>
         </div>
       </UForm>

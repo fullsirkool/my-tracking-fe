@@ -4,7 +4,7 @@
       <li v-for="(step, index) in steps" class="c-stepper__item cursor-pointer"
         :class="{ 'active-cicle': index <= valueIndex, 'active-spacing': index + 1 <= valueIndex }"
         @click="handleChangeStep(step)">
-        <h3 class="c-stepper__title">Step {{ index + 1 }}</h3>
+        <h3 class="c-stepper__title">{{ `${$t("step")} ${index + 1}` }}</h3>
         <p class="c-stepper__desc">{{ step.title }}</p>
       </li>
     </ol>
