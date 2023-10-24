@@ -1,3 +1,7 @@
+import {
+  PagingChallengeDto,
+  PagingChallengeResponse,
+} from "./../types/dto/challenge.dto";
 import { Challenge, CreateChallengeDto } from "~/types/dto/challenge.dto";
 
 const runtimeConfig = useRuntimeConfig();
@@ -11,6 +15,17 @@ export default {
       method: "post",
       body,
       headers: { Authorization: `Bearer ${accessTokenCookie.value}` },
+    });
+    return data.value;
+  },
+
+  async find(
+    params: PagingChallengeDto
+  ): Promise<PagingChallengeResponse | null> {
+    const url = `${BASE_URL}/challenge`;
+    const { data } = await useFetch<PagingChallengeResponse>(url, {
+      method: "get",
+      params,
     });
     return data.value;
   },

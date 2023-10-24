@@ -1,4 +1,5 @@
 import { ChallengeStatus, ChallengeType } from "../enum/challenge.enum";
+import { BasePagingDto, BasePagingResponse } from "./base.dto";
 
 export interface Challenge {
   id: number;
@@ -24,3 +25,6 @@ export interface CreateChallengeDto {
   status: ChallengeStatus;
   challengeType: ChallengeType;
 }
+
+export class PagingChallengeDto extends BasePagingDto {}
+export class PagingChallengeResponse extends BasePagingResponse<Challenge> {}
