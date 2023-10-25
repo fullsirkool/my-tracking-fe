@@ -1,16 +1,21 @@
 <template>
   <UCard class="rounded-3xl bg-[#f5f5f5] challenge-card cursor-pointer text-[#4B4B4B]" style="box-shadow: none;">
-    <div class="image-container rounded-xl">
-      <img :src="challenge.image" class="rounded-xl" />
+    <div class="image-container rounded-xl ">
+      <img :src="challenge.image" class="rounded-xl h-[200px] w-full object-cover" />
     </div>
-    <h1 class="font-bold mt-4 text-xl hover:text-sky-900">{{ challenge.title }}</h1>
-    <div class="flex items-center justify-between">
-      <h3 class="mt-1 text-md flex items-center gap-2">{{ $t("join") }}
-        <UIcon name="i-heroicons-arrow-right-20-solid" />
-      </h3>
-      <h3 class="mt-1 text-md flex items-center gap-2" @click="handleShareChallenge">{{ $t("share") }}
-        <UIcon name="i-heroicons-share-20-solid" />
-      </h3>
+    <div class="flex items-center justify-start gap-4 mt-4 ">
+      <UAvatar size="md" :src="challenge.owner.profile" alt="Avatar" />
+      <div>
+        <h1 class="font-bold text-xl hover:text-sky-900">{{ challenge.title }}</h1>
+        <div class="flex items-center justify-between">
+          <h3 class="mt-1 text-md flex items-center gap-2">{{ $t("join") }}
+            <UIcon name="i-heroicons-arrow-right-20-solid" />
+          </h3>
+          <h3 class="mt-1 text-md flex items-center gap-2" @click="handleShareChallenge">{{ $t("share") }}
+            <UIcon name="i-heroicons-share-20-solid" />
+          </h3>
+        </div>
+      </div>
     </div>
   </UCard>
 </template>

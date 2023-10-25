@@ -17,7 +17,10 @@
               <img src="~/assets/icon/icon_run.png" alt="" class="h-4 w-4" />
             </div>
             <template #panel>
-              <div class="py-2 px-3">Distance: {{ item.distance }}km</div>
+              <div class="py-2 px-3">
+                <p class="text-center">{{ `${getDateDisplay(item.title)}` }}</p>
+                <p class="py-2 px-3">Distance: {{ item.distance }}km</p>
+              </div>
             </template>
           </UPopover>
         </div>
@@ -99,4 +102,8 @@ const getBlocks = computed(() => {
 const getMonthDisplay = computed(() => {
   return `${dayjs(chartDate.value).format("YYYY, MMMM")}`;
 });
+
+const getDateDisplay = (date) => {
+  return `${dayjs(chartDate.value).format("YYYY, MMM")} ${date}`
+}
 </script>
