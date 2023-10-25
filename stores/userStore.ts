@@ -23,26 +23,26 @@ export const useUserStore = defineStore("user", () => {
       expires: refreshTokenExpireTime,
     });
     if (!accessTokenCookie.value && !refreshTokenCookie.value) {
+      localStorage.removeItem("user-info");
       return;
     }
 
-    if (!accessTokenCookie.value) {
-      try {
+    try {
+      if (!accessTokenCookie.value) {
         const data = await authRepository.renew(`${refreshTokenCookie.value}`);
-
         if (data) {
           const { accessToken, refreshToken } = data;
           accessTokenCookie.value = accessToken;
           refreshTokenCookie.value = refreshToken;
-          const loadedInfo = localStorage.getItem("user-info");
-          if (typeof loadedInfo === "string") {
-            user.value = JSON.parse(loadedInfo);
-          }
         }
-      } catch (error) {
-        console.log(error);
-        localStorage.removeItem("user-info");
       }
+      const loadedInfo = localStorage.getItem("user-info");
+      if (typeof loadedInfo === "string") {
+        user.value = JSON.parse(loadedInfo);
+      }
+    } catch (error) {
+      console.log(error);
+      localStorage.removeItem("user-info");
     }
   };
 
