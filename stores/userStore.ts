@@ -34,15 +34,15 @@ export const useUserStore = defineStore("user", () => {
           const { accessToken, refreshToken } = data;
           accessTokenCookie.value = accessToken;
           refreshTokenCookie.value = refreshToken;
+          const loadedInfo = localStorage.getItem("user-info");
+          if (typeof loadedInfo === "string") {
+            user.value = JSON.parse(loadedInfo);
+          }
         }
       } catch (error) {
         console.log(error);
+        localStorage.removeItem("user-info");
       }
-    }
-
-    const loadedInfo = localStorage.getItem("user-info");
-    if (typeof loadedInfo === "string") {
-      user.value = JSON.parse(loadedInfo);
     }
   };
 
