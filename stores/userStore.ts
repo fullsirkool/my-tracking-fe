@@ -46,10 +46,9 @@ export const useUserStore = defineStore("user", () => {
     }
   };
 
-  initValue();
-
   return {
     user,
     setUser,
+    initValue,
   };
 });

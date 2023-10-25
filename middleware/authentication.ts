@@ -1,8 +1,9 @@
 import { useUserStore } from "~/stores/userStore";
 
-export default defineNuxtRouteMiddleware((to, from) => {
-  const { user } = useUserStore();
+export default defineNuxtRouteMiddleware(async (to, from) => {
+  const { user, initValue } = useUserStore();
   console.log('middleware', user)
+  await initValue()
   if (isEmpty(user)) {
     return navigateTo("/login");
   }
