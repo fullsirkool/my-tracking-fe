@@ -27,12 +27,16 @@ export const useUserStore = defineStore("user", () => {
     }
 
     if (!accessTokenCookie.value) {
-      const data = await authRepository.renew(`${refreshTokenCookie.value}`);
+      try {
+        const data = await authRepository.renew(`${refreshTokenCookie.value}`);
 
-      if (data) {
-        const { accessToken, refreshToken } = data;
-        accessTokenCookie.value = accessToken;
-        refreshTokenCookie.value = refreshToken;
+        if (data) {
+          const { accessToken, refreshToken } = data;
+          accessTokenCookie.value = accessToken;
+          refreshTokenCookie.value = refreshToken;
+        }
+      } catch (error) {
+        console.log(error);
       }
     }
 

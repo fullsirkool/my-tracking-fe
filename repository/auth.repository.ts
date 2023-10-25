@@ -14,13 +14,17 @@ export default {
   },
 
   async renew(refreshToken: string): Promise<RenewDto | null> {
-    const { data } = await useFetch<RenewDto>(`${BASE_URL}/auth/renew`, {
-      method: "POST",
-      body: {
-        refreshToken,
-      },
-    });
+    try {
+      const { data } = await useFetch<RenewDto>(`${BASE_URL}/auth/renew`, {
+        method: "POST",
+        body: {
+          refreshToken,
+        },
+      });
 
-    return data.value;
+      return data.value;
+    } catch (error) {
+      throw error;
+    }
   },
 };

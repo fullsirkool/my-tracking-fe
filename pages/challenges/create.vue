@@ -100,7 +100,8 @@
 
         <div class="flex items-center justify-center mt-10">
 
-          <UButton v-show="selectedStep.key === 'review'" :label="$t('create_challenge')" size="xl" type="submit" variant="solid">
+          <UButton v-show="selectedStep.key === 'review'" :label="$t('create_challenge')" size="xl" type="submit"
+            variant="solid">
 
           </UButton>
         </div>
@@ -282,5 +283,6 @@ const submit = async (event: FormSubmitEvent<any>) => {
   }
 
   await challengeRepository.createChallenge(payload)
+  navigateTo('/challenges')
 }
 </script>
