@@ -1,3 +1,5 @@
+import { BasePagingDto, BasePagingResponse } from "./base.dto";
+
 export interface ActivityMontlyDto {
   date: string;
   stravaId: string;
@@ -23,3 +25,10 @@ export interface StatisticsDto {
   count: number;
   totalMovingTime: number;
 }
+
+export interface FindActivityDto extends BasePagingDto {
+  date: Date;
+  stravaId: number;
+}
+
+export interface FindActivityResponse extends BasePagingResponse<ActivityDto> {}

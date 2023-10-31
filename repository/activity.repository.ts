@@ -1,6 +1,8 @@
 import {
   ActivityMontlyDto,
   DailyActivityDto,
+  FindActivityDto,
+  FindActivityResponse,
   StatisticsDto,
 } from "./../types/dto/activity.dto";
 
@@ -27,6 +29,16 @@ export default {
     const { data } = await useFetch<StatisticsDto>(
       `${BASE_URL}/activity/statistics/${userId}`
     );
+
+    return data.value;
+  },
+
+  async fetchMonthlyActivitiesDetail(
+    params: FindActivityDto
+  ): Promise<FindActivityResponse | null> {
+    const { data } = await useFetch<FindActivityResponse>(`${BASE_URL}/activity`, {
+      params,
+    });
 
     return data.value;
   },
