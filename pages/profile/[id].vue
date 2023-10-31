@@ -51,7 +51,7 @@ const { user } = storeToRefs(store);
 const { params } = useRoute();
 const { id } = params;
 await useAsyncData("user", () => store.fetchUserInfo(+id));
-await useAsyncData("activity", () => store.fetchActivities());
+await useAsyncData("activity", () => store.fetchDailyActivityStatistics());
 const { data } = await useAsyncData("statistic", () =>
   activityRepository.fetchStatistics(id)
 );

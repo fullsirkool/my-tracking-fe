@@ -1,14 +1,19 @@
 import { defineStore } from "pinia";
 import activityRepository from "~/repository/activity.repository";
 import userRepository from "~/repository/user.repository";
-import { DailyActivityDto } from "~/types/dto/activity.dto";
+import { ActivityDto, DailyActivityDto } from "~/types/dto/activity.dto";
 import { UserClaims } from "~/types/dto/user.dto";
 
 export const useProfileStore = defineStore("profile", () => {
   const chartDate = ref(new Date());
-  const activities = ref<DailyActivityDto[] | null>([]);
+  const activities = ref<ActivityDto[] | null>([]);
+  const activitiesDetail = ref<DailyActivityDto[] | null>([]);
   const stravaId = ref<string>("");
   const user = ref<UserClaims | null>(null);
+  const detailPage = ref(1);
+  const detailSize = ref(9);
+  const totalDetailPage = ref(1);
+  const totalActivities = ref(0);
 
   const handleChangeMonth = async (sign: string) => {
     if (sign === "+") {
@@ -24,9 +29,9 @@ export const useProfileStore = defineStore("profile", () => {
         10
       );
     }
-    await fetchActivities();
+    await fetchDailyActivityStatistics();
   };
-  const fetchActivities = async () => {
+  const fetchDailyActivityStatistics = async () => {
     try {
       const data = await activityRepository.fetchMonthlyActivities({
         date: chartDate.value.toISOString(),
@@ -37,6 +42,26 @@ export const useProfileStore = defineStore("profile", () => {
       console.log(error);
     }
   };
+
+  const fetchMonthlyActivitiesDetail = async () => {
+    try {
+      const res = await activityRepository.fetchMonthlyActivitiesDetail({
+        page: detailPage.value,
+        size: detailSize.value,
+        date: chartDate.value.toISOString(),
+        userId: user.value?.id,
+      });
+      if (res) {
+        const { data, page, size, totalPages, totalElement } = res;
+        activitiesDetail.value = data;
+        totalDetailPage.value = totalPages;
+        totalActivities.value = totalElement;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const fetchUserInfo = async (id: any) => {
     try {
       if (id) {
@@ -55,7 +80,7 @@ export const useProfileStore = defineStore("profile", () => {
     stravaId,
     user,
     handleChangeMonth,
-    fetchActivities,
+    fetchDailyActivityStatistics,
     fetchUserInfo,
   };
 });

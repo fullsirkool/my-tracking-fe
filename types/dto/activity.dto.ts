@@ -27,8 +27,8 @@ export interface StatisticsDto {
 }
 
 export interface FindActivityDto extends BasePagingDto {
-  date: Date;
-  stravaId: number;
+  date: string;
+  userId: number | undefined;
 }
 
 export interface FindActivityResponse extends BasePagingResponse<ActivityDto> {}
