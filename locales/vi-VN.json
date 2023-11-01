@@ -21,5 +21,8 @@
   "min_pace": "Pace Nhanh Nhất",
   "max_pace": "Pace Chậm Nhất",
   "min_distance": "Khoảng Cách Nhỏ Nhất",
-  "max_distance": "Khoảng Cách Lớn Nhất"
+  "max_distance": "Khoảng Cách Lớn Nhất",
+  "next": "Tiếp",
+  "back": "Trở Lại",
+  "target": "Cự ly  "
 }

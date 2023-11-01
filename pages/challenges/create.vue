@@ -41,13 +41,21 @@
           </div>
           <div class="col-span-12 sm:col-span-4">
             <UFormGroup class="py-2" :label="$t('image_upload')" name="file">
-              <input type="file" @change="(e) => handleSelectFile(e)" :disabled="selectedStep.key === 'review'" />
+              <!-- <input type="file" @change="(e) => handleSelectFile(e)" :disabled="selectedStep.key === 'review'" /> -->
+              <CommonFileUpload v-model="state.file" :disabled="selectedStep.key === 'review'"></CommonFileUpload>
             </UFormGroup>
           </div>
         </div>
         <div v-show="['rules', 'review'].includes(selectedStep.key)">
           <UFormGroup class="py-2" :label="$t('rule_title')" name="ruleTitle">
             <UInput v-model="state.ruleTitle" :disabled="selectedStep.key === 'review'" />
+          </UFormGroup>
+          <UFormGroup class="py-2" :label="$t('target')" name="target">
+            <UInput type="number" v-model="state.target" :disabled="selectedStep.key === 'review'">
+              <template #trailing>
+                <span class="text-gray-400 text-sm">km(s)</span>
+              </template>
+            </UInput>
           </UFormGroup>
           <UFormGroup name="pace">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 py-2">
@@ -98,11 +106,15 @@
           </div>
         </div>
 
-        <div class="flex items-center justify-center mt-10">
-
+        <div class="flex items-center justify-center mt-10 gap-4">
+          <UButton v-show="selectedStep.key !== 'information'" :label="$t('back')" size="xl" variant="solid"
+            @click="handleBackStep">
+          </UButton>
+          <UButton v-show="selectedStep.key !== 'review'" :label="$t('next')" size="xl" variant="solid"
+            @click="handleNextStep">
+          </UButton>
           <UButton v-show="selectedStep.key === 'review'" :label="$t('create_challenge')" size="xl" type="submit"
             variant="solid">
-
           </UButton>
         </div>
       </UForm>
@@ -120,7 +132,7 @@ import { CreateChallengeDto } from "~/types/dto/challenge.dto";
 import { ChallengeStatus, ChallengeType } from '~/types/enum/challenge.enum';
 
 definePageMeta({
-  middleware: ["authentication"],
+  // middleware: ["authentication"],
 });
 
 const steps = ref([
@@ -131,14 +143,6 @@ const steps = ref([
 const selectedStep = ref({ key: "information", title: "Information" })
 
 const dayjs = useDayjs()
-
-const tabs = ref([{
-  label: 'Challenge',
-  slot: 'challenge',
-}, {
-  label: 'Rules',
-  slot: 'rules',
-}])
 
 const getStates = computed(() => Object.values(ChallengeStatus))
 const getTypes = computed(() => Object.values(ChallengeType))
@@ -156,6 +160,7 @@ const state = ref({
   startDate: new Date(),
   endDate: new Date(),
   ruleTitle: '',
+  target: undefined,
   minPace: "04:00",
   maxPace: "15:00",
   enableMinPace: true,
@@ -189,7 +194,12 @@ const validate = (state: any): FormError[] => {
   if (!state.file) {
     errors.push({ path: 'file', message: 'Required' })
   }
-
+  if (!state.target) {
+    errors.push({ path: 'target', message: 'Required' })
+  }
+  if (state.target < 1) {
+    errors.push({ path: 'target', message: 'Target must greater or equal 1km' })
+  }
   if (state.startDate && state.endDate) {
     if (!dayjs(state.endDate).isAfter(state.startDate, 'day')) {
       errors.push({ path: 'startDate', message: 'Start date must before end date' })
@@ -228,6 +238,16 @@ const handleSelectFile = (event: any) => {
   state.value.file = event.target.files[0]
 }
 
+const stepIndex = computed(() => steps.value.findIndex(item => item.key === selectedStep.value.key))
+
+const handleBackStep = () => {
+  selectedStep.value = steps.value[stepIndex.value - 1]
+}
+
+const handleNextStep = () => {
+  selectedStep.value = steps.value[+stepIndex.value + 1]
+}
+
 const uploadImgage = async () => {
   if (state.value.file) {
     return await fileRepository.upload(state.value.file)
@@ -262,6 +282,8 @@ const submit = async (event: FormSubmitEvent<any>) => {
     minDistance: minDistance * 1000,
     maxDistance: maxDistance * 1000,
   }
+
+  console.log('payload', payload)
 
   if (!ruleTitle) {
     delete payload.ruleTitle
