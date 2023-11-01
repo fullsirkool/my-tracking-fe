@@ -24,5 +24,6 @@
   "max_distance": "Khoảng Cách Lớn Nhất",
   "next": "Tiếp",
   "back": "Trở Lại",
-  "target": "Cự ly  "
+  "target": "Cự ly",
+  "no_activities_in_this_month": "Không có hoạt động nào tháng này"
 }

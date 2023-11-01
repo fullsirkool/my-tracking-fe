@@ -1,18 +1,20 @@
 <template>
-  <UCard class="rounded-2xl bg-[#f5f5f5] h-[400px] overflow-auto relative pt-8" style="box-shadow: none;">
-    <div class="flex items-center justify-center gap-4 absolute top-5 -translate-x-2/4 left-2/4">
-      <UButton icon="i-heroicons-chevron-left" size="xs" :ui="{ rounded: 'rounded-full' }" color="white" variant="solid"
-        @click="handleChangeMonth('-')" />
-      <h2 class="font-bold hidden md:block">{{ getMonthDisplay }}</h2>
-      <h2 class="font-bold block md:hidden">{{ getShortMonthDisplay }}</h2>
-      <UButton icon="i-heroicons-chevron-right" size="xs" :ui="{ rounded: 'rounded-full' }" color="white" variant="solid"
-        @click="handleChangeMonth('+')" />
-    </div>
-    <div class="min-w-[800px] lg:min-w-max pr-6 lg:pr-0">
-      <apexchart :key="chartRenderKey" height="300" :options="getOptions" :series="getChartSeries">
-      </apexchart>
-    </div>
-  </UCard>
+  <div class="relative">
+    <UCard class="rounded-2xl bg-[#f5f5f5] h-[400px] overflow-auto pt-8" style="box-shadow: none;">
+      <div class="flex items-center justify-center gap-4 absolute top-5 -translate-x-2/4 left-2/4">
+        <UButton icon="i-heroicons-chevron-left" size="xs" :ui="{ rounded: 'rounded-full' }" color="white" variant="solid"
+          @click="handleChangeMonth('-')" />
+        <h2 class="font-bold hidden md:block">{{ getMonthDisplay }}</h2>
+        <h2 class="font-bold block md:hidden">{{ getShortMonthDisplay }}</h2>
+        <UButton icon="i-heroicons-chevron-right" size="xs" :ui="{ rounded: 'rounded-full' }" color="white"
+          variant="solid" @click="handleChangeMonth('+')" />
+      </div>
+      <div class="min-w-[800px] lg:min-w-max pr-6 lg:pr-0">
+        <apexchart :key="chartRenderKey" height="300" :options="getOptions" :series="getChartSeries">
+        </apexchart>
+      </div>
+    </UCard>
+  </div>
 </template>
 <script setup lang="ts">
 import { storeToRefs } from "pinia";

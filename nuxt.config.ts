@@ -12,6 +12,7 @@ export default defineNuxtConfig({
     "nuxt-lodash",
     "@samk-dev/nuxt-vcalendar",
     "@nuxtjs/i18n",
+    "nuxt-icon",
   ],
   colorMode: {
     preference: "light",

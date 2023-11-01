@@ -24,5 +24,6 @@
   "max_distance": "Max Distance",
   "next": "Next",
   "back": "Back",
-  "target": "Target"
+  "target": "Target",
+  "no_activities_in_this_month": "No Activities in this month"
 }

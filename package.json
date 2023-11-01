@@ -12,7 +12,8 @@
   "devDependencies": {
     "@nuxt/devtools": "latest",
     "@nuxtjs/i18n": "^8.0.0-rc.5",
-    "nuxt": "^3.7.3"
+    "nuxt": "^3.7.3",
+    "nuxt-icon": "^0.6.1"
   },
   "dependencies": {
     "@nuxt/ui": "^2.8.1",

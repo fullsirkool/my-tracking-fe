@@ -1,5 +1,9 @@
 import { BasePagingDto, BasePagingResponse } from "./base.dto";
 
+export enum ActivityType {
+  Run,
+}
+
 export interface ActivityMontlyDto {
   date: string;
   stravaId: string;
@@ -28,7 +32,24 @@ export interface StatisticsDto {
 
 export interface FindActivityDto extends BasePagingDto {
   date: string;
-  userId: number | undefined;
+  stravaId: string;
 }
 
-export interface FindActivityResponse extends BasePagingResponse<ActivityDto> {}
+export interface FindActivityResponse
+  extends BasePagingResponse<ActivityDetail> {}
+
+export interface ActivityDetail {
+  averageSpeed: number;
+  distance: number;
+  elapsedTime: number;
+  id: string;
+  maxSpeed: number;
+  movingTime: number;
+  name: string;
+  startDate: string;
+  startDateLocal: string;
+  totalElevationGain: number;
+  type: ActivityType;
+  userId: 1;
+  visibility: string;
+}

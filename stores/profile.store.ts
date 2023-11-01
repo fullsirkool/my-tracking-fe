@@ -1,13 +1,13 @@
 import { defineStore } from "pinia";
 import activityRepository from "~/repository/activity.repository";
 import userRepository from "~/repository/user.repository";
-import { ActivityDto, DailyActivityDto } from "~/types/dto/activity.dto";
+import { ActivityDto, ActivityDetail } from "~/types/dto/activity.dto";
 import { UserClaims } from "~/types/dto/user.dto";
 
 export const useProfileStore = defineStore("profile", () => {
   const chartDate = ref(new Date());
   const activities = ref<ActivityDto[] | null>([]);
-  const activitiesDetail = ref<DailyActivityDto[] | null>([]);
+  const activitiesDetail = ref<ActivityDetail[] | null>([]);
   const stravaId = ref<string>("");
   const user = ref<UserClaims | null>(null);
   const detailPage = ref(1);
@@ -29,6 +29,7 @@ export const useProfileStore = defineStore("profile", () => {
         10
       );
     }
+    await fetchMonthlyActivitiesDetail({ page: 1 });
     await fetchDailyActivityStatistics();
   };
   const fetchDailyActivityStatistics = async () => {
@@ -43,13 +44,20 @@ export const useProfileStore = defineStore("profile", () => {
     }
   };
 
-  const fetchMonthlyActivitiesDetail = async () => {
+  const fetchMonthlyActivitiesDetail = async (params: {
+    fromWatch?: Boolean;
+    page?: number;
+  }) => {
     try {
+      const { fromWatch, page } = params;
+      if (!fromWatch && page) {
+        detailPage.value = page;
+      }
       const res = await activityRepository.fetchMonthlyActivitiesDetail({
         page: detailPage.value,
         size: detailSize.value,
         date: chartDate.value.toISOString(),
-        userId: user.value?.id,
+        stravaId: stravaId.value,
       });
       if (res) {
         const { data, page, size, totalPages, totalElement } = res;
@@ -74,11 +82,21 @@ export const useProfileStore = defineStore("profile", () => {
     }
   };
 
+  watch(detailPage, async (newVal) => {
+    console.log("change detailPage", newVal);
+    await fetchMonthlyActivitiesDetail({ fromWatch: true });
+  });
+
   return {
     chartDate,
     activities,
     stravaId,
     user,
+    activitiesDetail,
+    detailPage,
+    detailSize,
+    totalDetailPage,
+    totalActivities,
     handleChangeMonth,
     fetchDailyActivityStatistics,
     fetchUserInfo,

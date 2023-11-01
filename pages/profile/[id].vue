@@ -17,7 +17,7 @@
           </div>
           <div class="rounded-2xl text-center p-3 border-[1px] bg-white border-none text-gray-700">
             <p class="text-red-500 text-xl font-bold">{{ getTotalRuningMinute }}</p>
-            {{ $t('time') }}({{ $t('hours') }})
+            {{ $t('time') }}({{ $t('hour_s') }})
           </div>
         </div>
       </UCard>
@@ -40,6 +40,9 @@
         <profile-activity-calendar></profile-activity-calendar>
       </div>
     </div>
+    <div class="mt-24 text-center">
+      <profile-detail-table></profile-detail-table>
+    </div>
   </UContainer>
 </template>
 <script setup>
@@ -54,6 +57,9 @@ await useAsyncData("user", () => store.fetchUserInfo(+id));
 await useAsyncData("activity", () => store.fetchDailyActivityStatistics());
 const { data } = await useAsyncData("statistic", () =>
   activityRepository.fetchStatistics(id)
+);
+await useAsyncData("activity-detail", () =>
+  store.fetchMonthlyActivitiesDetail(id)
 );
 
 const avgPace = ref(data.value.pace.toFixed(2));
