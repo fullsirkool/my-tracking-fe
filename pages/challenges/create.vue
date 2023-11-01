@@ -132,7 +132,7 @@ import { CreateChallengeDto } from "~/types/dto/challenge.dto";
 import { ChallengeStatus, ChallengeType } from '~/types/enum/challenge.enum';
 
 definePageMeta({
-  // middleware: ["authentication"],
+  middleware: ["authentication"],
 });
 
 const steps = ref([
