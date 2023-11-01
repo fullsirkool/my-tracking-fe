@@ -25,5 +25,7 @@
   "next": "Next",
   "back": "Back",
   "target": "Target",
-  "no_activities_in_this_month": "No Activities in this month"
+  "no_activities_in_this_month": "No Activities in this month",
+  "challenge": "Challenge",
+  "home": "Home"
 }
