@@ -7,7 +7,7 @@
       </NuxtLink>
     </div>
     <div class="flex items-center gap-4">
-      <NuxtLink to="/challenges" class="text-lg no-underline text-grey-darkest hover:text-blue-dark ml-2">
+      <NuxtLink to="/challenge" class="text-lg no-underline text-grey-darkest hover:text-blue-dark ml-2">
         {{ $t('challenge') }}
       </NuxtLink>
       <NuxtLink v-if="user && user.profile" to="/profile"

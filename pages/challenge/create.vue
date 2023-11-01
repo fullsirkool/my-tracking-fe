@@ -305,6 +305,6 @@ const submit = async (event: FormSubmitEvent<any>) => {
   }
 
   await challengeRepository.createChallenge(payload)
-  navigateTo('/challenges')
+  navigateTo('/challenge')
 }
 </script>

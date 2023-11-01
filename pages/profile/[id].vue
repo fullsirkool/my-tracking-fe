@@ -17,7 +17,7 @@
           </div>
           <div class="rounded-2xl text-center p-3 border-[1px] bg-white border-none text-gray-700">
             <p class="text-red-500 text-xl font-bold">{{ getTotalRuningMinute }}</p>
-            {{ $t('time') }}({{ $t('hour_s') }})
+            {{ $t('time') }}
           </div>
         </div>
       </UCard>

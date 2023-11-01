@@ -1,4 +1,5 @@
 import {
+  ChallengeDetailDto,
   PagingChallengeDto,
   PagingChallengeResponse,
 } from "./../types/dto/challenge.dto";
@@ -26,6 +27,14 @@ export default {
     const { data } = await useFetch<PagingChallengeResponse>(url, {
       method: "get",
       params,
+    });
+    return data.value;
+  },
+
+  async findOne(id: number): Promise<ChallengeDetailDto | null> {
+    const url = `${BASE_URL}/challenge/${id}`;
+    const { data } = await useFetch<ChallengeDetailDto>(url, {
+      method: "get",
     });
     return data.value;
   },

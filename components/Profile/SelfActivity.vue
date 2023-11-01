@@ -106,13 +106,6 @@ const getChartSeries = computed(() => {
   ];
 });
 
-watch(
-  () => activities.value,
-  () => {
-    chartRenderKey.value++;
-  }
-);
-
 const getOptions = computed(() => {
   const completeOptions = {
     ...options.value,
@@ -133,4 +126,12 @@ const getMonthDisplay = computed(() => {
 const getShortMonthDisplay = computed(() => {
   return `${dayjs(chartDate.value).format("YYYY, MMMM")}`;
 });
+
+
+watch(
+  () => activities.value,
+  () => {
+    chartRenderKey.value++;
+  }
+);
 </script>

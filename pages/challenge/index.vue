@@ -1,6 +1,6 @@
 <template>
   <UContainer>
-    <NuxtLink to="/challenges/create">
+    <NuxtLink to="/challenge/create">
       <UButton :label="$t('create_challenge')" variant="solid" />
     </NuxtLink>
 
