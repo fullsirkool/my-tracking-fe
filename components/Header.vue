@@ -12,7 +12,7 @@
       </NuxtLink>
       <NuxtLink v-if="user && user.profile" to="/profile"
         class="text-lg no-underline text-grey-darkest hover:text-blue-dark ml-2">
-        <UAvatar alt="Profile" size="3xl" :src="user.profile" />
+        <UAvatar alt="Profile" size="xl" :src="user.profile" />
       </NuxtLink>
       <CommonLanguageSwitcher></CommonLanguageSwitcher>
     </div>
