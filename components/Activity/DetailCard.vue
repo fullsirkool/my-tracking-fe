@@ -8,7 +8,7 @@
     <div class="text-lg font-semibold mt-2">
       <div class="flex gap-2 items-center ">
         <Icon name="fluent:run-16-filled" width="1.75rem" height="1.75rem" />
-        <span class="text-orange-500">{{ activity.name }}</span>
+        <a href="javascript:void(0)" class="text-orange-500" @click="handleRedirect(activity.id)">{{ activity.name }}</a>
       </div>
     </div>
     <div class="flex items-center justify-between text-sm mt-2">
@@ -29,6 +29,9 @@
 </template>
 <script setup lang="ts">
 import { ActivityDetail } from '~/types/dto/activity.dto';
+
+const runtimeConfig = useRuntimeConfig();
+const { STRAVA_REDIRECT_URL } = runtimeConfig.public;
 
 interface IActivityDetailCardProps {
   activity: ActivityDetail;
@@ -72,4 +75,9 @@ const getAvgPace = computed(() => {
 
   return `${minute}:${+second > 9 ? second : '0' + second}`
 })
+
+const handleRedirect = (activityId: string) => {
+  window.open(`${STRAVA_REDIRECT_URL}/${activityId}`)
+
+}
 </script>

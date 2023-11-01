@@ -44,6 +44,7 @@ export default defineNuxtConfig({
       STRAVA_CLIENT_SECRET: process.env.STRAVA_CLIENT_SECRET,
       BASE_URL: process.env.BASE_URL,
       BASE_REDIRECT_URL: process.env.BASE_REDIRECT_URL,
+      STRAVA_REDIRECT_URL: process.env.STRAVA_REDIRECT_URL,
     },
   },
 });
