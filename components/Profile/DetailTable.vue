@@ -1,6 +1,6 @@
 <template>
   <UCard class="rounded-2xl bg-[#f5f5f5] overflow-auto min-h-[300px]" style="box-shadow: none;">
-    <div class="bg-">
+    <div>
       <UTabs :items="tabs">
         <template #default="{ item, index, selected }">
           <div class="flex items-center gap-2 relative truncate">
