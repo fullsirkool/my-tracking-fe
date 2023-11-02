@@ -6,7 +6,8 @@
     <div class="flex items-center justify-start gap-4 mt-4 ">
       <UAvatar size="md" :src="challenge.owner.profile" alt="Avatar" />
       <div>
-        <h1 class="font-bold text-xl hover:text-sky-900">{{ challenge.title }}</h1>
+        <NuxtLink :to="`/challenge/${challenge.id}`" class="font-bold text-xl hover:text-sky-900">{{ challenge.title }}
+        </NuxtLink>
         <div class="flex items-center justify-between">
           <h3 class="mt-1 text-md flex items-center gap-2">{{ $t("join") }}
             <UIcon name="i-heroicons-arrow-right-20-solid" />

@@ -11,7 +11,7 @@ export const useUserStore = defineStore("user", () => {
 
   const initValue = async () => {
     const accessTokenExpireTime = new Date(
-      new Date().getTime() + 12 * 60 * 60 * 1000
+      new Date().getTime() + 48 * 60 * 60 * 1000
     );
     const refreshTokenExpireTime = new Date(new Date());
     refreshTokenExpireTime.setFullYear(new Date().getFullYear() + 1);

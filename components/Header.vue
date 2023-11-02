@@ -12,7 +12,10 @@
       </NuxtLink>
       <NuxtLink v-if="user && user.profile" to="/profile"
         class="text-lg no-underline text-grey-darkest hover:text-blue-dark ml-2">
-        <UAvatar alt="Profile" size="xl" :src="user.profile" />
+        <UAvatar alt="Profile" size="lg" :src="user.profile" />
+      </NuxtLink>
+      <NuxtLink v-else to="/login" class="text-lg no-underline text-grey-darkest hover:text-blue-dark ml-2">
+        {{ $t('sign_in') }}
       </NuxtLink>
       <CommonLanguageSwitcher></CommonLanguageSwitcher>
     </div>

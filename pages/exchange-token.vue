@@ -13,7 +13,7 @@ const { setUser } = userStore;
 const { query } = useRoute();
 const { code } = query;
 
-const accessTokenExpireTime = dayjs(new Date()).add(12, "hour").toDate();
+const accessTokenExpireTime = dayjs(new Date()).add(2, "day").toDate();
 const refreshTokenExpireTime = dayjs(new Date()).add(1, "year").toDate();
 const accessTokenCookie = useCookie("access-token", {
   expires: accessTokenExpireTime,
