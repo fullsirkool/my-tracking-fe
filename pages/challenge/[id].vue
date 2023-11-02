@@ -1,18 +1,37 @@
 <template>
   <UContainer>
-    <div>
+    <UContainer class="text-center">
+      <h1 class="text-3xl font-semibold text-[#4b4b4b] mb-4">{{ $t('challenge_activity_chart') }}</h1>
       <ChallengeActivityChart></ChallengeActivityChart>
-    </div>
+    </UContainer>
+    <UContainer class="p-6 flex items-center justify-center">
+      <UButton color="red" size="xl" @click="handleJoinChallenge">{{ $t('join_challenge') }}</UButton>
+    </UContainer>
   </UContainer>
 </template>
 <script setup lang="ts">
-import { storeToRefs } from 'pinia';
+import challengeRepository from '~/repository/challenge.repository';
 import { useChallengeStore } from '~/stores/challenge.store';
+import { useUserStore } from '~/stores/userStore';
+const toast = useToast()
+const { t } = useI18n()
+
 const challengeStore = useChallengeStore();
-const { challengeDetail } = storeToRefs(challengeStore)
+const { user } = useUserStore();
 const { fetchChallengeDetail } = challengeStore
-const { params } = useRoute();
+const { params, fullPath } = useRoute();
 const { id } = params;
 
 await useAsyncData('challenge', () => fetchChallengeDetail(+id))
+
+const handleJoinChallenge = async () => {
+  if (isEmpty(user) || !user) {
+    localStorage.setItem("saved-path", fullPath);
+    navigateTo('/login')
+    return
+  }
+  await challengeRepository.join(+id)
+  toast.add({ id: "copy-challenge", icon: 'i-heroicons-check-circle', timeout: 4000, title: t('join_challenge_successful') })
+  fetchChallengeDetail(+id)
+}
 </script>

@@ -32,7 +32,6 @@
 import { storeToRefs } from "pinia";
 import { useProfileStore } from "@/stores/profile.store";
 const dayjs = useDayjs();
-const { t } = useI18n()
 
 //STORE//
 

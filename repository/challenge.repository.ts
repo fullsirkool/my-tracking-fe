@@ -11,6 +11,9 @@ const accessTokenCookie = useCookie("access-token");
 
 export default {
   async createChallenge(body: CreateChallengeDto): Promise<Challenge | null> {
+    if (!accessTokenCookie.value) {
+      navigateTo("/login");
+    }
     const url = `${BASE_URL}/challenge`;
     const { data } = await useFetch<Challenge>(url, {
       method: "post",
@@ -35,6 +38,18 @@ export default {
     const url = `${BASE_URL}/challenge/${id}`;
     const { data } = await useFetch<ChallengeDetailDto>(url, {
       method: "get",
+    });
+    return data.value;
+  },
+
+  async join(id: number) {
+    if (!accessTokenCookie.value) {
+      navigateTo("/login");
+    }
+    const url = `${BASE_URL}/challenge/join/${id}`;
+    const { data } = await useFetch<Challenge>(url, {
+      method: "post",
+      headers: { Authorization: `Bearer ${accessTokenCookie.value}` },
     });
     return data.value;
   },

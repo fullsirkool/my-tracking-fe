@@ -28,5 +28,9 @@
   "no_activities_in_this_month": "Không có hoạt động nào tháng này",
   "challenge": "Thử Thách",
   "home": "Home",
-  "sign_in": "Đăng Nhập"
+  "sign_in": "Đăng Nhập",
+  "copied_challenge_url_to_clipboard": "Đã sao chép link thử thách!",
+  "join_challenge": "Tham Gia Thử Thách",
+  "challenge_activity_chart": "Biểu Đồ Hoạt Động Của Thử Thách",
+  "join_challenge_successful": "Tham gia thử thách thành công"
 }

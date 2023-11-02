@@ -28,5 +28,9 @@
   "no_activities_in_this_month": "No Activities in this month",
   "challenge": "Challenge",
   "home": "Home",
-  "sign_in": "Sign In"
+  "sign_in": "Sign In",
+  "copied_challenge_url_to_clipboard": "Copied challenge url to clipboard",
+  "join_challenge": "Join Challenge",
+  "challenge_activity_chart": "Challenge Activity Chart",
+  "join_challenge_successful": "Join challenge successful"
 }

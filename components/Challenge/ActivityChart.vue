@@ -1,11 +1,9 @@
 <template>
   <div>
-    <UCard>
-      <div class="min-w-[800px] lg:min-w-max pr-6 lg:pr-0">
-        <apexchart :key="chartRenderKey" height="400" :options="options" :series="getChartSeries">
-        </apexchart>
-      </div>
-    </UCard>
+    <div class="rounded-2xl bg-[#f5f5f5] pt-6 pr-6 pl-6">
+      <apexchart :key="chartRenderKey" height="400" :options="options" :series="getChartSeries">
+      </apexchart>
+    </div>
   </div>
 </template>
 <script setup lang="ts">
@@ -65,6 +63,20 @@ const options = ref({
     forceNiceScale: true,
     min: 0,
   },
+  legend: {
+    show: true,
+    showForSingleSeries: true,
+    showForNullSeries: true,
+    showForZeroSeries: true,
+    position: 'bottom',
+    horizontalAlign: 'center',
+    fontSize: '14px',
+    fontWeight: 400,
+    itemMargin: {
+      horizontal: 0,
+      vertical: 20
+    },
+  }
 });
 
 const getOptions = computed(() => {
@@ -99,7 +111,7 @@ const getChartSeries = computed(() => {
       const { distance, startDateLocal } = i
       return {
         x: new Date(startDateLocal).getTime(),
-        y: distance
+        y: +(distance / 1000).toFixed(2)
       }
     })
 

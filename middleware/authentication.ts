@@ -5,6 +5,8 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
   await initValue()
   console.log('middleware', user, isEmpty(user))
   if (isEmpty(user)) {
+    const savePath = from.fullPath
+    localStorage.setItem("saved-path", savePath);
     return navigateTo("/login");
   }
 

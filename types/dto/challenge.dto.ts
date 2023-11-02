@@ -11,6 +11,8 @@ export interface Challenge {
   code: string;
   challengeType: ChallengeType;
   status: ChallengeStatus;
+  image: string;
+  owner: UserClaims;
 }
 
 export interface CreateChallengeDto {
