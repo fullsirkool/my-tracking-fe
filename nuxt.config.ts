@@ -17,6 +17,11 @@ export default defineNuxtConfig({
   colorMode: {
     preference: "light",
   },
+  postcss: {
+    plugins: {
+      "postcss-custom-properties": false,
+    },
+  },
   i18n: {
     /* module options */
     langDir: "locales",

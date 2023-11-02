@@ -13,6 +13,17 @@ export interface Challenge {
   status: ChallengeStatus;
   image: string;
   owner: UserClaims;
+  rule: Rule;
+}
+
+export interface Rule {
+  id: number;
+  title: string;
+  target: number;
+  minPace: number;
+  maxPace: number;
+  minDistance: number;
+  maxDistance: number;
 }
 
 export interface CreateChallengeDto {
