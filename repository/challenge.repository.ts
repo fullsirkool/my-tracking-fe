@@ -54,7 +54,7 @@ export default {
       });
       return data.value;
     } catch (error) {
-      console.log(error);
+      throw error;
     }
   },
 };

@@ -33,8 +33,13 @@ const handleJoinChallenge = async () => {
     navigateTo('/login')
     return
   }
-  await challengeRepository.join(+id)
-  toast.add({ id: "copy-challenge", icon: 'i-heroicons-check-circle', timeout: 4000, title: t('join_challenge_successfully') })
-  fetchChallengeDetail(+id)
+  try {
+    await challengeRepository.join(+id)
+    toast.add({ id: "copy-challenge", icon: 'i-heroicons-check-circle', timeout: 4000, title: t('join_challenge_successfully') })
+    fetchChallengeDetail(+id)
+  } catch (error) {
+    toast.add({ id: "copy-challenge", icon: 'i-heroicons-exclamation-circle', color: 'red', timeout: 4000, title: t('join_challenge_successfully') })
+  }
+
 }
 </script>
