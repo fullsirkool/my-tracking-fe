@@ -15,6 +15,7 @@ export const useChallengeStore = defineStore("challenge", () => {
       const data = await challengeRepository.findOne(challengeId.value);
       if (data) {
         challengeDetail.value = data;
+        await fetchChallengeUsers();
       }
     }
   };
@@ -35,10 +36,12 @@ export const useChallengeStore = defineStore("challenge", () => {
 
   const image = computed(() => {
     if (!challengeDetail.value) {
-      return '';
+      return "";
     }
     return challengeDetail.value.image;
   });
+
+  const rule = computed(() => challengeDetail.value?.rule);
 
   const target = computed(() => {
     if (!challengeDetail.value) {
@@ -96,7 +99,9 @@ export const useChallengeStore = defineStore("challenge", () => {
     }
     const minute = Math.floor(challengeDetail.value?.rule.minPace / 60);
     const second = challengeDetail.value?.rule.minPace % 60;
-    return `${minute}:${second}`;
+    return `${minute > 9 ? minute : "0" + minute}:${
+      second > 9 ? second : "0" + second
+    }`;
   });
   const maxPaceFormatted = computed(() => {
     if (!challengeDetail.value) {
@@ -104,7 +109,9 @@ export const useChallengeStore = defineStore("challenge", () => {
     }
     const minute = Math.floor(challengeDetail.value?.rule.maxPace / 60);
     const second = challengeDetail.value?.rule.maxPace % 60;
-    return `${minute}:${second}`;
+    return `${minute > 9 ? minute : "0" + minute}:${
+      second > 9 ? second : "0" + second
+    }`;
   });
 
   return {
@@ -112,6 +119,7 @@ export const useChallengeStore = defineStore("challenge", () => {
     challengeDetail,
     challengeUsers,
     image,
+    rule,
     target,
     targetFormatted,
     minDistance,

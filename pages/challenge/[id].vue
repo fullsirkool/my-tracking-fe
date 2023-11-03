@@ -19,13 +19,12 @@ const { t } = useI18n()
 
 const challengeStore = useChallengeStore();
 const { user } = useUserStore();
-const { fetchChallengeDetail, fetchChallengeUsers } = challengeStore
+const { fetchChallengeDetail } = challengeStore
 const { image } = storeToRefs(challengeStore)
 const { params, fullPath } = useRoute();
 const { id } = params;
 
 await useAsyncData('challenge', () => fetchChallengeDetail(+id))
-await useAsyncData('challenge-user', () => fetchChallengeUsers())
 
 const handleJoinChallenge = async () => {
   if (isEmpty(user) || !user) {
