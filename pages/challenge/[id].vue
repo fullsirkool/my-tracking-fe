@@ -35,7 +35,7 @@ const handleJoinChallenge = async () => {
   }
   try {
     const res = await challengeRepository.join(+id)
-    console.log('res')
+    console.log('res', res)
     toast.add({ id: "copy-challenge", icon: 'i-heroicons-check-circle', timeout: 4000, title: t('join_challenge_successfully') })
     fetchChallengeDetail(+id)
   } catch (error: any) {
