@@ -39,6 +39,6 @@ const tabs = [
   }, {
     slot: 'joined-user',
     icon: 'i-heroicons-user-group',
-    label: t('joined_user'),
+    label: t('joined_users'),
   }]
 </script>
