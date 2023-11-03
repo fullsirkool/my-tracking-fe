@@ -33,16 +33,12 @@ const handleJoinChallenge = async () => {
     navigateTo('/login')
     return
   }
-  try {
-    const res = await challengeRepository.join(+id)
-    console.log('res', res)
+  const res = await challengeRepository.join(+id)
+  if (res) {
     toast.add({ id: "copy-challenge", icon: 'i-heroicons-check-circle', timeout: 4000, title: t('join_challenge_successfully') })
     fetchChallengeDetail(+id)
-  } catch (error: any) {
-    console.log(error)
-    const { message } = error
-    toast.add({ id: "copy-challenge", icon: 'i-heroicons-exclamation-circle', color: 'red', timeout: 4000, title: message })
+  } else {
+    toast.add({ id: "copy-challenge", icon: 'i-heroicons-exclamation-circle', color: 'red', timeout: 4000, title: t('you_have_joined_this_challenge') })
   }
-
 }
 </script>
