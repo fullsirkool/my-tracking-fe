@@ -8,5 +8,5 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     return navigateTo("/login");
   }
 
-  return navigateTo(`profile/${user.stravaId}`);
+  return navigateTo(`/profile/${user.stravaId}`);
 });
