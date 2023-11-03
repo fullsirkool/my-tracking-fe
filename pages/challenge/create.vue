@@ -264,6 +264,7 @@ const submit = async (event: FormSubmitEvent<any>) => {
     startDate,
     endDate,
     ruleTitle,
+    target,
     minPace,
     maxPace,
     enableMinPace,
@@ -277,6 +278,7 @@ const submit = async (event: FormSubmitEvent<any>) => {
     title, startDate,
     endDate, image, ruleTitle, status,
     challengeType,
+    target,
     minPace,
     maxPace,
     minDistance: minDistance * 1000,
@@ -287,6 +289,9 @@ const submit = async (event: FormSubmitEvent<any>) => {
 
   if (!ruleTitle) {
     delete payload.ruleTitle
+  }
+  if (!target) {
+    delete payload.target
   }
   if (!enableMinPace) {
     delete payload.minPace

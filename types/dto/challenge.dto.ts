@@ -32,6 +32,7 @@ export interface CreateChallengeDto {
   endDate: Date;
   image: string | null | undefined;
   ruleTitle: string | undefined;
+  target: number | undefined;
   minPace: number | undefined;
   maxPace: number | undefined;
   minDistance: number | undefined;
@@ -57,4 +58,18 @@ export interface ActivityStatistics {
   movingTime: number;
   elapsedTime: number;
   startDateLocal: Date;
+}
+
+export interface ChallengeDailyActivity {
+  id: number;
+  distance: number;
+  movingTime: number;
+  elapsedTime: number;
+  startDateLocal: string;
+  userId: number;
+  challengeId: number;
+}
+
+export interface ChallengeUser extends UserClaims {
+  challengeDailyActivity: ChallengeDailyActivity[];
 }
