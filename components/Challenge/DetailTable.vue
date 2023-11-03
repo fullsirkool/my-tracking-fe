@@ -30,15 +30,15 @@ const tabs = [
   {
     slot: 'rule',
     icon: 'i-heroicons-adjustments-horizontal',
-    label: t('rule'),
+    label: t('rules'),
   },
   {
     slot: 'chart',
     icon: 'i-heroicons-chart-bar-square',
-    label: t('Activity Chart'),
+    label: t('activity_chart'),
   }, {
     slot: 'joined-user',
     icon: 'i-heroicons-user-group',
-    label: t('Joined User'),
+    label: t('joined_user'),
   }]
 </script>
