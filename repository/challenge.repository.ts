@@ -53,8 +53,8 @@ export default {
         headers: { Authorization: `Bearer ${accessTokenCookie.value}` },
       });
       return data.value;
-    } catch (error) {
-      throw error;
+    } catch (error: any) {
+      throw error.message;
     }
   },
 };
