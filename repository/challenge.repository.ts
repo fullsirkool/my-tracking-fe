@@ -46,11 +46,15 @@ export default {
     if (!accessTokenCookie.value) {
       navigateTo("/login");
     }
-    const url = `${BASE_URL}/challenge/join/${id}`;
-    const { data } = await useFetch<Challenge>(url, {
-      method: "post",
-      headers: { Authorization: `Bearer ${accessTokenCookie.value}` },
-    });
-    return data.value;
+    try {
+      const url = `${BASE_URL}/challenge/join/${id}`;
+      const { data } = await useFetch<Challenge>(url, {
+        method: "post",
+        headers: { Authorization: `Bearer ${accessTokenCookie.value}` },
+      });
+      return data.value;
+    } catch (error) {
+      console.log(error);
+    }
   },
 };
