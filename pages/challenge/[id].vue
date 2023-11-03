@@ -38,6 +38,7 @@ const handleJoinChallenge = async () => {
     toast.add({ id: "copy-challenge", icon: 'i-heroicons-check-circle', timeout: 4000, title: t('join_challenge_successfully') })
     fetchChallengeDetail(+id)
   } catch (error: any) {
+    console.log(error)
     const { message } = error
     toast.add({ id: "copy-challenge", icon: 'i-heroicons-exclamation-circle', color: 'red', timeout: 4000, title: message })
   }

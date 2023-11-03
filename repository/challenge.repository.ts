@@ -54,7 +54,7 @@ export default {
       });
       return data.value;
     } catch (error: any) {
-      throw error.message;
+      throw new Error(error.message);
     }
   },
 };
