@@ -5,10 +5,13 @@
       <Icon name="mdi:calendar-month-outline" width="1.25rem" height="1.25rem" />
       <span>{{ getDateFormated }}</span>
     </div>
-    <div class="text-lg font-semibold mt-2">
+    <div class="text-lg font-semibold mt-2 flex justify-between">
       <div class="flex gap-2 items-center ">
         <Icon name="fluent:run-16-filled" width="1.75rem" height="1.75rem" />
         <a href="javascript:void(0)" class="text-orange-500" @click="handleRedirect(activity.id)">{{ activity.name }}</a>
+      </div>
+      <div class="w-7 h-7 bg-orange-500 rounded-full flex items-center justify-center">
+        <Icon name="mdi:strava" width="1.25rem" height="1.25rem" color="white"/>
       </div>
     </div>
     <div class="flex items-center justify-between text-sm mt-2">
