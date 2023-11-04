@@ -5,7 +5,9 @@
     </NuxtLink>
 
     <div class="mt-10 grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-3 gap-6">
-      <ChallengeCard v-for="challenge in challenges" class="grid-span-1" :challenge="challenge"></ChallengeCard>
+      <div v-for="challenge in challenges" class="grid-span-1">
+        <ChallengeCard :challenge="challenge"></ChallengeCard>
+      </div>
     </div>
   </UContainer>
 </template>

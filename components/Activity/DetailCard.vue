@@ -47,6 +47,7 @@ const getDateFormated = computed(() => {
 
 const getMovingTimeFormatted = computed(() => {
   const { movingTime } = props.activity
+  console.log('getMovingTimeFormatted', movingTime)
   if (!movingTime) {
     return '00:00:00'
   }
@@ -56,20 +57,19 @@ const getMovingTimeFormatted = computed(() => {
   hour = Math.floor(props.activity.movingTime / 3600)
   const remainingSecondAfterHour = props.activity.movingTime % 3600
   const remainingMinute = Math.floor(remainingSecondAfterHour / 60)
-  const remainingSecond = remainingMinute % 60
+  const remainingSecond = remainingSecondAfterHour % 60
 
   minute = remainingMinute > 9 ? `${remainingMinute}` : `0${remainingMinute}`
   second = remainingSecond > 9 ? `${remainingSecond}` : `0${remainingSecond}`
-
   return `${hour}:${minute}:${second}`
 })
 
 const getAvgPace = computed(() => {
-  const { elapsedTime, distance } = props.activity
-  if (!elapsedTime) {
+  const { distance, movingTime } = props.activity
+  if (!movingTime) {
     return '00:00'
   }
-  const paceTime = elapsedTime / (distance / 1000) / 60
+  const paceTime = movingTime / (distance / 1000) / 60
   const minute = Math.floor(paceTime / 1)
   const second = ((paceTime % 1) * 60).toFixed(0)
 

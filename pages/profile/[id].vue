@@ -50,22 +50,27 @@ import { storeToRefs } from "pinia";
 import activityRepository from "~/repository/activity.repository";
 import { useProfileStore } from "~/stores/profile.store";
 const store = useProfileStore();
+const { fetchMonthlyActivitiesDetail, fetchUserInfo, fetchDailyActivityStatistics } = store
 const { user } = storeToRefs(store);
 const { params } = useRoute();
 const { id } = params;
-await useAsyncData("user", () => store.fetchUserInfo(+id));
-await useAsyncData("activity", () => store.fetchDailyActivityStatistics());
-const { data } = await useAsyncData("statistic", () =>
-  activityRepository.fetchStatistics(id)
-);
-await useAsyncData("activity-detail", () =>
-  store.fetchMonthlyActivitiesDetail(id)
-);
 
-const avgPace = ref(data.value.pace.toFixed(2));
-const totalDistance = ref((data.value.distance / 1000).toFixed(2));
-const count = ref(data.value.count);
-const totalMovingTime = ref((data.value.totalMovingTime / 3600).toFixed(2));
+const { data } = await useAsyncData('profile', async () => {
+  const [userInfor, dailyStatistics, statictics, dailyactivities] = await Promise.all([
+    fetchUserInfo(+id), fetchDailyActivityStatistics(), activityRepository.fetchStatistics(id), fetchMonthlyActivitiesDetail(id)
+  ])
+
+  return {
+    userInfor, dailyStatistics, statictics, dailyactivities
+  }
+})
+
+const statistics = data.value.statictics
+
+const avgPace = ref(statistics.pace.toFixed(2));
+const totalDistance = ref((statistics.distance / 1000).toFixed(2));
+const count = ref(statistics.count);
+const totalMovingTime = ref((statistics.totalMovingTime / 3600).toFixed(2));
 
 const getFullName = computed(() => `${user.value.firstName} ${user.value.lastName}`);
 const getPaceMinute = computed(() => {

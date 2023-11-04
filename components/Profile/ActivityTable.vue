@@ -2,8 +2,10 @@
   <div class="mt-10">
     <div v-show="activitiesDetail?.length">
       <div class="grid grid-cols-3 gap-4">
-        <ActivityDetailCard v-for="activity in activitiesDetail" class="grid-span-1" :activity="activity">
-        </ActivityDetailCard>
+        <div v-for="activity in activitiesDetail" class="grid-span-1">
+          <ActivityDetailCard :activity="activity">
+          </ActivityDetailCard>
+        </div>
       </div>
       <div class="flex items-center justify-end mt-4">
         <UPagination v-model="detailPage" :page-count="detailSize" :total="totalActivities"
@@ -24,4 +26,5 @@ import { useProfileStore } from '~/stores/profile.store';
 
 const profileStore = useProfileStore();
 const { activitiesDetail, totalActivities, detailPage, detailSize } = storeToRefs(profileStore);
+console.log('activitiesDetail', activitiesDetail.value)
 </script>

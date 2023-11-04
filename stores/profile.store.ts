@@ -59,9 +59,12 @@ export const useProfileStore = defineStore("profile", () => {
         date: chartDate.value.toISOString(),
         stravaId: stravaId.value,
       });
+      console.log("fetchMonthlyActivitiesDetail", res);
+
       if (res) {
         const { data, page, size, totalPages, totalElement } = res;
         activitiesDetail.value = data;
+        console.log("activitiesDetail.value", activitiesDetail.value);
         totalDetailPage.value = totalPages;
         totalActivities.value = totalElement;
       }
@@ -99,6 +102,7 @@ export const useProfileStore = defineStore("profile", () => {
     totalActivities,
     handleChangeMonth,
     fetchDailyActivityStatistics,
+    fetchMonthlyActivitiesDetail,
     fetchUserInfo,
   };
 });

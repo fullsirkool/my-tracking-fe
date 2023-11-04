@@ -1,20 +1,18 @@
 <template>
-  <UCard class="relative" style="box-shadow: none;">
+  <UCard class="relative text-[#4B4B4B]" style="box-shadow: none;">
     <div class="flex items-center gap-4">
       <UAvatar size="xl" :src="userActivitites.profile" alt="Avatar" />
       <div class="w-full">
-        <a class="text-lg font-semibold">{{ `${userActivitites.firstName} ${userActivitites.lastName}` }}</a>
+        <NuxtLink class="hover:text-sky-900 font-semibold" :to="`/profile/${userActivitites.stravaId}`">
+          {{ `${userActivitites.firstName} ${userActivitites.lastName}` }}
+        </NuxtLink>
       </div>
     </div>
     <div>
       <UProgress v-if="target" :value="process" size="md" :color="color">
         <template #indicator="{ percent }">
           <div class="text-right text-xs font-bold rounded-lg">
-            <span v-if="process < 25" class="text-red-500 font-bold">{{ $t('progress_so_far_complete') }}</span>
-            <span v-else-if="process < 50" class="text-orange-500">{{ $t('progress_nearly_half_complete') }}</span>
-            <span v-else-if="process < 75" class="text-yellow-500">{{ $t('progress_half_complete') }}</span>
-            <span v-else-if="process < 100" class="text-green-500">{{ $t('progress_nearly_complete') }}</span>
-            <span v-else class="text-blue-500">{{ $t('progress_complete') }}</span>
+            <span :class="`text-${color}-500`">{{ percent.toFixed(1) }}% {{ $t('completed') }}</span>
           </div>
         </template>
       </UProgress>
@@ -55,22 +53,24 @@ const statistics = computed(() => {
       totalDistance: 0,
       distance: '0km',
       movingTime: '00:00:00',
-      pace: '00:00'
+      pace: '00:00',
     }
   }
   const { challengeDailyActivity } = props.userActivitites
 
-  let movingTimeStr = '00:00:00'
   let distanceStr = '0km'
+  let movingTimeStr = '00:00:00'
 
   let totalDistance = 0
   let totalMovingTime = 0
+  let totalElapsedTime = 0
   let avgPace = '00:00'
 
   challengeDailyActivity.forEach(item => {
-    const { distance, movingTime } = item
+    const { distance, movingTime, elapsedTime } = item
     totalDistance += distance
     totalMovingTime += movingTime
+    totalElapsedTime += elapsedTime
   })
 
   if (totalDistance !== 0) {
@@ -84,7 +84,7 @@ const statistics = computed(() => {
     hour = Math.floor(totalMovingTime / 3600)
     const remainingSecondAfterHour = totalMovingTime % 3600
     const remainingMinute = Math.floor(remainingSecondAfterHour / 60)
-    const remainingSecond = remainingMinute % 60
+    const remainingSecond = remainingSecondAfterHour % 60
 
     minute = remainingMinute > 9 ? `${remainingMinute}` : `0${remainingMinute}`
     second = remainingSecond > 9 ? `${remainingSecond}` : `0${remainingSecond}`
