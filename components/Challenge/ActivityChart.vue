@@ -73,8 +73,8 @@ const options = ref({
     fontSize: '14px',
     fontWeight: 400,
     itemMargin: {
-      horizontal: 0,
-      vertical: 20
+      horizontal: 5,
+      vertical: 10
     },
   }
 });
