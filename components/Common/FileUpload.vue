@@ -3,7 +3,7 @@
     class="upload-box text-center p-8 flex justify-center items-center relative border-2 border-dashed border-[#4B4B4B]"
     :class="{ 'rounded-full': circle, 'rounded-lg': !circle, 'pointer-events-none border-[#A0A0A0]': disabled }"
     @dragover.prevent="dragOver" @dragleave.prevent="dragLeave" @drop.prevent="drop($event)"
-    :style="{ width: `${width}px`, height: `${height}px` }">
+    :style="{ width: `${width}px`, height: `${height}px` }" @click="open">
     <div class="preview-image" :class="{
       'bg-gray': previewURL,
       'rounded-full': circle,
@@ -79,7 +79,10 @@ const getFileUrl = (file: File) => {
     }
   };
   theReader.readAsDataURL(file);
+}
 
+const open = () => {
+  mediaRef.value?.click()
 }
 
 onMounted(() => { previewURL.value = props.defaultImage })

@@ -16,7 +16,7 @@ export default {
       navigateTo("/login");
     }
     const url = `${BASE_URL}/challenge`;
-    const { data } = await useFetch<Challenge>(url, {
+    const { data, error } = await useFetch<Challenge>(url, {
       method: "post",
       body,
       headers: { Authorization: `Bearer ${accessTokenCookie.value}` },
@@ -56,10 +56,11 @@ export default {
       navigateTo("/login");
     }
     const url = `${BASE_URL}/challenge/join/${id}`;
-    const { data } = await useFetch<Challenge>(url, {
+    const { data, error } = await useFetch<Challenge>(url, {
       method: "post",
       headers: { Authorization: `Bearer ${accessTokenCookie.value}` },
     });
+    console.log('error', error)
     return data.value;
   },
 };

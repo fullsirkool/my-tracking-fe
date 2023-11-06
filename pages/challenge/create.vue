@@ -173,6 +173,7 @@ const state = ref({
 })
 
 const validate = (state: any): FormError[] => {
+  console.log("file", state.file)
   const errors = []
   if (!state.title) {
     errors.push({ path: 'title', message: 'Required' })
@@ -194,6 +195,10 @@ const validate = (state: any): FormError[] => {
   if (!state.file) {
     errors.push({ path: 'file', message: 'Required' })
   }
+  if (state.file.size > 20971520) {
+    errors.push({ path: 'file', message: 'Image size must less than 20mb' })
+  }
+
   if (!state.target) {
     errors.push({ path: 'target', message: 'Required' })
   }
@@ -224,18 +229,17 @@ const validate = (state: any): FormError[] => {
     errors.push({ path: 'maxDistance', message: 'Required' })
   }
 
+  if (state.enableMinDistance && state.minDistance < 1) {
+    errors.push({ path: 'minDistance', message: 'Min distance must greater than 1km' })
+  }
 
-  if (state.enableMinDistance && state.enableMaxDistance && state.minDistance && state.maxDistance) {
+  if (state.enableMinDistance && state.enableMaxDistance && state.minDistance >= 1 && state.minDistance && state.maxDistance) {
     if (+state.minDistance >= +state.maxDistance) {
       errors.push({ path: 'minDistance', message: 'Min distance must less than max distance' })
       errors.push({ path: 'maxDistance', message: 'Max distance must greater than min distance' })
     }
   }
   return errors
-}
-
-const handleSelectFile = (event: any) => {
-  state.value.file = event.target.files[0]
 }
 
 const stepIndex = computed(() => steps.value.findIndex(item => item.key === selectedStep.value.key))
@@ -274,6 +278,7 @@ const submit = async (event: FormSubmitEvent<any>) => {
     enableMinDistance,
     enableMaxDistance,
   } = event.data
+
   const payload: CreateChallengeDto = {
     title, startDate,
     endDate, image, ruleTitle, status,
