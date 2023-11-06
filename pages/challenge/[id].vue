@@ -16,6 +16,8 @@ import { useChallengeStore } from '~/stores/challenge.store';
 import { useUserStore } from '~/stores/userStore';
 const toast = useToast()
 const { t } = useI18n()
+const route = useRoute()
+const router = useRouter()
 
 const challengeStore = useChallengeStore();
 const { user } = useUserStore();
@@ -36,6 +38,7 @@ const handleJoinChallenge = async () => {
   if (res) {
     toast.add({ id: "copy-challenge", icon: 'i-heroicons-check-circle', timeout: 4000, title: t('join_challenge_successfully') })
     fetchChallengeDetail(+id)
+    router.replace({ query: { tab: 'joined-user' } })
   } else {
     toast.add({ id: "copy-challenge", icon: 'i-heroicons-exclamation-circle', color: 'red', timeout: 4000, title: t('you_have_joined_this_challenge') })
   }

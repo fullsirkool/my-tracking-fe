@@ -1,7 +1,7 @@
 <template>
   <UContainer>
     <UCard class="rounded-2xl bg-[#f5f5f5] overflow-auto min-h-[300px]" style="box-shadow: none;">
-      <UTabs :items="tabs">
+      <UTabs v-model="selected" :items="tabs">
         <template #default="{ item, index, selected }">
           <div class="flex items-center gap-2 relative truncate">
             <UIcon :name="item.icon" class="w-4 h-4 flex-shrink-0" />
@@ -26,7 +26,7 @@
 </template>
 <script setup lang="ts">
 const { t } = useI18n()
-const tabs = [
+const tabs = ref([
   {
     slot: 'rule',
     icon: 'i-heroicons-adjustments-horizontal',
@@ -40,5 +40,24 @@ const tabs = [
     slot: 'joined-user',
     icon: 'i-heroicons-user-group',
     label: t('joined_users'),
-  }]
+  }])
+
+
+const route = useRoute()
+const router = useRouter()
+
+const selected = computed({
+  get() {
+    const index = tabs.value.findIndex((item) => item.slot === route.query.tab)
+    if (index === -1) {
+      return 0
+    }
+
+    return index
+  },
+  set(value) {
+    // Hash is specified here to prevent the page from scrolling to the top
+    router.replace({ query: { tab: tabs.value[value].slot } })
+  }
+})
 </script>

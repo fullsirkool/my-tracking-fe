@@ -10,10 +10,12 @@
       <NuxtLink to="/challenge" class="text-lg no-underline text-grey-darkest hover:text-blue-dark ml-2">
         {{ $t('challenge') }}
       </NuxtLink>
-      <NuxtLink v-if="user && user.profile" to="/profile"
-        class="text-lg no-underline text-grey-darkest hover:text-blue-dark ml-2">
-        <UAvatar alt="Profile" size="lg" :src="user.profile" />
-      </NuxtLink>
+      <template v-if="user && user.profile">
+        <NuxtLink to="/profile" class="text-lg no-underline text-grey-darkest hover:text-blue-dark ml-2">
+          <UAvatar alt="Profile" size="lg" :src="user.profile" />
+        </NuxtLink>
+        <a href="javascript:void(0)" class="text-lg no-underline text-grey-darkest hover:text-blue-dark ml-2" @click="logout">Sign Out</a>
+      </template>
       <NuxtLink v-else to="/login" class="text-lg no-underline text-grey-darkest hover:text-blue-dark ml-2">
         {{ $t('sign_in') }}
       </NuxtLink>
@@ -25,6 +27,6 @@
 import { storeToRefs } from 'pinia';
 import { useUserStore } from '~/stores/userStore';
 const userStore = useUserStore()
+const { logout } = userStore
 const { user } = storeToRefs(userStore)
-
 </script>

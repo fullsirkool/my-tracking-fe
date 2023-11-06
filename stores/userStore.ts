@@ -3,10 +3,19 @@ import authRepository from "~/repository/auth.repository";
 import { UserClaims } from "~/types/dto/user.dto";
 
 export const useUserStore = defineStore("user", () => {
-  const user = ref<UserClaims>();
+  const user = ref<UserClaims | null>();
 
   const setUser = (u: UserClaims) => {
     user.value = u;
+  };
+
+  const logout = () => {
+    const accessTokenCookie = useCookie("access-token");
+    const refreshTokenCookie = useCookie("refresh-token");
+    accessTokenCookie.value = null;
+    refreshTokenCookie.value = null;
+    localStorage.removeItem("user-info");
+    user.value = null;
   };
 
   const initValue = async () => {
@@ -22,8 +31,6 @@ export const useUserStore = defineStore("user", () => {
     const refreshTokenCookie = useCookie("refresh-token", {
       expires: refreshTokenExpireTime,
     });
-
-    console.log('check cookie', accessTokenCookie.value, refreshTokenCookie.value)
     if (!accessTokenCookie.value && !refreshTokenCookie.value) {
       localStorage.removeItem("user-info");
       return;
@@ -48,11 +55,12 @@ export const useUserStore = defineStore("user", () => {
     }
   };
 
-  initValue()
+  initValue();
 
   return {
     user,
     setUser,
+    logout,
     initValue,
   };
 });
