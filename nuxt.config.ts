@@ -5,6 +5,9 @@ export default defineNuxtConfig({
   pages: true,
   css: ["~/assets/main.css"],
   components: { global: true, dirs: ["~/components"] },
+  app: {
+    pageTransition: { name: "page", mode: "out-in" },
+  },
   modules: [
     "@nuxt/ui",
     "dayjs-nuxt",
