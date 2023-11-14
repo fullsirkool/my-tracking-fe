@@ -12,10 +12,6 @@
       <label for="">{{ $t('target') }}: </label>
       <span>{{ targetFormatted }}</span>
     </div>
-    <div class="p-2">
-      <label for="">{{ $t('target') }}: </label>
-      <span>{{ targetFormatted }}</span>
-    </div>
     <div v-if="minDistance" class="p-2">
       <label for="">{{ $t('min_distance') }}: </label>
       <span>{{ minDistanceFormatted }}</span>
