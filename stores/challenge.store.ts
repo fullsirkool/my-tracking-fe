@@ -113,6 +113,8 @@ export const useChallengeStore = defineStore("challenge", () => {
       second > 9 ? second : "0" + second
     }`;
   });
+  const startDate = computed(() => challengeDetail.value?.startDate)
+  const endDate = computed(() => challengeDetail.value?.endDate)
 
   return {
     challengeId,
@@ -130,6 +132,8 @@ export const useChallengeStore = defineStore("challenge", () => {
     minPaceFormatted,
     maxPace,
     maxPaceFormatted,
+    startDate,
+    endDate,
     fetchChallengeDetail,
     fetchChallengeUsers,
   };

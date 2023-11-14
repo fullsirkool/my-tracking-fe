@@ -43,5 +43,7 @@
   "joined_users": "Vận Động Viên",
   "rules": "Luật Thử Thách",
   "min_pace_and_max_pace_will_be_applied_to_every_single_km": "Tốc độ tối thiểu và tốc độ tối đa sẽ được áp dụng cho mỗi km",
-  "completed": "đã hoàn thành"
+  "completed": "đã hoàn thành",
+  "start_date": "Ngày Bắt Đầu",
+  "end_date": "Ngày Kết Thúc"
 }

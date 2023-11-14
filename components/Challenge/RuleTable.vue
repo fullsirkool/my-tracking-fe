@@ -1,6 +1,18 @@
 <template>
   <UContainer class="text-lg text-[#4B4B4B]">
     <div class="p-2">
+      <label for="">{{ $t('start_date') }}: </label>
+      <span>{{ startDateFormatted }}</span>
+    </div>
+    <div class="p-2">
+      <label for="">{{ $t('end_date') }}: </label>
+      <span>{{ endDateFormatted }}</span>
+    </div>
+    <div class="p-2">
+      <label for="">{{ $t('target') }}: </label>
+      <span>{{ targetFormatted }}</span>
+    </div>
+    <div class="p-2">
       <label for="">{{ $t('target') }}: </label>
       <span>{{ targetFormatted }}</span>
     </div>
@@ -25,6 +37,19 @@
 </template>
 <script setup lang="ts">
 import { useChallengeStore } from '~/stores/challenge.store';
+const dayjs = useDayjs()
 
-const { maxDistance, minDistance, minPace, maxPace, targetFormatted, minDistanceFormatted, maxDistanceFormatted, minPaceFormatted, maxPaceFormatted } = useChallengeStore()
+const { maxDistance, minDistance, minPace, maxPace, targetFormatted, minDistanceFormatted, maxDistanceFormatted, minPaceFormatted, maxPaceFormatted, startDate, endDate } = useChallengeStore()
+const startDateFormatted = computed(() => {
+  if (!startDate) {
+    return
+  }
+  return dayjs(startDate).format("YYYY-MM-DD")
+})
+const endDateFormatted = computed(() => {
+  if (!endDate) {
+    return
+  }
+  return dayjs(endDate).subtract(1, 'days').format("YYYY-MM-DD")
+})
 </script>

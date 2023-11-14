@@ -43,5 +43,7 @@
   "joined_users": "Joined Users",
   "rules": "Rules",
   "min_pace_and_max_pace_will_be_applied_to_every_single_km":"Min pace and max pace will be applied to every single kilometer",
-  "completed": "completed"
+  "completed": "completed",
+  "start_date": "Start Date",
+  "end_date": "End Date"
 }
