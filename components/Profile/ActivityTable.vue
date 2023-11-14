@@ -26,5 +26,4 @@ import { useProfileStore } from '~/stores/profile.store';
 
 const profileStore = useProfileStore();
 const { activitiesDetail, totalActivities, detailPage, detailSize } = storeToRefs(profileStore);
-console.log('activitiesDetail', activitiesDetail.value)
 </script>

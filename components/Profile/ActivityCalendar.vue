@@ -9,7 +9,7 @@
     </div>
     <div class="grid grid-cols-7 text-center">
       <div v-for="day in daysInWeek" class="font-bold h-14">{{ day }}</div>
-      <div v-for="item in getBlocks" class="h-10 flex items-center justify-center">
+      <div v-for="item in blocks" class="h-10 flex items-center justify-center">
         <div v-if="item">
           <span v-if="!item.hasActivities">{{ item.title }}</span>
           <UPopover v-else mode="hover">
@@ -42,14 +42,20 @@ const { chartDate, activities } = storeToRefs(profileStore);
 //END STORE//
 
 const daysInWeek = ref(["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]);
-
 const numberOfWeeks = computed(() => munberOfWeeksInMonth(chartDate.value));
+const blocks = ref([])
 
-const getBlocks = computed(() => {
+watch(activities, () => {
+  setBlocks()
+})
+
+
+const setBlocks = () => {
   if (numberOfWeeks.value === 4) {
-    return Array.from({ length: 28 }, (_, index) => ({
+    blocks.value = Array.from({ length: 28 }, (_, index) => ({
       title: index + 1,
     }));
+    return
   }
 
   const firstDay = new Date(
@@ -66,7 +72,7 @@ const getBlocks = computed(() => {
   let count = 0;
   const cloneActivities = [...activities.value];
 
-  return Array.from({ length: numberOfWeeks.value * 7 }, (_, index) => {
+  blocks.value = Array.from({ length: numberOfWeeks.value * 7 }, (_, index) => {
     if (index < firstDay) {
       return {};
     }
@@ -97,7 +103,9 @@ const getBlocks = computed(() => {
       distance: (item.distance / 1000).toFixed(2),
     };
   });
-});
+
+  console.log('set block', blocks.value)
+};
 const getMonthDisplay = computed(() => {
   return `${dayjs(chartDate.value).format("YYYY, MMMM")}`;
 });
@@ -105,4 +113,7 @@ const getMonthDisplay = computed(() => {
 const getDateDisplay = (date) => {
   return `${dayjs(chartDate.value).format("YYYY, MMM")} ${date}`
 }
+
+setBlocks()
+
 </script>

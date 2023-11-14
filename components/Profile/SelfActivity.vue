@@ -31,6 +31,7 @@ const { chartDate, activities } = storeToRefs(profileStore);
 
 //END STORE//
 const chartRenderKey = ref(0);
+const renderCount = ref(0)
 
 const options = ref({
   chart: {
@@ -86,6 +87,7 @@ const options = ref({
 // COMPUTED //
 
 const getChartSeries = computed(() => {
+  renderCount.value++
   const seriesData: DailyActivityDto[] = [...activities.value];
   const data = Array.from({ length: numberOfDate(chartDate.value) }, (_, index) => {
     if (!seriesData.length) {
@@ -127,11 +129,11 @@ const getShortMonthDisplay = computed(() => {
   return `${dayjs(chartDate.value).format("YYYY, MMMM")}`;
 });
 
-
-watch(
-  () => activities.value,
-  () => {
+const init = () => {
+  setTimeout(() => {
     chartRenderKey.value++;
-  }
-);
+  }, 500);
+}
+
+init()
 </script>

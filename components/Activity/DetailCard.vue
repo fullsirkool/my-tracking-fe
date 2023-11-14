@@ -50,7 +50,6 @@ const getDateFormated = computed(() => {
 
 const getMovingTimeFormatted = computed(() => {
   const { movingTime } = props.activity
-  console.log('getMovingTimeFormatted', movingTime)
   if (!movingTime) {
     return '00:00:00'
   }

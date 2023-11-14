@@ -64,7 +64,6 @@ export const useProfileStore = defineStore("profile", () => {
       if (res) {
         const { data, page, size, totalPages, totalElement } = res;
         activitiesDetail.value = data;
-        console.log("activitiesDetail.value", activitiesDetail.value);
         totalDetailPage.value = totalPages;
         totalActivities.value = totalElement;
       }
