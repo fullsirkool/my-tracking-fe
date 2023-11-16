@@ -1,11 +1,13 @@
 import { defineStore } from "pinia";
 import challengeRepository from "~/repository/challenge.repository";
 import { ChallengeDetailDto, ChallengeUser } from "~/types/dto/challenge.dto";
+import {Challenge} from "~/types/dto/challenge.dto";
 
 export const useChallengeStore = defineStore("challenge", () => {
   const challengeId = ref<number>();
   const challengeDetail = ref<ChallengeDetailDto>();
   const challengeUsers = ref<ChallengeUser[]>();
+  const topChallenge = ref<Challenge>()
 
   const fetchChallengeDetail = async (id?: number) => {
     if (id) {
@@ -19,6 +21,10 @@ export const useChallengeStore = defineStore("challenge", () => {
       }
     }
   };
+
+  const setTopChallenge = (challenge: Challenge) => {
+    topChallenge.value = challenge
+  }
 
   const fetchChallengeUsers = async (id?: number) => {
     if (id) {
@@ -120,6 +126,7 @@ export const useChallengeStore = defineStore("challenge", () => {
     challengeId,
     challengeDetail,
     challengeUsers,
+    topChallenge,
     image,
     rule,
     target,
@@ -136,5 +143,6 @@ export const useChallengeStore = defineStore("challenge", () => {
     endDate,
     fetchChallengeDetail,
     fetchChallengeUsers,
+    setTopChallenge
   };
 });

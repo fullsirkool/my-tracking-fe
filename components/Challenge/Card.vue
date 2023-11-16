@@ -1,5 +1,5 @@
 <template>
-  <UCard class="rounded-3xl bg-[#f5f5f5] challenge-card text-[#4B4B4B]" style="box-shadow: none;">
+  <UCard class="rounded-3xl bg-[#f5f5f5] challenge-card text-[#4B4B4B] max-w-[500px]" style="box-shadow: none;">
     <div class="image-container rounded-xl ">
       <img :src="challenge.image" class="rounded-xl h-[200px] w-full object-cover" />
     </div>

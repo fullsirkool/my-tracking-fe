@@ -1,6 +1,8 @@
 <template>
   <Header></Header>
-  <slot></slot>
+  <div class="p-4">
+    <slot></slot>
+  </div>
   <Footer></Footer>
   <UNotifications/>
 </template>
