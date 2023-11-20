@@ -45,5 +45,6 @@
   "min_pace_and_max_pace_will_be_applied_to_every_single_km": "Tốc độ tối thiểu và tốc độ tối đa sẽ được áp dụng cho mỗi km",
   "completed": "đã hoàn thành",
   "start_date": "Ngày Bắt Đầu",
-  "end_date": "Ngày Kết Thúc"
+  "end_date": "Ngày Kết Thúc",
+  "ended": "Đã kết thúc"
 }
