@@ -3,6 +3,9 @@
     <div class="image-container rounded-xl ">
       <img :src="challenge.image" class="rounded-xl h-[200px] w-full object-cover" />
     </div>
+    <div>
+      <UIcon name="i-heroicons-calendar-days-solid" />
+    </div>
     <div class="flex items-center justify-start gap-4 mt-4 ">
       <UAvatar size="md" :src="challenge.owner.profile" alt="Avatar" />
       <div class="w-full">

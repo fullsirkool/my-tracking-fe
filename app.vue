@@ -13,6 +13,6 @@
 .page-enter-from,
 .page-leave-to {
   opacity: 0;
-  filter: blur(0.5rem);
+  filter: blur(0.2rem);
 }
 </style>
