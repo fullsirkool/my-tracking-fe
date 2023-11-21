@@ -1,5 +1,5 @@
 <template>
-  <div class="relative challenge-card-container">
+  <div class="relative challenge-card-container" :class="customClass">
     <div v-show="isEnded"
          class="challenge-card-tag absolute -right-4 -top-2 flex items-center justify-center px-4 py-2 h-6 rounded-lg text-white z-10 bg-red-500">
       {{$t('ended')}}
@@ -65,6 +65,7 @@ const dayjs = useDayjs()
 
 interface IChallengeCardProps {
   challenge: Challenge;
+  customClass: string;
 }
 
 const props = withDefaults(defineProps<IChallengeCardProps>(), {})

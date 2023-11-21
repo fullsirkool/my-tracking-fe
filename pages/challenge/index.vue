@@ -6,7 +6,7 @@
     <div v-if="challenges" class="grid grid-cols-1 gap-6">
       <div class="mt-10 grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-3 gap-6">
         <div v-for="challenge in challenges" class="grid-span-1 flex items-center justify-center">
-          <ChallengeCard :challenge="challenge"></ChallengeCard>
+          <ChallengeCard :challenge="challenge" custom-class="w-full"></ChallengeCard>
         </div>
       </div>
       <div class="flex items-center justify-end">
