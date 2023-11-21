@@ -3,12 +3,11 @@
     <div class="grid grid-cols-1 lg:grid-cols-2 items-center item py-[50px] lg:pb-[200px] ">
       <div class="h-fit text-center lg:text-left">
         <div class="font-bold text-6xl">
-          Discover, collect, and sell extraordinary NFTs
+          Take on challenges, fulfill yourself
         </div>
         <div class="text-h5 my-6 text-2xl">
-          EGtrade is a NFT marketplace for artist, content creator and the
-          collector
-        </div>
+          Compete with others in the running challenges to become a better version of yourself
+        </div>  
       </div>
       <div class="h-fit p-12 flex items-center justify-center">
         <ChallengeCard :challenge="challenges[0]"></ChallengeCard>
