@@ -50,14 +50,15 @@ import { storeToRefs } from "pinia";
 import activityRepository from "~/repository/activity.repository";
 import { useProfileStore } from "~/stores/profile.store";
 const store = useProfileStore();
-const { fetchMonthlyActivitiesDetail, fetchUserInfo, fetchDailyActivityStatistics } = store
+const { fetchMonthlyActivitiesDetail, fetchUserInfo, fetchDailyActivityStatistics, fetchCreatedChallenge, fetchJoinedChallenge } = store
 const { user } = storeToRefs(store);
 const { params } = useRoute();
 const { id } = params;
 
 const { data } = await useAsyncData('profile', async () => {
   const [userInfor, dailyStatistics, statictics, dailyactivities] = await Promise.all([
-    fetchUserInfo(+id), fetchDailyActivityStatistics(), activityRepository.fetchStatistics(id), fetchMonthlyActivitiesDetail(id)
+    fetchUserInfo(+id), fetchDailyActivityStatistics(), activityRepository.fetchStatistics(id), fetchMonthlyActivitiesDetail(id),
+    fetchCreatedChallenge(id), fetchJoinedChallenge(id)
   ])
 
   return {

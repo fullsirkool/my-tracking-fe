@@ -63,4 +63,22 @@ export default {
     console.log('error', error)
     return data.value;
   },
+
+  async findJoinedChallenge(stravaId: string, params: PagingChallengeDto): Promise<PagingChallengeResponse | null> {
+    const url = `${BASE_URL}/challenge/user/joined/${stravaId}`;
+    const { data } = await useFetch<PagingChallengeResponse>(url, {
+      method: "get",
+      params,
+    });
+    return data.value;
+  },
+
+  async findCreatedChallenge(stravaId: string, params: PagingChallengeDto): Promise<PagingChallengeResponse | null> {
+    const url = `${BASE_URL}/challenge/user/created/${stravaId}`;
+    const { data } = await useFetch<PagingChallengeResponse>(url, {
+      method: "get",
+      params,
+    });
+    return data.value;
+  }
 };

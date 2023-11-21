@@ -3,17 +3,93 @@ import activityRepository from "~/repository/activity.repository";
 import userRepository from "~/repository/user.repository";
 import {ActivityDto, ActivityDetail} from "~/types/dto/activity.dto";
 import {UserClaims} from "~/types/dto/user.dto";
+import {Challenge} from "~/types/dto/challenge.dto";
+import challengeRepository from "~/repository/challenge.repository";
 
 export const useProfileStore = defineStore("profile", () => {
     const chartDate = ref(new Date());
     const activities = ref<ActivityDto[] | null>([]);
-    const activitiesDetail = ref<ActivityDetail[] | null>([]);
+
     const stravaId = ref<string>("");
     const user = ref<UserClaims | null>(null);
+
+    const activitiesDetail = ref<ActivityDetail[] | null>([]);
     const detailPage = ref(1);
     const detailSize = ref(9);
     const totalDetailPage = ref(1);
     const totalActivities = ref(0);
+
+    const createdChallenges = ref<Challenge[]>([])
+    const createdChallengePage = ref(1);
+    const createdChallengePageSize = ref(9);
+    const totalCreatedChallenge = ref(1);
+    const totalCreatedChallengePage = ref(0);
+
+    const joinedChallenges = ref<Challenge[]>([])
+    const joinedChallengePage = ref(1);
+    const joinedChallengePageSize = ref(9);
+    const totalJoinedChallenge = ref(1);
+    const totalJoinedChallengePage = ref(0);
+
+    const fetchCreatedChallenge = async (params: {
+        page?: number;
+    }) => {
+        try {
+            const {page} = params;
+            if (page) {
+                createdChallengePage.value = page
+            }
+
+            const param = {
+                page: createdChallengePage.value,
+                size: createdChallengePageSize.value
+            }
+
+            const response = await challengeRepository.findCreatedChallenge(
+                stravaId.value,
+                param
+            );
+
+            if (response) {
+                const {data, totalPages, totalElement} = response
+                createdChallenges.value = data
+                totalCreatedChallenge.value = totalElement
+                totalCreatedChallengePage.value = totalPages
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const fetchJoinedChallenge = async (params: {
+        page?: number;
+    }) => {
+        try {
+            const {page} = params;
+            if (page) {
+                joinedChallengePage.value = page
+            }
+
+            const param = {
+                page: joinedChallengePage.value,
+                size: joinedChallengePageSize.value
+            }
+
+            const response = await challengeRepository.findJoinedChallenge(
+                stravaId.value,
+                param
+            );
+
+            if (response) {
+                const {data, totalPages, totalElement} = response
+                joinedChallenges.value = data
+                totalJoinedChallenge.value = totalElement
+                totalJoinedChallengePage.value = totalPages
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     const handleChangeMonth = async (sign: string) => {
         if (sign === "+") {
@@ -103,5 +179,7 @@ export const useProfileStore = defineStore("profile", () => {
         fetchDailyActivityStatistics,
         fetchMonthlyActivitiesDetail,
         fetchUserInfo,
+        fetchCreatedChallenge,
+        fetchJoinedChallenge
     };
 });
