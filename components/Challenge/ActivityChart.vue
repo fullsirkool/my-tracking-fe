@@ -103,8 +103,8 @@ const getChartSeries = computed(() => {
     return []
   }
 
-  const { userActivitites, startDate, endDate } = challengeDetail.value
-  const series = userActivitites.map(item => {
+  const { userActivities, startDate, endDate } = challengeDetail.value
+  const series = userActivities.map(item => {
     const { user, statistics } = item
 
     const data = statistics.map(i => {

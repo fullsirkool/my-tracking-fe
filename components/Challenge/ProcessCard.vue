@@ -1,10 +1,10 @@
 <template>
   <UCard class="relative text-[#4B4B4B]" style="box-shadow: none;">
     <div class="flex items-center gap-4">
-      <UAvatar size="xl" :src="userActivitites.profile" alt="Avatar" />
+      <UAvatar size="xl" :src="userActivities.profile" alt="Avatar" />
       <div class="w-full">
-        <NuxtLink class="hover:text-sky-900 font-semibold" :to="`/profile/${userActivitites.stravaId}`">
-          {{ `${userActivitites.firstName} ${userActivitites.lastName}` }}
+        <NuxtLink class="hover:text-sky-900 font-semibold" :to="`/profile/${userActivities.stravaId}`">
+          {{ `${userActivities.firstName} ${userActivities.lastName}` }}
         </NuxtLink>
       </div>
     </div>
@@ -40,7 +40,7 @@ import { useChallengeStore } from '~/stores/challenge.store';
 import { ChallengeUser } from '~/types/dto/challenge.dto';
 
 interface IChallengeProcessCardProps {
-  userActivitites: ChallengeUser;
+  userActivities: ChallengeUser;
 }
 
 const { target } = useChallengeStore()
@@ -48,7 +48,7 @@ const { target } = useChallengeStore()
 const props = withDefaults(defineProps<IChallengeProcessCardProps>(), {})
 
 const statistics = computed(() => {
-  if (!props.userActivitites) {
+  if (!props.userActivities) {
     return {
       totalDistance: 0,
       distance: '0km',
@@ -56,7 +56,7 @@ const statistics = computed(() => {
       pace: '00:00',
     }
   }
-  const { challengeDailyActivity } = props.userActivitites
+  const { challengeDailyActivity } = props.userActivities
 
   let distanceStr = '0km'
   let movingTimeStr = '00:00:00'

@@ -45,7 +45,7 @@ export class PagingChallengeDto extends BasePagingDto {}
 export class PagingChallengeResponse extends BasePagingResponse<Challenge> {}
 
 export interface ChallengeDetailDto extends Challenge {
-  userActivitites: ChallengeUserActivities[];
+  userActivities: ChallengeUserActivities[];
 }
 
 export interface ChallengeUserActivities {
