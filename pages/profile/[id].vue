@@ -1,28 +1,47 @@
 <template>
   <UContainer>
     <div class="relative">
-      <UCard class="flex justify-center p-10 pb-20 profile-header border-none rounded-3xl">
-        <div class="w-fit grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 font-semibold">
-          <div class="rounded-2xl text-center p-3 border-[1px] bg-white border-none text-gray-700">
+      <UCard
+        class="flex justify-center p-10 pb-20 profile-header border-none rounded-3xl"
+      >
+        <div
+          class="w-fit grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 font-semibold"
+        >
+          <div
+            class="rounded-2xl text-center p-3 border-[1px] bg-white border-none text-gray-700"
+          >
             <p class="text-red-500 text-xl font-bold">{{ totalDistance }}</p>
             {{ $t('distance') }} (km)
           </div>
-          <div class="rounded-2xl text-center p-3 border-[1px] bg-white border-none text-gray-700">
+          <div
+            class="rounded-2xl text-center p-3 border-[1px] bg-white border-none text-gray-700"
+          >
             <p class="text-red-500 text-xl font-bold">{{ getPaceMinute }}</p>
             {{ $t('pace') }}
           </div>
-          <div class="rounded-2xl text-center p-3 border-[1px] bg-white border-none text-gray-700">
+          <div
+            class="rounded-2xl text-center p-3 border-[1px] bg-white border-none text-gray-700"
+          >
             <p class="text-red-500 text-xl font-bold">{{ count }}</p>
             {{ $t('activities') }}
           </div>
-          <div class="rounded-2xl text-center p-3 border-[1px] bg-white border-none text-gray-700">
-            <p class="text-red-500 text-xl font-bold">{{ getTotalRuningMinute }}</p>
+          <div
+            class="rounded-2xl text-center p-3 border-[1px] bg-white border-none text-gray-700"
+          >
+            <p class="text-red-500 text-xl font-bold">
+              {{ getTotalRuningMinute }}
+            </p>
             {{ $t('time') }}
           </div>
         </div>
       </UCard>
-      <div class="absolute rounded-full bg-white -translate-x-2/4 translate-y-2/4 z-[1] left-2/4 bottom-0">
-        <img :src="user.profile" class="h-44 w-44 rounded-full border-[5px] border-solid border-[white]" />
+      <div
+        class="absolute rounded-full bg-white -translate-x-2/4 translate-y-2/4 z-[1] left-2/4 bottom-0"
+      >
+        <img
+          :src="user.profile"
+          class="h-44 w-44 rounded-full border-[5px] border-solid border-[white]"
+        />
       </div>
     </div>
     <div class="mt-24 text-center">
@@ -46,50 +65,68 @@
   </UContainer>
 </template>
 <script setup>
-import { storeToRefs } from "pinia";
-import activityRepository from "~/repository/activity.repository";
-import { useProfileStore } from "~/stores/profile.store";
-const store = useProfileStore();
-const { fetchMonthlyActivitiesDetail, fetchUserInfo, fetchDailyActivityStatistics, fetchCreatedChallenge, fetchJoinedChallenge } = store
-const { user } = storeToRefs(store);
-const { params } = useRoute();
-const { id } = params;
+import { storeToRefs } from 'pinia'
+import activityRepository from '~/repository/activity.repository'
+import { useProfileStore } from '~/stores/profile.store'
+const store = useProfileStore()
+const {
+  fetchMonthlyActivitiesDetail,
+  fetchUserInfo,
+  fetchDailyActivityStatistics,
+  fetchCreatedChallenge,
+  fetchJoinedChallenge,
+} = store
+const { user } = storeToRefs(store)
+const { params } = useRoute()
+const { id } = params
 
 const { data } = await useAsyncData('profile', async () => {
-  const [userInfor, dailyStatistics, statictics, dailyactivities] = await Promise.all([
-    fetchUserInfo(+id), fetchDailyActivityStatistics(), activityRepository.fetchStatistics(id), fetchMonthlyActivitiesDetail(id),
-    fetchCreatedChallenge(id), fetchJoinedChallenge(id)
-  ])
+  const [userInfor, dailyStatistics, statictics, dailyactivities] =
+    await Promise.all([
+      fetchUserInfo(+id),
+      fetchDailyActivityStatistics(),
+      activityRepository.fetchStatistics(id),
+      fetchMonthlyActivitiesDetail(id),
+      fetchCreatedChallenge(id),
+      fetchJoinedChallenge(id),
+    ])
 
   return {
-    userInfor, dailyStatistics, statictics, dailyactivities
+    userInfor,
+    dailyStatistics,
+    statictics,
+    dailyactivities,
   }
 })
 
 const statistics = data.value.statictics
 
-const avgPace = ref(statistics.pace.toFixed(2));
-const totalDistance = ref((statistics.distance / 1000).toFixed(2));
-const count = ref(statistics.count);
-const totalMovingTime = ref((statistics.totalMovingTime / 3600).toFixed(2));
+const avgPace = ref(statistics.pace.toFixed(2))
+const totalDistance = ref((statistics.distance / 1000).toFixed(2))
+const count = ref(statistics.count)
+const totalMovingTime = ref((statistics.totalMovingTime / 3600).toFixed(2))
 
-const getFullName = computed(() => `${user.value.firstName} ${user.value.lastName}`);
+const getFullName = computed(
+  () => `${user.value.firstName} ${user.value.lastName}`,
+)
 const getPaceMinute = computed(() => {
-  const minutes = Math.floor(avgPace.value / 1);
-  const seconds = (avgPace.value % 1) * 60;
-  return `${minutes}:${seconds.toFixed(0)}`;
-});
+  const minutes = Math.floor(avgPace.value / 1)
+  const seconds = (avgPace.value % 1) * 60
+  return `${minutes}:${seconds.toFixed(0)}`
+})
 const getTotalRuningMinute = computed(() => {
-  const minutes = Math.floor(totalMovingTime.value / 1);
-  const seconds = (totalMovingTime.value % 1) * 60;
-  return `${minutes}:${seconds.toFixed(0)}`;
-});
+  const minutes = Math.floor(totalMovingTime.value / 1)
+  const seconds = (totalMovingTime.value % 1) * 60
+  return `${minutes}:${seconds.toFixed(0)}`
+})
 </script>
 <style scoped>
 .profile-header {
   background: rgb(255, 244, 79);
-  background: radial-gradient(circle,
-      rgba(255, 244, 79, 1) 0%,
-      rgba(224, 81, 49, 1) 100%);
+  background: radial-gradient(
+    circle,
+    rgba(255, 244, 79, 1) 0%,
+    rgba(224, 81, 49, 1) 100%
+  );
 }
 </style>

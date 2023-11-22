@@ -1,10 +1,17 @@
 <template>
   <div class="wrapper option-1 option-1-1">
     <ol class="c-stepper">
-      <li v-for="(step, index) in steps" class="c-stepper__item cursor-pointer"
-        :class="{ 'active-cicle': index <= valueIndex, 'active-spacing': index + 1 <= valueIndex }"
-        @click="handleChangeStep(step)">
-        <h3 class="c-stepper__title">{{ `${$t("step")} ${index + 1}` }}</h3>
+      <li
+        v-for="(step, index) in steps"
+        :key="index"
+        class="c-stepper__item cursor-pointer"
+        :class="{
+          'active-cicle': index <= valueIndex,
+          'active-spacing': index + 1 <= valueIndex,
+        }"
+        @click="handleChangeStep(step)"
+      >
+        <h3 class="c-stepper__title">{{ `${$t('step')} ${index + 1}` }}</h3>
         <p class="c-stepper__desc">{{ step.title }}</p>
       </li>
     </ol>
@@ -14,15 +21,16 @@
 const props = defineProps({
   steps: {
     type: Array,
-    default: () => ([])
+    default: () => [],
   },
   modelValue: {
     type: Object,
+    default: () => ({}),
   },
   allowNext: {
     type: Boolean,
-    default: true
-  }
+    default: true,
+  },
 })
 const emit = defineEmits(['update:model-value'])
 const handleChangeStep = (step) => {
@@ -30,7 +38,9 @@ const handleChangeStep = (step) => {
     emit('update:model-value', step)
   }
 }
-const valueIndex = computed(() => props.steps.findIndex(item => item.key === props.modelValue.key))
+const valueIndex = computed(() =>
+  props.steps.findIndex((item) => item.key === props.modelValue.key),
+)
 </script>
 <style>
 :root {
@@ -50,19 +60,19 @@ const valueIndex = computed(() => props.steps.findIndex(item => item.key === pro
 
   &:before {
     --size: 3rem;
-    content: "";
+    content: '';
     display: block;
     width: var(--circle-size);
     height: var(--circle-size);
     border-radius: 50%;
-    background-color: #A0A0A0;
+    background-color: #a0a0a0;
     opacity: 0.5;
     margin: 0 auto 1rem;
   }
 
   &:not(:last-child) {
     &:after {
-      content: "";
+      content: '';
       position: relative;
       top: calc(var(--circle-size) / 2);
       width: calc(100% - var(--circle-size) - calc(var(--spacing) * 2));
@@ -77,7 +87,7 @@ const valueIndex = computed(() => props.steps.findIndex(item => item.key === pro
 .c-stepper__item.active-cicle {
   &:before {
     --size: 3rem;
-    content: "";
+    content: '';
     display: block;
     width: var(--circle-size);
     height: var(--circle-size);
@@ -91,7 +101,7 @@ const valueIndex = computed(() => props.steps.findIndex(item => item.key === pro
 .c-stepper__item.active-spacing {
   &:not(:last-child) {
     &:after {
-      content: "";
+      content: '';
       position: relative;
       top: calc(var(--circle-size) / 2);
       width: calc(100% - var(--circle-size) - calc(var(--spacing) * 2));
@@ -124,8 +134,8 @@ const valueIndex = computed(() => props.steps.findIndex(item => item.key === pro
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 *,

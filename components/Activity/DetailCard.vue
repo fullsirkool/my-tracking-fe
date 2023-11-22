@@ -1,17 +1,32 @@
-
 <template>
-  <UCard class="rounded-2xl bg-white" style="box-shadow: none;">
+  <UCard class="rounded-2xl bg-white" style="box-shadow: none">
     <div class="flex gap-2 items-center text-sm">
-      <Icon name="mdi:calendar-month-outline" width="1.25rem" height="1.25rem" />
+      <Icon
+        name="mdi:calendar-month-outline"
+        width="1.25rem"
+        height="1.25rem"
+      />
       <span>{{ getDateFormated }}</span>
     </div>
     <div class="text-lg font-semibold mt-2 flex justify-between">
-      <div class="flex gap-2 items-center ">
+      <div class="flex gap-2 items-center">
         <Icon name="fluent:run-16-filled" width="1.75rem" height="1.75rem" />
-        <a href="javascript:void(0)" class="text-orange-500" @click="handleRedirect(activity.id)">{{ activity.name }}</a>
+        <a
+          href="javascript:void(0)"
+          class="text-orange-500"
+          @click="handleRedirect(activity.id)"
+          >{{ activity.name }}</a
+        >
       </div>
-      <div class="w-7 h-7 bg-orange-500 rounded-full flex items-center justify-center">
-        <Icon name="mdi:strava" width="1.25rem" height="1.25rem" color="white"/>
+      <div
+        class="w-7 h-7 bg-orange-500 rounded-full flex items-center justify-center"
+      >
+        <Icon
+          name="mdi:strava"
+          width="1.25rem"
+          height="1.25rem"
+          color="white"
+        />
       </div>
     </div>
     <div class="flex items-center justify-between text-sm mt-2">
@@ -31,13 +46,13 @@
   </UCard>
 </template>
 <script setup lang="ts">
-import { ActivityDetail } from '~/types/dto/activity.dto';
+import { ActivityDetail } from '~/types/dto/activity.dto'
 
-const runtimeConfig = useRuntimeConfig();
-const { STRAVA_REDIRECT_URL } = runtimeConfig.public;
+const runtimeConfig = useRuntimeConfig()
+const { STRAVA_REDIRECT_URL } = runtimeConfig.public
 
 interface IActivityDetailCardProps {
-  activity: ActivityDetail;
+  activity: ActivityDetail
 }
 const props = withDefaults(defineProps<IActivityDetailCardProps>(), {})
 
@@ -80,6 +95,5 @@ const getAvgPace = computed(() => {
 
 const handleRedirect = (activityId: string) => {
   window.open(`${STRAVA_REDIRECT_URL}/${activityId}`)
-
 }
 </script>

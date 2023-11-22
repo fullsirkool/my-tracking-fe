@@ -1,15 +1,33 @@
 <template>
-  <UCard class="rounded-2xl bg-[#f5f5f5] h-[400px]" style="box-shadow: none;">
+  <UCard class="rounded-2xl bg-[#f5f5f5] h-[400px]" style="box-shadow: none">
     <div class="flex items-center justify-center gap-4 pb-4">
-      <UButton icon="i-heroicons-chevron-left" size="xs" :ui="{ rounded: 'rounded-full' }" color="white" variant="solid"
-        @click="handleChangeMonth('-')" />
+      <UButton
+        icon="i-heroicons-chevron-left"
+        size="xs"
+        :ui="{ rounded: 'rounded-full' }"
+        color="white"
+        variant="solid"
+        @click="handleChangeMonth('-')"
+      />
       <h2 class="font-bold">{{ getMonthDisplay }}</h2>
-      <UButton icon="i-heroicons-chevron-right" size="xs" :ui="{ rounded: 'rounded-full' }" color="white" variant="solid"
-        @click="handleChangeMonth('+')" />
+      <UButton
+        icon="i-heroicons-chevron-right"
+        size="xs"
+        :ui="{ rounded: 'rounded-full' }"
+        color="white"
+        variant="solid"
+        @click="handleChangeMonth('+')"
+      />
     </div>
     <div class="grid grid-cols-7 text-center">
-      <div v-for="day in daysInWeek" class="font-bold h-14">{{ day }}</div>
-      <div v-for="item in blocks" class="h-10 flex items-center justify-center">
+      <div v-for="day in daysInWeek" :key="day" class="font-bold h-14">
+        {{ day }}
+      </div>
+      <div
+        v-for="item in blocks"
+        :key="item"
+        class="h-10 flex items-center justify-center"
+      >
         <div v-if="item">
           <span v-if="!item.hasActivities">{{ item.title }}</span>
           <UPopover v-else mode="hover">
@@ -29,91 +47,90 @@
   </UCard>
 </template>
 <script setup>
-import { storeToRefs } from "pinia";
-import { useProfileStore } from "@/stores/profile.store";
-const dayjs = useDayjs();
+import { storeToRefs } from 'pinia'
+import { useProfileStore } from '@/stores/profile.store'
+const dayjs = useDayjs()
 
-//STORE//
+// STORE//
 
-const profileStore = useProfileStore();
-const { handleChangeMonth } = profileStore;
-const { chartDate, activities } = storeToRefs(profileStore);
+const profileStore = useProfileStore()
+const { handleChangeMonth } = profileStore
+const { chartDate, activities } = storeToRefs(profileStore)
 
-//END STORE//
+// END STORE//
 
-const daysInWeek = ref(["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]);
-const numberOfWeeks = computed(() => munberOfWeeksInMonth(chartDate.value));
+const daysInWeek = ref(['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'])
+const numberOfWeeks = computed(() => munberOfWeeksInMonth(chartDate.value))
 const blocks = ref([])
 
 watch(activities, () => {
   setBlocks()
 })
 
-
 const setBlocks = () => {
   if (numberOfWeeks.value === 4) {
     blocks.value = Array.from({ length: 28 }, (_, index) => ({
       title: index + 1,
-    }));
+    }))
     return
   }
 
   const firstDay = new Date(
     chartDate.value.getFullYear(),
     chartDate.value.getMonth(),
-    1
-  ).getDay();
+    1,
+  ).getDay()
   const lastDay = new Date(
     chartDate.value.getFullYear(),
     chartDate.value.getMonth() + 1,
-    0
-  ).getDay();
+    0,
+  ).getDay()
 
-  let count = 0;
-  const cloneActivities = [...activities.value];
+  let count = 0
+  const cloneActivities = [...activities.value]
 
   blocks.value = Array.from({ length: numberOfWeeks.value * 7 }, (_, index) => {
     if (index < firstDay) {
-      return {};
+      return {}
     }
 
     if (index > numberOfWeeks.value * 7 - 7 + lastDay) {
-      return {};
+      return {}
     }
 
     if (!cloneActivities.length) {
       return {
         title: ++count,
         hasActivities: false,
-      };
+      }
     }
 
-    if (new Date(`${cloneActivities[0].startDateLocal}`).getDate() !== count + 1) {
+    if (
+      new Date(`${cloneActivities[0].startDateLocal}`).getDate() !==
+      count + 1
+    ) {
       return {
         title: ++count,
         hasActivities: false,
-      };
+      }
     }
 
-    const item = cloneActivities.shift();
+    const item = cloneActivities.shift()
 
     return {
       title: ++count,
       hasActivities: true,
       distance: (item.distance / 1000).toFixed(2),
-    };
-  });
-
-  console.log('set block', blocks.value)
-};
+    }
+  })
+}
 const getMonthDisplay = computed(() => {
-  return `${dayjs(chartDate.value).format("YYYY, MMMM")}`;
-});
+  return `${dayjs(chartDate.value).format('YYYY, MMMM')}`
+})
 
 const getDateDisplay = (date) => {
-  return `${dayjs(chartDate.value).format("YYYY, MMM")} ${date}`
+  return `${dayjs(chartDate.value).format('YYYY, MMM')} ${date}`
 }
 
 setBlocks()
-
 </script>

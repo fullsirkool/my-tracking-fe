@@ -28,24 +28,38 @@
       <label for="">{{ $t('max_pace') }}: </label>
       <span>{{ maxPaceFormatted }}</span>
     </div>
-    <i class="text-sm">*{{ $t('min_pace_and_max_pace_will_be_applied_to_every_single_km') }}</i>
+    <i class="text-sm"
+      >*{{ $t('min_pace_and_max_pace_will_be_applied_to_every_single_km') }}</i
+    >
   </UContainer>
 </template>
 <script setup lang="ts">
-import { useChallengeStore } from '~/stores/challenge.store';
+import { useChallengeStore } from '~/stores/challenge.store'
 const dayjs = useDayjs()
 
-const { maxDistance, minDistance, minPace, maxPace, targetFormatted, minDistanceFormatted, maxDistanceFormatted, minPaceFormatted, maxPaceFormatted, startDate, endDate } = useChallengeStore()
+const {
+  maxDistance,
+  minDistance,
+  minPace,
+  maxPace,
+  targetFormatted,
+  minDistanceFormatted,
+  maxDistanceFormatted,
+  minPaceFormatted,
+  maxPaceFormatted,
+  startDate,
+  endDate,
+} = useChallengeStore()
 const startDateFormatted = computed(() => {
   if (!startDate) {
     return
   }
-  return dayjs(startDate).format("YYYY-MM-DD")
+  return dayjs(startDate).format('YYYY-MM-DD')
 })
 const endDateFormatted = computed(() => {
   if (!endDate) {
     return
   }
-  return dayjs(endDate).subtract(1, 'days').format("YYYY-MM-DD")
+  return dayjs(endDate).subtract(1, 'days').format('YYYY-MM-DD')
 })
 </script>

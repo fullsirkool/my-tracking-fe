@@ -2,18 +2,14 @@
   <div>
     <Header></Header>
     <div class="relative">
-      <img src="~/assets/bg.jpg" class="home-background">
+      <img src="~/assets/bg.jpg" class="home-background" />
       <slot></slot>
     </div>
     <Footer></Footer>
-    <UNotifications/>
+    <UNotifications />
   </div>
 </template>
-<script setup lang="ts">
-import {useChallengeStore} from "~/stores/challenge.store";
-
-const {topChallenge} = useChallengeStore()
-</script>
+<script setup lang="ts"></script>
 <style>
 .home-background {
   width: 100%;
@@ -21,7 +17,7 @@ const {topChallenge} = useChallengeStore()
   max-height: 650px;
   position: absolute;
   overflow: hidden;
-  background-image: url("~/assets/bg.jpg");
+  background-image: url('~/assets/bg.jpg');
   background-size: cover;
   background-color: rgb(255, 255, 255);
   background-position: center center;

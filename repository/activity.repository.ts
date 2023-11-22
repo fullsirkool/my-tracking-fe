@@ -4,42 +4,45 @@ import {
   FindActivityDto,
   FindActivityResponse,
   StatisticsDto,
-} from "./../types/dto/activity.dto";
+} from './../types/dto/activity.dto'
 
-const runtimeConfig = useRuntimeConfig();
-const { BASE_URL } = runtimeConfig.public;
+const runtimeConfig = useRuntimeConfig()
+const { BASE_URL } = runtimeConfig.public
 
 export default {
   async fetchMonthlyActivities(
-    params: ActivityMontlyDto
+    params: ActivityMontlyDto,
   ): Promise<DailyActivityDto[] | null> {
     const { data } = await useFetch<DailyActivityDto[]>(
       `${BASE_URL}/activity/monthly`,
       {
         params,
-      }
-    );
+      },
+    )
 
-    return data.value;
+    return data.value
   },
 
   async fetchStatistics(
-    userId: string | number
+    userId: string | number,
   ): Promise<StatisticsDto | null> {
     const { data } = await useFetch<StatisticsDto>(
-      `${BASE_URL}/activity/statistics/${userId}`
-    );
+      `${BASE_URL}/activity/statistics/${userId}`,
+    )
 
-    return data.value;
+    return data.value
   },
 
   async fetchMonthlyActivitiesDetail(
-    params: FindActivityDto
+    params: FindActivityDto,
   ): Promise<FindActivityResponse | null> {
-    const { data } = await useFetch<FindActivityResponse>(`${BASE_URL}/activity`, {
-      params,
-    });
+    const { data } = await useFetch<FindActivityResponse>(
+      `${BASE_URL}/activity`,
+      {
+        params,
+      },
+    )
 
-    return data.value;
+    return data.value
   },
-};
+}

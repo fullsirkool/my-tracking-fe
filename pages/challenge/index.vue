@@ -4,25 +4,31 @@
       <UButton :label="$t('create_challenge')" variant="solid" />
     </NuxtLink>
     <div v-if="challenges" class="grid grid-cols-1 gap-6">
-      <div class="mt-10 grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-3 gap-6">
-        <div v-for="challenge in challenges" class="grid-span-1 flex items-center justify-center">
-          <ChallengeCard :challenge="challenge" custom-class="w-full"></ChallengeCard>
+      <div class="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div
+          v-for="challenge in challenges"
+          :key="challenge.id"
+          class="grid-span-1 flex items-center justify-center"
+        >
+          <ChallengeCard
+            :challenge="challenge"
+            custom-class="w-full"
+          ></ChallengeCard>
         </div>
       </div>
       <div class="flex items-center justify-end">
         <UPagination v-model="paging.page" :total="challenges.length" />
       </div>
     </div>
-
   </UContainer>
 </template>
 <script setup lang="ts">
-import challengeRepository from '~/repository/challenge.repository';
-import { Challenge, PagingChallengeDto } from '~/types/dto/challenge.dto';
+import challengeRepository from '~/repository/challenge.repository'
+import { Challenge, PagingChallengeDto } from '~/types/dto/challenge.dto'
 
 const paging = ref<PagingChallengeDto>({
   page: 1,
-  size: 9
+  size: 9,
 })
 const challenges = ref<Challenge[]>([])
 
@@ -33,9 +39,13 @@ const fetchChallenges = async () => {
   }
 }
 
-await useAsyncData("challenges", () => fetchChallenges())
+await useAsyncData('challenges', () => fetchChallenges())
 
-watch(paging.value, () => {
-  fetchChallenges()
-}, { deep: true })
+watch(
+  paging.value,
+  () => {
+    fetchChallenges()
+  },
+  { deep: true },
+)
 </script>

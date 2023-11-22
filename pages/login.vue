@@ -3,7 +3,5 @@
     <CommonStravaConnect></CommonStravaConnect>
   </UContainer>
 </template>
-<script setup>
-const title = ref("Index Page");
-</script>
+<script setup></script>
 <style></style>

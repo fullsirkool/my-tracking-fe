@@ -1,43 +1,49 @@
 <template>
-  <UCard class="rounded-2xl bg-[#f5f5f5] overflow-auto min-h-[300px]" style="box-shadow: none;">
+  <UCard
+    class="rounded-2xl bg-[#f5f5f5] overflow-auto min-h-[300px]"
+    style="box-shadow: none"
+  >
     <div>
       <UTabs :items="tabs">
-        <template #default="{ item, index, selected }">
+        <template #default="{ item, selected }">
           <div class="flex items-center gap-2 relative truncate">
             <UIcon :name="item.icon" class="w-4 h-4 flex-shrink-0" />
-            <span class="truncate font-semibold text-xl"> {{ item.label }}</span>
-            <span v-if="selected" class="absolute -right-4 w-2 h-2 rounded-full bg-primary-500 dark:bg-primary-400" />
+            <span class="truncate font-semibold text-xl">
+              {{ item.label }}</span
+            >
+            <span
+              v-if="selected"
+              class="absolute -right-4 w-2 h-2 rounded-full bg-primary-500 dark:bg-primary-400"
+            />
           </div>
         </template>
-        <template #activities="{ item }">
+        <template #activities>
           <ProfileActivityTable></ProfileActivityTable>
         </template>
-        <template #joined-challenges="{ item }">
-          joined-challenges
-        </template>
-        <template #created-challenges="{ item }">
-          created-challenges
-        </template>
+        <template #joined-challenges> joined-challenges </template>
+        <template #created-challenges> created-challenges </template>
       </UTabs>
     </div>
-
   </UCard>
 </template>
 <script setup lang="ts">
-
-const tabs = [{
-  slot: 'activities',
-  icon: 'i-heroicons-bolt',
-  label: 'Activities',
-}, {
-  slot: 'joined-challenges',
-  icon: 'i-heroicons-rocket-launch',
-  disabled: true,
-  label: 'Joined Challenges',
-}, {
-  slot: 'created-challenges',
-  icon: 'i-heroicons-rocket-launch-20-solid',
-  disabled: true,
-  label: 'Created Challenges',
-}]
+const tabs = [
+  {
+    slot: 'activities',
+    icon: 'i-heroicons-bolt',
+    label: 'Activities',
+  },
+  {
+    slot: 'joined-challenges',
+    icon: 'i-heroicons-rocket-launch',
+    disabled: true,
+    label: 'Joined Challenges',
+  },
+  {
+    slot: 'created-challenges',
+    icon: 'i-heroicons-rocket-launch-20-solid',
+    disabled: true,
+    label: 'Created Challenges',
+  },
+]
 </script>

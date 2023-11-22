@@ -1,12 +1,11 @@
-import { useUserStore } from "~/stores/userStore";
+import { useUserStore } from '~/stores/userStore'
 
-export default defineNuxtRouteMiddleware(async (to, from) => {
-  const { user, initValue } = useUserStore();
-  console.log("middleware", user);
-  await initValue();
+export default defineNuxtRouteMiddleware(async () => {
+  const { user, initValue } = useUserStore()
+  await initValue()
   if (!user) {
-    return navigateTo("/login");
+    return navigateTo('/login')
   }
 
-  return navigateTo(`/profile/${user.stravaId}`);
-});
+  return navigateTo(`/profile/${user.stravaId}`)
+})

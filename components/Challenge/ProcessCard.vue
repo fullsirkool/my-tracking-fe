@@ -1,9 +1,12 @@
 <template>
-  <UCard class="relative text-[#4B4B4B]" style="box-shadow: none;">
+  <UCard class="relative text-[#4B4B4B]" style="box-shadow: none">
     <div class="flex items-center gap-4">
       <UAvatar size="xl" :src="userActivities.profile" alt="Avatar" />
       <div class="w-full">
-        <NuxtLink class="hover:text-sky-900 font-semibold" :to="`/profile/${userActivities.stravaId}`">
+        <NuxtLink
+          class="hover:text-sky-900 font-semibold"
+          :to="`/profile/${userActivities.stravaId}`"
+        >
           {{ `${userActivities.firstName} ${userActivities.lastName}` }}
         </NuxtLink>
       </div>
@@ -12,7 +15,9 @@
       <UProgress v-if="target" :value="process" size="md" :color="color">
         <template #indicator="{ percent }">
           <div class="text-right text-xs font-bold rounded-lg">
-            <span :class="`text-${color}-500`">{{ percent.toFixed(1) }}% {{ $t('completed') }}</span>
+            <span :class="`text-${color}-500`"
+              >{{ percent.toFixed(1) }}% {{ $t('completed') }}</span
+            >
           </div>
         </template>
       </UProgress>
@@ -36,11 +41,11 @@
   </UCard>
 </template>
 <script setup lang="ts">
-import { useChallengeStore } from '~/stores/challenge.store';
-import { ChallengeUser } from '~/types/dto/challenge.dto';
+import { useChallengeStore } from '~/stores/challenge.store'
+import { ChallengeUser } from '~/types/dto/challenge.dto'
 
 interface IChallengeProcessCardProps {
-  userActivities: ChallengeUser;
+  userActivities: ChallengeUser
 }
 
 const { target } = useChallengeStore()
@@ -63,14 +68,12 @@ const statistics = computed(() => {
 
   let totalDistance = 0
   let totalMovingTime = 0
-  let totalElapsedTime = 0
   let avgPace = '00:00'
 
-  challengeDailyActivity.forEach(item => {
-    const { distance, movingTime, elapsedTime } = item
+  challengeDailyActivity.forEach((item) => {
+    const { distance, movingTime } = item
     totalDistance += distance
     totalMovingTime += movingTime
-    totalElapsedTime += elapsedTime
   })
 
   if (totalDistance !== 0) {
@@ -92,7 +95,6 @@ const statistics = computed(() => {
     movingTimeStr = `${hour}:${minute}:${second}`
   }
 
-
   if (totalDistance !== 0 && totalMovingTime !== 0) {
     const avgPaceTime = totalMovingTime / (totalDistance / 1000) / 60
     const minute = Math.floor(avgPaceTime / 1)
@@ -101,21 +103,10 @@ const statistics = computed(() => {
   }
 
   return {
-    totalDistance: totalDistance,
+    totalDistance,
     distance: distanceStr,
     movingTime: movingTimeStr,
-    avgPace
-  };
-})
-
-const color = computed(() => {
-  switch (true) {
-    case process.value < 25: return 'red'
-    case process.value < 50: return 'orange'
-    case process.value < 75: return 'yellow'
-    case process.value < 100: return 'green'
-    case process.value === 100: return 'blue'
-    default: return 'red'
+    avgPace,
   }
 })
 
@@ -128,6 +119,23 @@ const process = computed(() => {
     return 100
   }
 
-  return +(statistics.value.totalDistance * 100 / target).toFixed(1)
+  return +((statistics.value.totalDistance * 100) / target).toFixed(1)
+})
+
+const color = computed(() => {
+  switch (true) {
+    case process.value < 25:
+      return 'red'
+    case process.value < 50:
+      return 'orange'
+    case process.value < 75:
+      return 'yellow'
+    case process.value < 100:
+      return 'green'
+    case process.value === 100:
+      return 'blue'
+    default:
+      return 'red'
+  }
 })
 </script>
