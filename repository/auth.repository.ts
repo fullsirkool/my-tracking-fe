@@ -32,6 +32,7 @@ export default {
       body: {
         completeDto,
       },
+      headers: { Authorization: `Bearer ${accessTokenCookie.value}` },
     })
     return data.value
   },
