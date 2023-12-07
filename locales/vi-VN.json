@@ -49,5 +49,7 @@
   "ended": "Đã kết thúc",
   "not_a_member": "Chưa có tài khoản?",
   "sign_up_now": "Đăng kí ngay",
-  "sign_in_now": "Đăng nhập ngay"
+  "sign_in_now": "Đăng nhập ngay",
+  "sign_up_successfully": "Đăng kí thành công",
+  "sign_up_failed": "Đăng kí thất bại"
 }

@@ -111,6 +111,10 @@
 <script setup lang="ts">
 import {object, string, type InferType} from 'yup'
 import type {FormSubmitEvent} from '#ui/types'
+import authRepository from "~/repository/auth.repository";
+
+const toast = useToast()
+const {t} = useI18n()
 
 const genderOptions = ref(['Male', 'Female', 'Other'])
 const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
@@ -149,5 +153,48 @@ const isLoading = ref(false)
 const onSubmit = async (event: FormSubmitEvent<any>) => {
   // Do something with data
   console.log(event.data)
+  const {
+    email,
+    password,
+    firstName,
+    lastName,
+    sex
+  } = event.data
+
+  const {data, error} = await authRepository.signUp({
+    email,
+    password,
+    firstName,
+    lastName,
+    sex
+  })
+
+  if (error) {
+    const {message} = error
+    toast.add({
+      id: 'copy-challenge',
+      icon: 'i-heroicons-x-circle-solid',
+      color: "red",
+      timeout: 3000,
+      title: message,
+    })
+    return
+  }
+
+  if (data) {
+    const {success} = data
+    if (success) {
+      toast.add({
+        id: 'copy-challenge',
+        icon: 'i-heroicons-check-circle',
+        timeout: 3000,
+        title: t('sign_up_successfully'),
+      })
+      setTimeout(() => {
+
+      }, 3000)
+      return
+    }
+  }
 }
 </script>
