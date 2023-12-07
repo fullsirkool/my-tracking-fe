@@ -46,5 +46,8 @@
   "completed": "completed",
   "start_date": "Start Date",
   "end_date": "End Date",
-  "ended": "Ended"
+  "ended": "Ended",
+  "not_a_member": "Not a member?",
+  "sign_up_now": "Sign up now",
+  "sign_in_now": "Sign in now"
 }

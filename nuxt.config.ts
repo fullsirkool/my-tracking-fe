@@ -3,10 +3,10 @@ export default defineNuxtConfig({
   ssr: false,
   devtools: { enabled: true },
   pages: true,
-  css: ['~/assets/main.css'],
+  css: ['~/assets/main.scss'],
   components: { global: true, dirs: ['~/components'] },
   app: {
-    pageTransition: { name: 'page', mode: 'out-in' },
+    // pageTransition: { name: 'page', mode: 'out-in' },
   },
   modules: [
     '@nuxt/ui',

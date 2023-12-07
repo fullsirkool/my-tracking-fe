@@ -18,7 +18,8 @@
         <template #label>
           <label class="text-md font-medium text-gray-900 leading-6">Password</label>
         </template>
-        <UInput v-model="state.password" icon="i-heroicons-lock-closed" placeholder="Password" :type="isShowPassword ? 'text' : 'password'"  class="custom-input">
+        <UInput v-model="state.password" icon="i-heroicons-lock-closed" placeholder="Password"
+                :type="isShowPassword ? 'text' : 'password'" class="custom-input">
           <template #trailing>
             <div @click="isShowPassword = !isShowPassword" class="cursor-pointer">
               <Icon
@@ -46,9 +47,13 @@
     </UForm>
 
     <p class="mt-10 text-center text-sm text-gray-500">
-      Not a member?
-      <a href="#" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Start a 14 day free
-        trial</a>
+      {{ $t('not_a_member') }}
+      <NuxtLink
+          to="/signup"
+          class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+      >
+        {{ $t('sign_up_now') }}
+      </NuxtLink>
     </p>
   </div>
 </template>
