@@ -15,22 +15,22 @@
         </UFormGroup>
 
         <UFormGroup label="Password" name="password">
-          <UInput v-model="state.password" :type="showPassword ? 'text' : 'password' " size="md" class="custom-input">
+          <UInput v-model="state.password" :type="isShowPassword ? 'text' : 'password' " size="md" class="custom-input">
             <template #trailing>
-              <div @click="showPassword = !showPassword" class="cursor-pointer">
+              <div @click="isShowPassword = !isShowPassword" class="cursor-pointer">
                 <Icon
-                    v-show="!showPassword"
+                    v-show="!isShowPassword"
                     name="mdi:eye-outline"
                     width="1.5rem"
                     height="1.5rem"
-                    color="#4b4b4b"
+                    color="#9ca3af"
                 />
                 <Icon
-                    v-show="showPassword"
+                    v-show="isShowPassword"
                     name="mdi:eye-off-outline"
                     width="1.5rem"
                     height="1.5rem"
-                    color="#4b4b4b"
+                    color="#9ca3af"
                 />
               </div>
             </template>
@@ -38,24 +38,24 @@
         </UFormGroup>
 
         <UFormGroup label="Confirm Password" name="confirmPassword">
-          <UInput v-model="state.confirmPassword" :type="showConfirmPassword ? 'text' : 'password'" size="md"
+          <UInput v-model="state.confirmPassword" :type="isShowConfirmPassword ? 'text' : 'password'" size="md"
                   class="custom-input">
             <template #trailing>
-              <div @click="showConfirmPassword = !showConfirmPassword" class="cursor-pointer">
+              <div @click="isShowConfirmPassword = !isShowConfirmPassword" class="cursor-pointer">
                 <Icon
-                    v-show="!showConfirmPassword"
+                    v-show="!isShowConfirmPassword"
                     name="mdi:eye-outline"
                     width="1.5rem"
                     height="1.5rem"
-                    color="#4b4b4b"
+                    color="#9ca3af"
 
                 />
                 <Icon
-                    v-show="showConfirmPassword"
+                    v-show="isShowConfirmPassword"
                     name="mdi:eye-off-outline"
                     width="1.5rem"
                     height="1.5rem"
-                    color="#4b4b4b"
+                    color="#9ca3af"
                 />
               </div>
             </template>
@@ -110,8 +110,8 @@ const state = ref({
   password: '',
   confirmPassword: ''
 })
-const showPassword = ref(false)
-const showConfirmPassword = ref(false)
+const isShowPassword = ref(false)
+const isShowConfirmPassword = ref(false)
 
 const validate = (state: any): FormError[] => {
   const errors = []

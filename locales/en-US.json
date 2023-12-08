@@ -48,4 +48,10 @@
   "end_date": "End Date",
   "ended": "Ended",
   "complete_information": "Complete Information"
+  "ended": "Ended",
+  "not_a_member": "Not a member?",
+  "sign_up_now": "Sign up now",
+  "sign_in_now": "Sign in now",
+  "sign_up_successfully": "Sign up successfully",
+  "sign_up_failed": "Sign up failed"
 }

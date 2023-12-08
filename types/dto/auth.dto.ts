@@ -16,3 +16,11 @@ export interface CompleteDto {
     email: string
     password: string
 }
+
+export interface SignUpDto {
+    email: string;
+    password: string;
+    firstName: string;
+    lastName: string;
+    sex: string;
+}

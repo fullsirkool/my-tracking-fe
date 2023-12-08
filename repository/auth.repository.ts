@@ -1,4 +1,6 @@
-import {CompleteDto, RenewDto, SignInDto} from './../types/dto/auth.dto'
+import {RenewDto, SignInDto, SignUpDto} from './../types/dto/auth.dto'
+import {BaseCreateResponse} from "~/types/dto/base.dto";
+import {BaseFetchResponse} from "~/types/dto/base.dto";
 import {UserClaims} from "~/types/dto/user.dto";
 
 const runtimeConfig = useRuntimeConfig()
@@ -21,17 +23,28 @@ export default {
             body: {
                 refreshToken,
             },
-            headers: {Authorization: `Bearer ${accessTokenCookie.value}`},
         })
         return data.value
     },
 
-    async complete(completeDto: CompleteDto): Promise<UserClaims | null> {
-        const {data} = await useFetch<UserClaims>(`${BASE_URL}/auth/complete`, {
-            method: 'PATCH',
-            body: completeDto,
-            headers: {Authorization: `Bearer ${accessTokenCookie.value}`},
+    async signUp(signUpDto: SignUpDto): Promise<BaseFetchResponse<BaseCreateResponse | null>> {
+        const {data, error} = await useFetch<BaseCreateResponse>(`${BASE_URL}/auth/signup`, {
+            method: 'POST',
+            body: signUpDto,
         })
-        return data.value
+        return {
+            data: data.value,
+            error: error.value?.data
+        }
     },
+
+    async verify(capcha: string): Promise<BaseFetchResponse<UserClaims | null>> {
+        const {data, error} = await useFetch<UserClaims>(`${BASE_URL}/auth/verify/${capcha}`, {
+            method: 'PATCH',
+        })
+        return {
+            data: data.value,
+            error: error.value?.data
+        }
+    }
 }
