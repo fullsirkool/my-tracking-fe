@@ -6,7 +6,7 @@
     <div v-else class="text-center">
       <div v-if="getUser">
         <h1 class="text-cyan-700">Hi {{ `${getUser.firstName} ${getUser.lastName}` }}</h1>
-        <h2>Your account is verified!. You'll be redirect to app in: {{}}</h2>
+        <h2>Your account is verified!. You'll be redirect to app in: {{counter}}</h2>
       </div>
     </div>
     <div class="flex items-center justify-center leading-10">
