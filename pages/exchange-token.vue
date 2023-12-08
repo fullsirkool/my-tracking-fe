@@ -6,6 +6,9 @@
 <script setup>
 import authRepository from '~/repository/auth.repository'
 import { useUserStore } from '~/stores/userStore'
+definePageMeta({
+  layout: 'empty',
+})
 const dayjs = useDayjs()
 const userStore = useUserStore()
 const { setUser } = userStore

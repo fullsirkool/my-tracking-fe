@@ -17,6 +17,9 @@ export interface BaseCreateResponse {
     success: Boolean
 }
 
+export interface BaseUpdateResponse {
+    success: Boolean
+}
 export interface BaseFetchResponse<T> {
     data: T,
     error: FetchError

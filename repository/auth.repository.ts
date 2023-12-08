@@ -1,6 +1,7 @@
 import {RenewDto, SignInDto, SignUpDto} from './../types/dto/auth.dto'
 import {BaseCreateResponse} from "~/types/dto/base.dto";
 import {BaseFetchResponse} from "~/types/dto/base.dto";
+import {UserClaims} from "~/types/dto/user.dto";
 
 const runtimeConfig = useRuntimeConfig()
 const {BASE_URL} = runtimeConfig.public
@@ -24,12 +25,21 @@ export default {
         return data.value
     },
 
-    async signUp(signUpDto: SignUpDto): Promise<BaseFetchResponse<BaseCreateResponse | null> | null> {
+    async signUp(signUpDto: SignUpDto): Promise<BaseFetchResponse<BaseCreateResponse | null>> {
         const {data, error} = await useFetch<BaseCreateResponse>(`${BASE_URL}/auth/signup`, {
             method: 'POST',
             body: signUpDto,
         })
-        console.log('sign up', error.value?.data)
+        return {
+            data: data.value,
+            error: error.value?.data
+        }
+    },
+
+    async verify(capcha: string): Promise<BaseFetchResponse<UserClaims | null>> {
+        const {data, error} = await useFetch<UserClaims>(`${BASE_URL}/auth/verify/${capcha}`, {
+            method: 'PATCH',
+        })
         return {
             data: data.value,
             error: error.value?.data
