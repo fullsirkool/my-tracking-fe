@@ -1,4 +1,4 @@
-import {RenewDto, SignInDto, SignUpDto} from './../types/dto/auth.dto'
+import {AuthResponseDto, RenewDto, SignInDto, SignUpDto} from './../types/dto/auth.dto'
 import {BaseCreateResponse} from "~/types/dto/base.dto";
 import {BaseFetchResponse} from "~/types/dto/base.dto";
 import {UserClaims} from "~/types/dto/user.dto";
@@ -9,10 +9,22 @@ const {BASE_URL} = runtimeConfig.public
 const accessTokenCookie = useCookie('access-token')
 
 export default {
-    async signIn(code: number): Promise<SignInDto | null> {
-        const url = `${BASE_URL}/auth/signin/${code}`
-        const {data} = await useFetch<SignInDto>(url, {
-            method: 'post',
+    async signIn(signInDto: SignInDto): Promise<BaseFetchResponse<AuthResponseDto | null>> {
+        const url = `${BASE_URL}/auth/sign-in`
+        const {data, error} = await useFetch<AuthResponseDto>(url, {
+            method: 'POST',
+            body: signInDto
+        })
+        return {
+            data: data.value,
+            error: error.value?.data
+        }
+    },
+
+    async connectStrava(code: number): Promise<AuthResponseDto | null> {
+        const url = `${BASE_URL}/auth/connect/${code}`
+        const {data} = await useFetch<AuthResponseDto>(url, {
+            method: 'POST',
         })
         return data.value
     },

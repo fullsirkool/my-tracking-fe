@@ -22,8 +22,8 @@ export const useUserStore = defineStore('user', () => {
         const accessTokenExpireTime = new Date(
             new Date().getTime() + 48 * 60 * 60 * 1000,
         )
-        const refreshTokenExpireTime = new Date(new Date())
-        refreshTokenExpireTime.setFullYear(new Date().getFullYear() + 1)
+        const refreshTokenExpireTime = new Date(
+            new Date().getTime() + 7 * 24 * 60 * 60 * 1000)
 
         const accessTokenCookie = useCookie('access-token', {
             expires: accessTokenExpireTime,

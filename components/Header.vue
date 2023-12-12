@@ -17,7 +17,7 @@
       >
         {{ $t('challenge') }}
       </NuxtLink>
-      <template v-if="user && user.profile">
+      <template v-if="user && user.id">
         <NuxtLink
             to="/profile"
             class="text-lg no-underline text-grey-darkest hover:text-blue-dark ml-2"

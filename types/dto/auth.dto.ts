@@ -1,6 +1,6 @@
 import {UserClaims} from './user.dto'
 
-export interface SignInDto {
+export interface AuthResponseDto {
     expireTime: number
     accessToken: string
     refreshToken: string
@@ -23,4 +23,9 @@ export interface SignUpDto {
     firstName: string;
     lastName: string;
     sex: string;
+}
+
+export interface SignInDto {
+    email: string
+    password: string
 }

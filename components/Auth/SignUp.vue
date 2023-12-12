@@ -175,7 +175,7 @@ const onSubmit = async (event: FormSubmitEvent<any>) => {
       id: 'copy-challenge',
       icon: 'i-heroicons-x-circle-solid',
       color: "red",
-      timeout: 3000,
+      timeout: 5000,
       title: message,
     })
     return
@@ -187,11 +187,11 @@ const onSubmit = async (event: FormSubmitEvent<any>) => {
       toast.add({
         id: 'copy-challenge',
         icon: 'i-heroicons-check-circle',
-        timeout: 3000,
+        timeout: 5000,
         title: t('sign_up_successfully'),
       })
       setTimeout(() => {
-
+        navigateTo('/signin')
       }, 3000)
       return
     }

@@ -59,6 +59,12 @@
 </template>
 <script setup lang="ts">
 import type {FormError, FormSubmitEvent} from '#ui/types'
+import authRepository from "~/repository/auth.repository";
+import {useUserStore} from "~/stores/userStore";
+
+const dayjs = useDayjs()
+const toast = useToast()
+const {setUser} = useUserStore()
 
 const state = reactive({
   email: undefined,
@@ -76,8 +82,48 @@ const validate = (state: any): FormError[] => {
   return errors
 }
 
+const accessTokenExpireTime = dayjs(new Date()).add(2, 'day').toDate()
+const refreshTokenExpireTime = dayjs(new Date()).add(1, 'week').toDate()
+const accessTokenCookie = useCookie('access-token', {
+  expires: accessTokenExpireTime,
+})
+const refreshTokenCookie = useCookie('refresh-token', {
+  expires: refreshTokenExpireTime,
+})
+
 const onSubmit = async (event: FormSubmitEvent<any>) => {
   // Do something with data
   console.log(event.data)
+  const {
+    email,
+    password,
+  } = event.data
+
+  const {data, error} = await authRepository.signIn({
+    email,
+    password,
+  })
+
+  if (error) {
+    const {message} = error
+    toast.add({
+      id: 'copy-challenge',
+      icon: 'i-heroicons-x-circle-solid',
+      color: "red",
+      timeout: 5000,
+      title: message,
+    })
+    return
+  }
+
+  if (data) {
+    const {user, accessToken, refreshToken} = data
+    accessTokenCookie.value = accessToken
+    refreshTokenCookie.value = refreshToken
+    setUser(user)
+    localStorage.setItem('user-info', JSON.stringify(user))
+    navigateTo('/')
+    return
+  }
 }
 </script>

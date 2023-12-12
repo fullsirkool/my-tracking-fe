@@ -17,7 +17,7 @@ const { query } = useRoute()
 const { code } = query
 
 const accessTokenExpireTime = dayjs(new Date()).add(2, 'day').toDate()
-const refreshTokenExpireTime = dayjs(new Date()).add(1, 'year').toDate()
+const refreshTokenExpireTime = dayjs(new Date()).add(1, 'week').toDate()
 const accessTokenCookie = useCookie('access-token', {
   expires: accessTokenExpireTime,
 })
@@ -26,7 +26,7 @@ const refreshTokenCookie = useCookie('refresh-token', {
 })
 
 const exchangeToken = async () => {
-  const data = await authRepository.signIn(code)
+  const data = await authRepository.connectStrava(code)
   const { accessToken, refreshToken, user } = data
   accessTokenCookie.value = accessToken
   refreshTokenCookie.value = refreshToken
