@@ -65,26 +65,24 @@
   </UContainer>
 </template>
 <script setup>
-import {storeToRefs} from 'pinia'
 import activityRepository from '~/repository/activity.repository'
 import {useProfileStore} from '~/stores/profile.store'
 
-const store = useProfileStore()
 const {
   fetchMonthlyActivitiesDetail,
   fetchUserInfo,
   fetchDailyActivityStatistics,
   fetchCreatedChallenge,
   fetchJoinedChallenge,
-} = store
-const {user} = storeToRefs(store)
+  user
+} = useProfileStore()
 const {params} = useRoute()
 const {id} = params
 
 const {data} = await useAsyncData('profile', async () => {
   const [userInfor, dailyStatistics, statictics, dailyactivities] =
       await Promise.all([
-        fetchUserInfo(+id),
+        fetchUserInfo(id),
         fetchDailyActivityStatistics(),
         activityRepository.fetchStatistics(id),
         fetchMonthlyActivitiesDetail(id),
@@ -108,7 +106,7 @@ const count = ref(statistics.count)
 const totalMovingTime = ref((statistics.totalMovingTime / 3600).toFixed(2))
 
 const getFullName = computed(
-    () => `${user.value.firstName} ${user.value.lastName}`,
+    () => `${user.firstName} ${user.lastName}`,
 )
 const getPaceMinute = computed(() => {
   const minutes = Math.floor(avgPace.value / 1)
