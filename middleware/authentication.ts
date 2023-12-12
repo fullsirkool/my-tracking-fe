@@ -10,6 +10,6 @@ export default defineNuxtRouteMiddleware(async (from) => {
   }
 
   if (from.fullPath === '/profile') {
-    return navigateTo(`/profile/${user?.stravaId}`)
+    return navigateTo(`/profile/${user?.id}`)
   }
 })

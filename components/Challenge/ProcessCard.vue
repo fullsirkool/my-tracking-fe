@@ -5,7 +5,7 @@
       <div class="w-full">
         <NuxtLink
           class="hover:text-sky-900 font-semibold"
-          :to="`/profile/${userActivities.stravaId}`"
+          :to="`/profile/${userActivities.id}`"
         >
           {{ `${userActivities.firstName} ${userActivities.lastName}` }}
         </NuxtLink>
