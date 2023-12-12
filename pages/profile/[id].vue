@@ -67,15 +67,16 @@
 <script setup>
 import activityRepository from '~/repository/activity.repository'
 import {useProfileStore} from '~/stores/profile.store'
-
+import {storeToRefs} from "pinia";
+const profileStore = useProfileStore()
 const {
   fetchMonthlyActivitiesDetail,
   fetchUserInfo,
   fetchDailyActivityStatistics,
   fetchCreatedChallenge,
   fetchJoinedChallenge,
-  user
-} = useProfileStore()
+} = profileStore
+const {user} = storeToRefs(profileStore)
 const {params} = useRoute()
 const {id} = params
 
@@ -106,7 +107,7 @@ const count = ref(statistics.count)
 const totalMovingTime = ref((statistics.totalMovingTime / 3600).toFixed(2))
 
 const getFullName = computed(
-    () => `${user.firstName} ${user.lastName}`,
+    () => `${user.value.firstName} ${user.value.lastName}`,
 )
 const getPaceMinute = computed(() => {
   const minutes = Math.floor(avgPace.value / 1)
