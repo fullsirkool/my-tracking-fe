@@ -65,10 +65,10 @@ export default {
   },
 
   async findJoinedChallenge(
-    stravaId: string,
+    id: string,
     params: PagingChallengeDto,
   ): Promise<PagingChallengeResponse | null> {
-    const url = `${BASE_URL}/challenge/user/joined/${stravaId}`
+    const url = `${BASE_URL}/challenge/user/joined/${id}`
     const { data } = await useFetch<PagingChallengeResponse>(url, {
       method: 'get',
       params,
@@ -77,10 +77,10 @@ export default {
   },
 
   async findCreatedChallenge(
-    stravaId: string,
+    id: string,
     params: PagingChallengeDto,
   ): Promise<PagingChallengeResponse | null> {
-    const url = `${BASE_URL}/challenge/user/created/${stravaId}`
+    const url = `${BASE_URL}/challenge/user/created/${id}`
     const { data } = await useFetch<PagingChallengeResponse>(url, {
       method: 'get',
       params,

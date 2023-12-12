@@ -10,7 +10,7 @@ export const useProfileStore = defineStore('profile', () => {
   const chartDate = ref(new Date())
   const activities = ref<ActivityDto[] | null>([])
 
-  const stravaId = ref<string>('')
+  const id = ref<string>('')
   const user = ref<UserClaims | null>(null)
 
   const activitiesDetail = ref<ActivityDetail[] | null>([])
@@ -44,7 +44,7 @@ export const useProfileStore = defineStore('profile', () => {
       }
 
       const response = await challengeRepository.findCreatedChallenge(
-        stravaId.value,
+        id.value,
         param,
       )
 
@@ -70,7 +70,7 @@ export const useProfileStore = defineStore('profile', () => {
       }
 
       const response = await challengeRepository.findJoinedChallenge(
-        stravaId.value,
+        id.value,
         param,
       )
 
@@ -104,7 +104,7 @@ export const useProfileStore = defineStore('profile', () => {
     try {
       const data = await activityRepository.fetchMonthlyActivities({
         date: chartDate.value.toISOString(),
-        stravaId: stravaId.value,
+        id: id.value,
       })
       activities.value = data
     } catch (error) {}
@@ -123,7 +123,7 @@ export const useProfileStore = defineStore('profile', () => {
         page: detailPage.value,
         size: detailSize.value,
         date: chartDate.value.toISOString(),
-        stravaId: stravaId.value,
+        id: id.value,
       })
 
       if (res) {
@@ -138,9 +138,9 @@ export const useProfileStore = defineStore('profile', () => {
   const fetchUserInfo = async (id: any) => {
     try {
       if (id) {
-        stravaId.value = id
+        id.value = id
       }
-      const data = await userRepository.fetchUserInfo(stravaId.value)
+      const data = await userRepository.fetchUserInfo(id.value)
       user.value = data
     } catch (error) {}
   }
@@ -152,7 +152,7 @@ export const useProfileStore = defineStore('profile', () => {
   return {
     chartDate,
     activities,
-    stravaId,
+    id,
     user,
     activitiesDetail,
     detailPage,

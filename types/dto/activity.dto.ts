@@ -6,7 +6,7 @@ export enum ActivityType {
 
 export interface ActivityMontlyDto {
   date: string
-  stravaId: string
+  id: string
 }
 
 export interface ActivityDto {
@@ -32,7 +32,7 @@ export interface StatisticsDto {
 
 export interface FindActivityDto extends BasePagingDto {
   date: string
-  stravaId: string
+  id: string
 }
 
 export interface ActivityDetail {
