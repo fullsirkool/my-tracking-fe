@@ -46,8 +46,13 @@ export const useUserStore = defineStore('user', () => {
                 }
             }
             const loadedInfo = localStorage.getItem('user-info')
-            if (typeof loadedInfo === 'string') {
-                user.value = JSON.parse(loadedInfo)
+            if (loadedInfo) {
+                const loadedUser = JSON.parse(loadedInfo)
+                if (loadedUser?.activated) {
+                    user.value = loadedUser
+                } else {
+                    localStorage.removeItem('user-info')
+                }
             }
         } catch (error) {
             localStorage.removeItem('user-info')

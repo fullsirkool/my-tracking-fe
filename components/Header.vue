@@ -24,26 +24,26 @@
         >
           <UAvatar alt="Profile" size="lg" :src="user.profile"/>
         </NuxtLink>
-        <a
-            href="javascript:void(0)"
-            class="text-lg no-underline text-grey-darkest hover:text-blue-dark ml-2"
-            @click="logout"
-        >Sign Out</a
-        >
+        <UButton color="orange" variant="outline" :ui="{ rounded : 'rounded-full' }" @click="logout" >
+          <template #leading>
+            <Icon name="heroicons:arrow-right-on-rectangle-solid" width="1.5rem" height="1.5rem"/>
+          </template>
+          {{ $t('sign_out') }}
+        </UButton>
       </template>
       <NuxtLink
           v-else
-          to="/login"
-          class="text-lg no-underline text-grey-darkest hover:text-blue-dark ml-2"
-      >
-        login
-      </NuxtLink>
-      <NuxtLink
           to="/signin"
           class="text-lg no-underline text-grey-darkest hover:text-blue-dark ml-2"
       >
-        {{ $t('sign_in') }}
+        <UButton color="orange" variant="outline" :ui="{ rounded: 'rounded-full' }">
+          <template #leading>
+            <Icon name="heroicons:arrow-left-end-on-rectangle-solid" width="1.5rem" height="1.5rem"/>
+          </template>
+          {{ $t('sign_in') }}
+        </UButton>
       </NuxtLink>
+
       <CommonLanguageSwitcher></CommonLanguageSwitcher>
     </div>
   </nav>

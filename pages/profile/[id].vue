@@ -38,17 +38,20 @@
       <div
           class="absolute rounded-full bg-white -translate-x-2/4 translate-y-2/4 z-[1] left-2/4 bottom-0"
       >
-        <img
-            :src="user.profile"
-            class="h-44 w-44 rounded-full border-[5px] border-solid border-[white]"
-        />
+        <UAvatar size="4xl" :src="user.profile" alt="Avatar"
+                 class="h-44 w-44 rounded-full border-[5px] border-solid border-[white]"/>
       </div>
     </div>
     <div class="mt-24 text-center">
       <h1 class="font-bold text-2xl">{{ getFullName }}</h1>
-      <div class="flex gap-3 items-center mx-auto my-2 w-fit">
-        <CommonStravaIcon></CommonStravaIcon>
-        <h3 class="text-md">{{ $t('strava_id') }}: {{ user.stravaId }}</h3>
+      <div>
+        <div v-if="user?.stravaId" class="flex gap-3 items-center mx-auto my-2 w-fit">
+          <CommonStravaIcon></CommonStravaIcon>
+          <h3 class="text-md">{{ $t('strava_id') }}: {{ user.stravaId }}</h3>
+        </div>
+        <div v-else class="mt-2">
+          <CommonStravaConnect></CommonStravaConnect>
+        </div>
       </div>
     </div>
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-10">
@@ -68,6 +71,7 @@
 import activityRepository from '~/repository/activity.repository'
 import {useProfileStore} from '~/stores/profile.store'
 import {storeToRefs} from "pinia";
+
 const profileStore = useProfileStore()
 const {
   fetchMonthlyActivitiesDetail,
