@@ -15,7 +15,7 @@ import {useUserStore} from '../stores/userStore'
 const userStore = useUserStore()
 const {user} = userStore
 console.log('user', user)
-const isOpenCompleteModal = ref(false)
+const isOpenCompleteModal = ref<boolean>(false)
 
 if (user && !user.email) {
   isOpenCompleteModal.value = true
