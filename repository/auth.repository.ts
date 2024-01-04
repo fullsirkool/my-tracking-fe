@@ -62,5 +62,17 @@ export default {
             data: data.value,
             error: error.value?.data
         }
+    },
+
+    async resendEmail(signInDto: SignInDto): Promise<BaseFetchResponse<BaseCreateResponse | null>> {
+        const url = `${BASE_URL}/auth/resend-email`
+        const {data, error} = await useFetch<BaseCreateResponse>(url, {
+            method: 'POST',
+            body: signInDto
+        })
+        return {
+            data: data.value,
+            error: error.value?.data
+        }
     }
 }

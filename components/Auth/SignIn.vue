@@ -44,6 +44,25 @@
       <UButton type="submit" color="indigo" variant="solid" size="md" :ui="{ rounded: 'rounded-lg' }" block
                :loading="isLoading">Submit
       </UButton>
+
+      <UDivider label="OR" color="gray"/>
+
+      <UButton color="black" label="" icon="i-simple-icons-github" block disabled>
+        <Icon
+            name="simple-icons:google"
+            width="1.25rem"
+            height="1.25rem"
+        />
+        Login with Google
+      </UButton>
+      <UButton color="black" label="" icon="i-simple-icons-github" block disabled>
+        <Icon
+            name="simple-icons:facebook"
+            width="1.25rem"
+            height="1.25rem"
+        />
+        Login with Facebook
+      </UButton>
     </UForm>
 
     <p class="mt-10 text-center text-sm text-gray-500">
@@ -91,9 +110,44 @@ const refreshTokenCookie = useCookie('refresh-token', {
   expires: refreshTokenExpireTime,
 })
 
+const tempAuthDto = {
+  email: "",
+  password: "",
+}
+
+const actions = [{
+  label: 'Resend email',
+  click: async () => await handleResendEmail()
+}]
+
+const handleResendEmail = async () => {
+  const {data, error} = await authRepository.resendEmail(tempAuthDto)
+  if (error) {
+    const {message} = error
+    toast.add({
+      id: 'copy-challenge',
+      icon: 'i-heroicons-x-circle-solid',
+      color: "red",
+      timeout: 5000,
+      title: message,
+      actions: actions
+    })
+    return
+  }
+
+  if (data) {
+    toast.add({
+      id: 'copy-challenge',
+      icon: 'i-heroicons-check-circle',
+      timeout: 5000,
+      title: 'Email has been sent!',
+    })
+    return
+  }
+}
+
 const onSubmit = async (event: FormSubmitEvent<any>) => {
   // Do something with data
-  console.log(event.data)
   const {
     email,
     password,
@@ -104,14 +158,19 @@ const onSubmit = async (event: FormSubmitEvent<any>) => {
     password,
   })
 
+
+
   if (error) {
     const {message} = error
+    tempAuthDto.email = email
+    tempAuthDto.password = password
     toast.add({
       id: 'copy-challenge',
       icon: 'i-heroicons-x-circle-solid',
       color: "red",
-      timeout: 5000,
+      timeout: 10000,
       title: message,
+      actions: actions
     })
     return
   }

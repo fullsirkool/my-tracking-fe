@@ -1,5 +1,5 @@
 export default (date: Date = new Date()): number => {
-  const month = date.getMonth()
+  const month = date.getMonth() + 1
   const year = date.getFullYear()
 
   if (month < 1 || month > 12) {
