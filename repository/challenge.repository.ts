@@ -14,7 +14,7 @@ const accessTokenCookie = useCookie('access-token')
 export default {
   async createChallenge(body: CreateChallengeDto): Promise<Challenge | null> {
     if (!accessTokenCookie.value) {
-      navigateTo('/login')
+      navigateTo('/signin')
     }
     const url = `${BASE_URL}/challenge`
     const { data } = await useFetch<Challenge>(url, {
@@ -54,7 +54,7 @@ export default {
 
   async join(id: number) {
     if (!accessTokenCookie.value) {
-      navigateTo('/login')
+      navigateTo('/signin')
     }
     const url = `${BASE_URL}/challenge/join/${id}`
     const { data } = await useFetch<Challenge>(url, {

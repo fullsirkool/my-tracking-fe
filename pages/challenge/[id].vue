@@ -36,7 +36,7 @@ await useAsyncData('challenge', () => fetchChallengeDetail(+id))
 const handleJoinChallenge = async () => {
   if (isEmpty(user) || !user) {
     localStorage.setItem('saved-path', fullPath)
-    navigateTo('/login')
+    navigateTo('/signin')
     return
   }
   const res = await challengeRepository.join(+id)

@@ -5,7 +5,7 @@ export default defineNuxtRouteMiddleware(async () => {
   console.log('middleware', user)
   await initValue()
   if (!user) {
-    return navigateTo('/login')
+    return navigateTo('/signin')
   }
 
   return navigateTo(`/profile/${user.id}`)

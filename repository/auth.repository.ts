@@ -23,7 +23,7 @@ export default {
 
     async connectStrava(code: number): Promise<AuthResponseDto | null> {
         if (!accessTokenCookie.value) {
-            navigateTo('/login')
+            navigateTo('/signin')
         }
         const url = `${BASE_URL}/auth/connect/${code}`
         const {data} = await useFetch<AuthResponseDto>(url, {
