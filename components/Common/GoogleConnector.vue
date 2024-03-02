@@ -18,6 +18,11 @@ import {
   signInWithPopup,
 } from 'firebase/auth'
 
+interface IGoogleConnectorPros {
+  handleSignIn: Function
+}
+const props = withDefaults(defineProps<IGoogleConnectorPros>(), {})
+
 const auth = useFirebaseAuth()
 const googleAuthProvider = new GoogleAuthProvider()
 
@@ -27,7 +32,8 @@ const signinRedirect = async () => {
     console.log('auth null')
     return
   }
-  const res = await signInWithPopup(auth, googleAuthProvider)
-  console.log('res', res)
+  const {user} = await signInWithPopup(auth, googleAuthProvider)
+  const token = await user.getIdToken()
+  await props.handleSignIn(token)
 }
 </script>
