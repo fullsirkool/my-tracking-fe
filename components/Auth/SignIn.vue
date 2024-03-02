@@ -47,14 +47,15 @@
 
       <UDivider label="OR" color="gray"/>
 
-      <UButton color="black" label="" icon="i-simple-icons-github" block disabled>
-        <Icon
-            name="simple-icons:google"
-            width="1.25rem"
-            height="1.25rem"
-        />
-        Login with Google
-      </UButton>
+<!--      <UButton color="black" label="" icon="i-simple-icons-github" block disabled>-->
+<!--        <Icon-->
+<!--            name="simple-icons:google"-->
+<!--            width="1.25rem"-->
+<!--            height="1.25rem"-->
+<!--        />-->
+<!--        Login with Google-->
+<!--      </UButton>-->
+      <CommonGoogleConnector></CommonGoogleConnector>
       <UButton color="black" label="" icon="i-simple-icons-github" block disabled>
         <Icon
             name="simple-icons:facebook"
