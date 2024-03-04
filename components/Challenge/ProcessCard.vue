@@ -103,9 +103,11 @@ const statistics = computed(() => {
     avgPace = `${minute}:${+second > 9 ? second : '0' + second}`
   }
 
+  const totalDistanceFormatted = totalDistance ? (totalDistance / 1000).toFixed(2) : 0
+
   return {
     totalDistance,
-    totalDistanceFormatted: (totalDistance / 1000).toFixed(2),
+    totalDistanceFormatted,
     distance: distanceStr,
     movingTime: movingTimeStr,
     avgPace,

@@ -21,16 +21,19 @@ export default {
         }
     },
 
-    async connectStrava(code: number): Promise<AuthResponseDto | null> {
+    async connectStrava(code: number): Promise<BaseFetchResponse<AuthResponseDto| null>> {
         if (!accessTokenCookie.value) {
             navigateTo('/signin')
         }
         const url = `${BASE_URL}/auth/connect/${code}`
-        const {data} = await useFetch<AuthResponseDto>(url, {
+        const {data, error} = await useFetch<AuthResponseDto>(url, {
             method: 'POST',
             headers: {Authorization: `Bearer ${accessTokenCookie.value}`},
         })
-        return data.value
+        return {
+            data: data.value,
+            error: error.value?.data
+        }
     },
 
     async renew(refreshToken: string): Promise<RenewDto | null> {

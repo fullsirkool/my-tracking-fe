@@ -38,8 +38,12 @@
       <div
           class="absolute rounded-full bg-white -translate-x-2/4 translate-y-2/4 z-[1] left-2/4 bottom-0"
       >
-        <UAvatar size="4xl" :src="user.profile" alt="Avatar"
+        <UAvatar v-if="!user.profile" size="4xl" :src="user.profile" alt="Avatar"
                  class="h-44 w-44 rounded-full border-[5px] border-solid border-[white]"/>
+        <img v-else
+            :src="user.profile"
+            class="h-44 w-44 rounded-full border-[5px] border-solid border-[white]"
+        />
       </div>
     </div>
     <div class="mt-24 text-center">

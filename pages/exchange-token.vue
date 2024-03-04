@@ -7,7 +7,7 @@
 import authRepository from '~/repository/auth.repository'
 import { useUserStore } from '~/stores/userStore'
 definePageMeta({
-  layout: 'empty',
+  layout: 'home',
 })
 const dayjs = useDayjs()
 const userStore = useUserStore()
@@ -25,8 +25,25 @@ const refreshTokenCookie = useCookie('refresh-token', {
   expires: refreshTokenExpireTime,
 })
 
+const actions = [{
+  label: 'Back to profile',
+  click: () => navigateTo('/profile')
+}]
+
 const exchangeToken = async () => {
-  const data = await authRepository.connectStrava(code)
+  const {data, error} = await authRepository.connectStrava(code)
+  if (error) {
+    const {message} = error
+    toast.add({
+      id: 'copy-challenge',
+      icon: 'i-heroicons-x-circle-solid',
+      color: "red",
+      timeout: 10000,
+      title: message,
+      actions: actions
+    })
+    return
+  }
   const { accessToken, refreshToken, user } = data
   accessTokenCookie.value = accessToken
   refreshTokenCookie.value = refreshToken
