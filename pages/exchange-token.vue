@@ -12,7 +12,7 @@ definePageMeta({
 const dayjs = useDayjs()
 const userStore = useUserStore()
 const { setUser } = userStore
-
+const toast = useToast()
 const { query } = useRoute()
 const { code } = query
 
