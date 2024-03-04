@@ -7,7 +7,7 @@
             class="hover:text-sky-900 font-semibold"
             :to="`/profile/${userActivities.id}`"
         >
-          {{ `${userActivities.firstName} ${userActivities.lastName}` }}
+          {{ userDisplayName }}
         </NuxtLink>
       </div>
     </div>
@@ -141,5 +141,9 @@ const color = computed(() => {
     default:
       return 'red'
   }
+})
+
+const userDisplayName = computed(() => {
+  return `${props.userActivities.firstName? props.userActivities.firstName : ''} ${props.userActivities.lastName ? props.userActivities.lastName : ''}`
 })
 </script>

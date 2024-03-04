@@ -47,8 +47,8 @@ const handleJoinChallenge = async () => {
       timeout: 4000,
       title: t('join_challenge_successfully'),
     })
-    fetchChallengeDetail(+id)
-    router.replace({ query: { tab: 'joined-user' } })
+    await fetchChallengeDetail(+id)
+    await router.replace({ query: { tab: 'joined-user' } })
   } else {
     toast.add({
       id: 'copy-challenge',

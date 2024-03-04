@@ -115,7 +115,7 @@ const count = ref(statistics.count)
 const totalMovingTime = ref((statistics.totalMovingTime / 3600).toFixed(2))
 
 const getFullName = computed(
-    () => `${user.value.firstName} ${user.value.lastName}`,
+    () => `${user.value.firstName ? user.value.firstName : ''} ${user.value.lastName ? user.value.lastName : ''}`,
 )
 const getPaceMinute = computed(() => {
   const minutes = Math.floor(avgPace.value / 1)
