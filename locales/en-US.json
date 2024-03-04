@@ -53,5 +53,6 @@
   "sign_in_now": "Sign in now",
   "sign_up_successfully": "Sign up successfully",
   "sign_up_failed": "Sign up failed",
-  "sign_out": "Sign Out"
+  "sign_out": "Sign Out",
+  "total_distance": "Total Distance"
 }
