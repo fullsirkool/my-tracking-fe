@@ -137,8 +137,8 @@ const showConnectStravaButton = computed(() => {
   if (user.value.stravaId) {
     return false
   }
-  const {id} = getUser()
-  if (id !== user.value.id) {
+  const currentUser = getUser()
+  if (!currentUser || currentUser.id !== user.value.id) {
     return false
   }
   return true
