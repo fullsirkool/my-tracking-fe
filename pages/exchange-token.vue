@@ -6,9 +6,6 @@
 <script setup>
 import authRepository from '~/repository/auth.repository'
 import { useUserStore } from '~/stores/userStore'
-definePageMeta({
-  layout: 'home',
-})
 const dayjs = useDayjs()
 const userStore = useUserStore()
 const { setUser } = userStore
@@ -38,7 +35,7 @@ const exchangeToken = async () => {
       id: 'copy-challenge',
       icon: 'i-heroicons-x-circle-solid',
       color: "red",
-      timeout: 10000,
+      timeout: 30000,
       title: message,
       actions: actions
     })
