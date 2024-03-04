@@ -18,6 +18,10 @@ export const useUserStore = defineStore('user', () => {
         user.value = null
     }
 
+    const getUser = () => {
+        return user.value
+    }
+
     const initValue = async () => {
         const accessTokenExpireTime = new Date(
             new Date().getTime() + 48 * 60 * 60 * 1000,
@@ -63,6 +67,7 @@ export const useUserStore = defineStore('user', () => {
 
     return {
         user,
+        getUser,
         setUser,
         logout,
         initValue,

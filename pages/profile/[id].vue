@@ -41,20 +41,20 @@
         <UAvatar v-if="!user.profile" size="4xl" :src="user.profile" alt="Avatar"
                  class="h-44 w-44 rounded-full border-[5px] border-solid border-[white]"/>
         <img v-else
-            :src="user.profile"
-            class="h-44 w-44 rounded-full border-[5px] border-solid border-[white]"
+             :src="user.profile"
+             class="h-44 w-44 rounded-full border-[5px] border-solid border-[white]"
         />
       </div>
     </div>
     <div class="mt-24 text-center">
       <h1 class="font-bold text-2xl">{{ getFullName }}</h1>
       <div>
-        <div v-if="user?.stravaId" class="flex gap-3 items-center mx-auto my-2 w-fit">
-          <CommonStravaIcon></CommonStravaIcon>
-          <h3 class="text-md">{{ $t('strava_id') }}: {{ user.stravaId }}</h3>
-        </div>
-        <div v-else class="mt-2">
+        <div v-if="showConnectStravaButton" class="mt-2">
           <CommonStravaConnect></CommonStravaConnect>
+        </div>
+        <div v-else class="flex gap-3 items-center mx-auto my-2 w-fit">
+          <CommonStravaIcon></CommonStravaIcon>
+          <h3 class="text-md">{{ $t('strava_id') }}: {{ user.stravaId ? user.stravaId : 'Not connected' }}</h3>
         </div>
       </div>
     </div>
@@ -75,6 +75,7 @@
 import activityRepository from '~/repository/activity.repository'
 import {useProfileStore} from '~/stores/profile.store'
 import {storeToRefs} from "pinia";
+import {useUserStore} from '~/stores/userStore'
 
 const profileStore = useProfileStore()
 const {
@@ -84,7 +85,11 @@ const {
   fetchCreatedChallenge,
   fetchJoinedChallenge,
 } = profileStore
+
+
 const {user} = storeToRefs(profileStore)
+const {getUser} = useUserStore()
+
 const {params} = useRoute()
 const {id} = params
 
@@ -126,6 +131,17 @@ const getTotalRuningMinute = computed(() => {
   const minutes = Math.floor(totalMovingTime.value / 1)
   const seconds = (totalMovingTime.value % 1) * 60
   return `${minutes}:${seconds.toFixed(0)}`
+})
+
+const showConnectStravaButton = computed(() => {
+  if (user.value.stravaId) {
+    return false
+  }
+  const {id} = getUser()
+  if (id !== user.value.id) {
+    return false
+  }
+  return true
 })
 </script>
 <style scoped>
