@@ -29,3 +29,8 @@ export interface SignInDto {
     email: string
     password: string
 }
+
+export interface SignInGoogleDto {
+    token: string
+    deviceToken?: string;
+}

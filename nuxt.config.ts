@@ -17,6 +17,7 @@ export default defineNuxtConfig({
         '@nuxtjs/i18n',
         'nuxt-icon',
         'vue3-carousel-nuxt',
+        'nuxt-vuefire',
     ],
     colorMode: {
         preference: 'light',
@@ -45,6 +46,18 @@ export default defineNuxtConfig({
             },
         ],
         defaultLocale: 'en-US',
+    },
+    vuefire: {
+        auth: {
+            enabled: true
+        },
+        config: {
+            apiKey: process.env.FIREBASE_API_KEY,
+            authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+            projectId: process.env.FIREBASE_PROJECT_ID,
+            appId: process.env.FIREBASE_APP_ID,
+            // there could be other properties depending on the project
+        },
     },
     runtimeConfig: {
         public: {

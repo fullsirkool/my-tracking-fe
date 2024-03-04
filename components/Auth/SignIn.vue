@@ -47,14 +47,15 @@
 
       <UDivider label="OR" color="gray"/>
 
-      <UButton color="black" label="" icon="i-simple-icons-github" block disabled>
-        <Icon
-            name="simple-icons:google"
-            width="1.25rem"
-            height="1.25rem"
-        />
-        Login with Google
-      </UButton>
+<!--      <UButton color="black" label="" icon="i-simple-icons-github" block disabled>-->
+<!--        <Icon-->
+<!--            name="simple-icons:google"-->
+<!--            width="1.25rem"-->
+<!--            height="1.25rem"-->
+<!--        />-->
+<!--        Login with Google-->
+<!--      </UButton>-->
+      <CommonGoogleConnector :handle-sign-in="handleSignInGoogle"></CommonGoogleConnector>
       <UButton color="black" label="" icon="i-simple-icons-github" block disabled>
         <Icon
             name="simple-icons:facebook"
@@ -164,6 +165,37 @@ const onSubmit = async (event: FormSubmitEvent<any>) => {
     const {message} = error
     tempAuthDto.email = email
     tempAuthDto.password = password
+    toast.add({
+      id: 'copy-challenge',
+      icon: 'i-heroicons-x-circle-solid',
+      color: "red",
+      timeout: 10000,
+      title: message,
+      actions: actions
+    })
+    return
+  }
+
+  if (data) {
+    const {user, accessToken, refreshToken} = data
+    accessTokenCookie.value = accessToken
+    refreshTokenCookie.value = refreshToken
+    setUser(user)
+    localStorage.setItem('user-info', JSON.stringify(user))
+    navigateTo('/')
+    return
+  }
+}
+
+const handleSignInGoogle = async (token: string) => {
+  const {data, error} = await authRepository.signInGoogle({
+    token
+  })
+
+
+
+  if (error) {
+    const {message} = error
     toast.add({
       id: 'copy-challenge',
       icon: 'i-heroicons-x-circle-solid',

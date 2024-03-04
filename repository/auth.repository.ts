@@ -1,4 +1,4 @@
-import {AuthResponseDto, RenewDto, SignInDto, SignUpDto} from './../types/dto/auth.dto'
+import {AuthResponseDto, RenewDto, SignInDto, SignInGoogleDto, SignUpDto} from './../types/dto/auth.dto'
 import {BaseCreateResponse} from "~/types/dto/base.dto";
 import {BaseFetchResponse} from "~/types/dto/base.dto";
 import {UserClaims} from "~/types/dto/user.dto";
@@ -69,6 +69,18 @@ export default {
         const {data, error} = await useFetch<BaseCreateResponse>(url, {
             method: 'POST',
             body: signInDto
+        })
+        return {
+            data: data.value,
+            error: error.value?.data
+        }
+    },
+
+    async signInGoogle(signInGoogleDto: SignInGoogleDto): Promise<BaseFetchResponse<AuthResponseDto | null>> {
+        const url = `${BASE_URL}/auth/google/sign-in`
+        const {data, error} = await useFetch<AuthResponseDto>(url, {
+            method: 'POST',
+            body: signInGoogleDto
         })
         return {
             data: data.value,
