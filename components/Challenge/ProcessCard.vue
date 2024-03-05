@@ -11,7 +11,6 @@
         </NuxtLink>
       </div>
     </div>
-    <div>{{ $t('total_distance') }}: {{ statistics.totalDistanceFormatted }}km</div>
     <div>
       <UProgress v-if="target" :value="process" size="md" :color="color">
         <template #indicator="{ percent }">
