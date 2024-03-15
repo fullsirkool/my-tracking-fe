@@ -5,16 +5,19 @@
       <slot></slot>
     </div>
     <Footer></Footer>
-    <AuthCompleteDialog :is-open="isOpenCompleteModal" @close="isOpenCompleteModal = false"></AuthCompleteDialog>
-    <UNotifications/>
+    <AuthCompleteDialog
+      :is-open="isOpenCompleteModal"
+      @close="isOpenCompleteModal = false"
+    ></AuthCompleteDialog>
+    <UNotifications />
   </div>
 </template>
 <script setup lang="ts">
-import {useUserStore} from '../stores/userStore'
+import { useUserStore } from '~/stores/userStore'
 
 const userStore = useUserStore()
-const {user} = userStore
-console.log('user', user)
+const { user } = userStore
+
 const isOpenCompleteModal = ref<boolean>(false)
 
 if (user && !user.email) {
