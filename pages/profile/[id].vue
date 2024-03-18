@@ -2,7 +2,7 @@
   <UContainer>
     <div class="relative">
       <UCard
-        class="flex justify-center p-10 pb-20 profile-header border-none rounded-3xl"
+        class="flex justify-center p-10 pb-20 border-none rounded-3xl bg-gradient-to-tl from-orange-500 to-yellow-500"
       >
         <div
           class="w-fit grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 font-semibold"
@@ -10,13 +10,17 @@
           <div
             class="shadow rounded-full w-32 h-32 flex items-center justify-center flex-col text-center p-3 border-[1px] bg-white border-none text-gray-700"
           >
-            <p class="text-red-500 text-4xl font-extrabold">{{ totalDistance }}</p>
+            <p class="text-red-500 text-4xl font-extrabold">
+              {{ totalDistance }}
+            </p>
             {{ $t('distance') }} (km)
           </div>
           <div
             class="shadow rounded-full w-32 h-32 flex items-center justify-center flex-col text-center p-3 border-[1px] bg-white border-none text-gray-700"
           >
-            <p class="text-red-500 text-4xl font-extrabold">{{ getPaceMinute }}</p>
+            <p class="text-red-500 text-4xl font-extrabold">
+              {{ getPaceMinute }}
+            </p>
             {{ $t('pace') }}
           </div>
           <div
@@ -81,9 +85,9 @@
   </UContainer>
 </template>
 <script setup>
+import { storeToRefs } from 'pinia'
 import activityRepository from '~/repository/activity.repository'
 import { useProfileStore } from '~/stores/profile.store'
-import { storeToRefs } from 'pinia'
 import { useUserStore } from '~/stores/userStore'
 
 const profileStore = useProfileStore()

@@ -18,13 +18,26 @@
         </NuxtLink>
       </UTooltip>
     </div>
+    <div
+      class="leading-10 text-4xl uppercase font-black text-slate-100 tracking-widest absolute left-1/2 -translate-x-1/2"
+    >
+      Tracking App
+    </div>
     <div class="flex items-center">
-      <UTooltip :text="$t('challenge')">
+      <UTooltip :text="$t('create_challenge')">
+        <NuxtLink
+          to="/challenge/create"
+          class="text-2xl no-underline text-grey-darkest hover:text-blue-dark inline-flex items-center justify-center w-[45px] h-[45px] rounded-full bg-slate-100 text-orange-600 shadow-xl mx-2"
+        >
+          <Icon name="system-uicons:create" />
+        </NuxtLink>
+      </UTooltip>
+      <UTooltip :text="$t('view_challenge')">
         <NuxtLink
           to="/challenge"
           class="text-2xl no-underline text-grey-darkest hover:text-blue-dark inline-flex items-center justify-center w-[45px] h-[45px] rounded-full bg-slate-100 text-orange-600 shadow-xl mx-2"
         >
-          <Icon name="ep:aim" class="relative" style="top: 1px" />
+          <Icon name="ep:aim" class="relative" />
         </NuxtLink>
       </UTooltip>
 
@@ -67,26 +80,18 @@
           </template>
         </UPopover>
       </template>
-      <NuxtLink
-        v-else
-        to="/signin"
-        class="text-lg no-underline text-grey-darkest hover:text-blue-dark ml-2"
-      >
-        <UButton
-          color="orange"
-          variant="outline"
-          :ui="{ rounded: 'rounded-full' }"
+
+      <UTooltip v-else :text="$t('sign_in')">
+        <NuxtLink
+          to="/signin"
+          class="text-2xl no-underline text-grey-darkest hover:text-blue-dark inline-flex items-center justify-center w-[45px] h-[45px] rounded-full bg-slate-100 text-orange-600 shadow-xl mx-2"
         >
-          <template #leading>
-            <Icon
-              name="heroicons:arrow-left-end-on-rectangle-solid"
-              width="1.5rem"
-              height="1.5rem"
-            />
-          </template>
-          {{ $t('sign_in') }}
-        </UButton>
-      </NuxtLink>
+          <Icon
+            name="heroicons:arrow-left-end-on-rectangle-solid"
+            style="top: -1px"
+          />
+        </NuxtLink>
+      </UTooltip>
     </div>
   </nav>
 </template>

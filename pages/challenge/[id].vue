@@ -8,9 +8,9 @@
       />
     </div>
     <UContainer class="p-6 flex items-center justify-center">
-      <UButton color="red" size="xl" @click="handleJoinChallenge">{{
-        $t('join_challenge')
-      }}</UButton>
+      <UButton size="xl" @click="handleJoinChallenge">
+        {{ $t('join_challenge') }}
+      </UButton>
     </UContainer>
     <ChallengeDetailTable></ChallengeDetailTable>
   </UContainer>

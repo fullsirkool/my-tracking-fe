@@ -16,7 +16,6 @@
         }"
       >
         <template #header>
-          <Placeholder class="h-8" />
           <h1 class="text-center text-2xl font-semibold">Setting</h1>
         </template>
         <div class="flex items-center gap-4">

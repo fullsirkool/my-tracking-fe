@@ -1,19 +1,18 @@
 <template>
-  <div class="relative challenge-card-container" :class="customClass">
-    <div
-      v-show="isEnded"
-      class="challenge-card-tag absolute -right-4 -top-2 flex items-center justify-center px-4 py-2 h-6 rounded-lg text-white z-10 bg-red-500"
-    >
-      {{ $t('ended') }}
-    </div>
+  <div class="relative" :class="customClass">
     <UCard
-      class="rounded-3xl bg-[#f5f5f5] challenge-card-content text-[#4B4B4B] max-w-[500px] relative"
-      style="box-shadow: none"
+      class="rounded-3xl bg-[#f5f5f5] text-[#4B4B4B] max-w-[500px] relative group hover:bg-orange-50 transition-all shadow-none hover:-translate-y-2 duration-300 hover:shadow-xl scale-90 hover:scale-100"
     >
-      <div class="image-container rounded-xl">
+      <div
+        v-show="isEnded"
+        class="absolute right-0 top-1/4 inline-block z-10 rotate-12 duration-300 py-1 text-2xl text-red-600 w-full text-center tracking-wider border-red-500 border-y-2 scale-125 font-black shadow bg-slate-100 opacity-80"
+      >
+        {{ $t('ended') }}
+      </div>
+      <div class="rounded-xl">
         <img
           :src="challenge.image"
-          class="rounded-xl h-[200px] w-full object-cover"
+          class="rounded-xl h-[200px] w-full object-cover opacity-90 group-hover:opacity-100"
         />
       </div>
       <div class="mt-4">
@@ -26,13 +25,13 @@
           <div class="w-full">
             <NuxtLink
               :to="`/challenge/${challenge.id}`"
-              class="font-bold text-xl hover:text-sky-900"
+              class="font-bold text-xl hover:text-orange-500 transition-colors duration-300"
               >{{ challenge.title }}
             </NuxtLink>
             <div class="flex items-center justify-between">
               <NuxtLink
                 :to="`/challenge/${challenge.id}`"
-                class="mt-1 text-md flex items-center gap-2"
+                class="mt-1 text-md flex items-center gap-2 hover:text-orange-500 hover:translate-x-1 transition-transform"
               >
                 {{ $t('join') }}
                 <UIcon name="i-heroicons-arrow-right-20-solid" />
@@ -128,47 +127,4 @@ const handleShareChallenge = () => {
   } catch (error) {}
 }
 </script>
-<style lang="scss">
-.challenge-card-container {
-  .challenge-card-tag,
-  .challenge-card-content {
-    transition:
-      transform 0.3s ease-in-out,
-      background-color 0.3s ease-in-out;
-  }
-
-  .challenge-card-tag {
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px !important;
-  }
-
-  .challenge-card-content {
-    .image-container {
-      height: auto;
-      overflow: hidden;
-      position: relative;
-
-      img {
-        transition: transform 0.3s ease-in-out;
-      }
-    }
-  }
-}
-
-.challenge-card-container:hover {
-  .challenge-card-tag,
-  .challenge-card-content {
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px !important;
-    transform: translate(0, -5px);
-  }
-
-  .challenge-card-content {
-    background-color: bisque;
-
-    .image-container {
-      img {
-        transform: scale(1.07);
-      }
-    }
-  }
-}
-</style>
+<style lang="scss"></style>

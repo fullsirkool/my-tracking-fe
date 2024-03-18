@@ -1,8 +1,5 @@
 <template>
   <UContainer>
-    <NuxtLink to="/challenge/create">
-      <UButton :label="$t('create_challenge')" variant="solid" />
-    </NuxtLink>
     <div v-if="challenges" class="grid grid-cols-1 gap-6">
       <div class="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         <div
@@ -17,7 +14,11 @@
         </div>
       </div>
       <div class="flex items-center justify-end">
-        <UPagination v-model="paging.page" :total="challenges.length" />
+        <UPagination
+          v-model="paging.page"
+          :total="challenges.length"
+          :active-button="{ class: 'bg-orange-500' }"
+        />
       </div>
     </div>
   </UContainer>
