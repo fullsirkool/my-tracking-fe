@@ -74,3 +74,8 @@ export interface ChallengeDailyActivity {
 export interface ChallengeUser extends UserClaims {
   challengeDailyActivity: ChallengeDailyActivity[]
 }
+
+export interface JoinChallengeResponse {
+  qrCode: string
+  qrDataURL: string
+}

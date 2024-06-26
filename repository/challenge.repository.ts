@@ -4,7 +4,7 @@ import {
   PagingChallengeDto,
   PagingChallengeResponse,
   Challenge,
-  CreateChallengeDto,
+  CreateChallengeDto, JoinChallengeResponse,
 } from './../types/dto/challenge.dto'
 
 const runtimeConfig = useRuntimeConfig()
@@ -52,12 +52,12 @@ export default {
     return data.value
   },
 
-  async join(id: number) {
+  async join(id: number): Promise<JoinChallengeResponse | null> {
     if (!accessTokenCookie.value) {
       navigateTo('/signin')
     }
     const url = `${BASE_URL}/challenge/join/${id}`
-    const { data } = await useFetch<Challenge>(url, {
+    const { data } = await useFetch<JoinChallengeResponse | null>(url, {
       method: 'post',
       headers: { Authorization: `Bearer ${accessTokenCookie.value}` },
     })
