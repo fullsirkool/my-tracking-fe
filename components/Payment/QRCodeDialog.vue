@@ -1,14 +1,14 @@
 <template>
   <UModal v-model="props.isOpen">
     <div class="p-4">
-      <Placeholder class="h-48" />
-      <img :src="qrDataUrl" />
+      <Placeholder class="h-48"/>
+      <img :src="qrDataUrl"/>
     </div>
   </UModal>
 </template>
 <script setup lang="ts">
 const runtimeConfig = useRuntimeConfig()
-const { BASE_URL } = runtimeConfig.public
+const {BASE_URL} = runtimeConfig.public
 
 interface IPaymentDialogProps {
   isOpen: boolean
@@ -26,7 +26,7 @@ const props = withDefaults(defineProps<IPaymentDialogProps>(), {
 
 const init = () => {
   const eventSource = new EventSource(
-    `${BASE_URL}/payment/event/${props.paymentId}`,
+      `${BASE_URL}/payment/event/${props.paymentId}`,
   )
   eventSource.addEventListener('complete-payment', () => {
     console.log('payment complete')
@@ -37,8 +37,11 @@ const init = () => {
   }
 }
 
-onMounted(() => {
-  init()
+watch(() => props.isOpen, (newVal) => {
+  if (newVal) {
+    console.log('open dialog')
+    init()
+  }
 })
 </script>
 <style scoped></style>

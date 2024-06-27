@@ -44,7 +44,7 @@ const paymentId = ref(0)
 
 await useAsyncData('challenge', () => fetchChallengeDetail(+id))
 
-const handleJoinChallenge = async () => {
+const handleJoinChallenge = async  () => {
   if (isEmpty(user) || !user) {
     localStorage.setItem('saved-path', fullPath)
     navigateTo('/signin')
