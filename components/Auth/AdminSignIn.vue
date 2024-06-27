@@ -91,17 +91,23 @@ import { useAdminStore } from '~/stores/admin.store'
 import { useAlertStore } from '~/stores/alert.store'
 
 const dayjs = useDayjs()
+const router = useRouter()
 const toast = useToast()
 const adminStore = useAdminStore()
 const alertStore = useAlertStore()
 const accessTokenExpireTime = dayjs(new Date()).add(2, 'day').toDate()
 const refreshTokenExpireTime = dayjs(new Date()).add(1, 'week').toDate()
+const roleExpireTime = dayjs(new Date()).add(1, 'week').toDate()
 
 const accessTokenCookie = useCookie('access-token', {
   expires: accessTokenExpireTime,
 })
 const refreshTokenCookie = useCookie('refresh-token', {
   expires: refreshTokenExpireTime,
+})
+
+const roleCookie = useCookie('role', {
+  expires: roleExpireTime,
 })
 
 const isShowPassword = ref(false)
@@ -114,24 +120,38 @@ const formState = reactive({
 const onSubmit = async () => {
   try {
     const response = await adminStore.login(formState)
-    console.log(response)
+
     if (!response.data && response.error) {
-      alertStore.open({ message: response.error.message, type: 'error' })
+      toast.add({
+        color: 'red',
+        description: 'Invalid username or password',
+        timeout: 2000,
+      })
+      return
     }
 
     accessTokenCookie.value = response.data?.accessToken
     refreshTokenCookie.value = response.data?.refreshToken
+    roleCookie.value = 'admin'
+
+    router.push('/')
+    toast.add({
+      description: 'Login successful',
+      timeout: 2000,
+    })
   } catch (error: any) {
-    console.log(error)
+    console.error(error)
   }
 }
 
 const validate = (state: any): FormError[] => {
   const errors = []
-  if (!formState.username)
+  if (!formState.username) {
     errors.push({ path: 'username', message: 'Required' })
-  if (!formState.password)
+  }
+  if (!formState.password) {
     errors.push({ path: 'password', message: 'Required' })
+  }
   return errors
 }
 </script>

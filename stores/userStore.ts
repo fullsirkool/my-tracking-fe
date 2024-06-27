@@ -36,10 +36,6 @@ export const useUserStore = defineStore('user', () => {
     const refreshTokenCookie = useCookie('refresh-token', {
       expires: refreshTokenExpireTime,
     })
-    if (!accessTokenCookie.value && !refreshTokenCookie.value) {
-      localStorage.removeItem('user-info')
-      return
-    }
 
     try {
       if (!accessTokenCookie.value) {

@@ -27,7 +27,7 @@ export const useAdminStore = defineStore('admin', () => {
     return readonly(user)
   }
 
-  const initValue = async () => {
+  const verifyUser = async () => {
     const accessTokenExpireTime = new Date(
       new Date().getTime() + 48 * 60 * 60 * 1000,
     )
@@ -43,12 +43,8 @@ export const useAdminStore = defineStore('admin', () => {
       expires: refreshTokenExpireTime,
     })
 
-    if (!accessTokenCookie.value && !refreshTokenCookie.value) {
-      // localStorage.removeItem('user-info')
-      return
-    }
-
     try {
+      console.log('accessTokenCookie.value', accessTokenCookie.value)
       if (!accessTokenCookie.value) {
         const data = await authAdminRepository.renew(
           `${refreshTokenCookie.value}`,
@@ -57,6 +53,7 @@ export const useAdminStore = defineStore('admin', () => {
           const { accessToken, refreshToken } = data
           accessTokenCookie.value = accessToken
           refreshTokenCookie.value = refreshToken
+          console.log(data)
         }
       }
       // const loadedInfo = localStorage.getItem('user-info')
@@ -71,12 +68,12 @@ export const useAdminStore = defineStore('admin', () => {
 
       // asign admin info
     } catch (error) {
-      // localStorage.removeItem('user-info')
       console.error(error)
     }
   }
 
   return {
+    verifyUser,
     getUser,
     setUser,
     login,
