@@ -1,4 +1,4 @@
-import { useUserStore } from '~/stores/userStore'
+import { useUserStore } from '~/stores/user.store'
 
 export default defineNuxtRouteMiddleware(async () => {
   const { user, initValue } = useUserStore()
