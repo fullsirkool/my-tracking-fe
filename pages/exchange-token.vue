@@ -5,7 +5,7 @@
 </template>
 <script setup>
 import authRepository from '~/repository/auth.repository'
-import { useUserStore } from '~/stores/userStore'
+import { useUserStore } from '~/stores/user.store'
 const dayjs = useDayjs()
 const userStore = useUserStore()
 const { setUser } = userStore

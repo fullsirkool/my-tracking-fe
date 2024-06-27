@@ -97,7 +97,7 @@
 import { object, string, type InferType } from 'yup'
 import type { FormError, FormSubmitEvent } from '@nuxt/ui/dist/runtime/types'
 import authRepository from '~/repository/auth.repository'
-import { useUserStore } from '~/stores/userStore'
+import { useUserStore } from '~/stores/user.store'
 
 interface ICompleteDialogProps {
   isOpen: Boolean
