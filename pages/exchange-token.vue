@@ -22,22 +22,24 @@ const refreshTokenCookie = useCookie('refresh-token', {
   expires: refreshTokenExpireTime,
 })
 
-const actions = [{
-  label: 'Back to profile',
-  click: () => navigateTo('/profile')
-}]
+const actions = [
+  {
+    label: 'Back to profile',
+    click: () => navigateTo('/profile'),
+  },
+]
 
 const exchangeToken = async () => {
-  const {data, error} = await authRepository.connectStrava(code)
+  const { data, error } = await authRepository.connectStrava(code)
   if (error) {
-    const {message} = error
+    const { message } = error
     toast.add({
       id: 'copy-challenge',
       icon: 'i-heroicons-x-circle-solid',
-      color: "red",
+      color: 'red',
       timeout: 30000,
       title: message,
-      actions: actions
+      actions,
     })
     return
   }

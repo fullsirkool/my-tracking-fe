@@ -46,8 +46,8 @@
         >
           <template #trailing>
             <div
-              @click="isShowPassword = !isShowPassword"
               class="cursor-pointer"
+              @click="isShowPassword = !isShowPassword"
             >
               <Icon
                 v-show="!isShowPassword"
@@ -160,7 +160,7 @@ const handleResendEmail = async () => {
       color: 'red',
       timeout: 5000,
       title: message,
-      actions: actions,
+      actions,
     })
     return
   }
@@ -172,20 +172,19 @@ const handleResendEmail = async () => {
       timeout: 5000,
       title: 'Email has been sent!',
     })
-    return
   }
 }
 
 const onSubmit = async (event: FormSubmitEvent<any>) => {
   // Do something with data
-  
+
   try {
     const { email, password } = event.data
     const { data, error } = await authRepository.signIn({
       email,
       password,
     })
-  
+
     if (error) {
       const { message } = error
       tempAuthDto.email = email
@@ -196,11 +195,11 @@ const onSubmit = async (event: FormSubmitEvent<any>) => {
         color: 'red',
         timeout: 10000,
         title: message,
-        actions: actions,
+        actions,
       })
       return
     }
-  
+
     if (data) {
       const { user, accessToken, refreshToken } = data
       accessTokenCookie.value = accessToken
@@ -208,7 +207,6 @@ const onSubmit = async (event: FormSubmitEvent<any>) => {
       setUser(user)
       localStorage.setItem('user-info', JSON.stringify(user))
       navigateTo('/')
-      return
     }
   } catch (error) {
     console.error(error)
@@ -228,7 +226,7 @@ const handleSignInGoogle = async (token: string) => {
       color: 'red',
       timeout: 10000,
       title: message,
-      actions: actions,
+      actions,
     })
     return
   }
@@ -240,7 +238,6 @@ const handleSignInGoogle = async (token: string) => {
     setUser(user)
     localStorage.setItem('user-info', JSON.stringify(user))
     navigateTo('/')
-    return
   }
 }
 </script>

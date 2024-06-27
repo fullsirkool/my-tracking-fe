@@ -47,8 +47,8 @@
         >
           <template #trailing>
             <div
-              @click="isShowPassword = !isShowPassword"
               class="cursor-pointer"
+              @click="isShowPassword = !isShowPassword"
             >
               <Icon
                 v-show="!isShowPassword"

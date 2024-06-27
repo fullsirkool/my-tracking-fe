@@ -2,9 +2,9 @@
   <UContainer>
     <div>
       <img
-          :src="image"
-          alt=""
-          class="h-[600px] w-full object-cover rounded-3xl"
+        :src="image"
+        alt=""
+        class="h-[600px] w-full object-cover rounded-3xl"
       />
     </div>
     <UContainer class="p-6 flex items-center justify-center">
@@ -14,27 +14,33 @@
     </UContainer>
     <ChallengeDetailTable></ChallengeDetailTable>
   </UContainer>
-  <PaymentQRCodeDialog :is-open="openQrDialog" :qr-data-url="qrCodeDataUrl"></PaymentQRCodeDialog>
+  <PaymentQRCodeDialog
+    :is-open="openQrDialog"
+    :qr-data-url="qrCodeDataUrl"
+    :payment-id="paymentId"
+    @close="handleClosePaymentDialog"
+  ></PaymentQRCodeDialog>
 </template>
 <script setup lang="ts">
-import {storeToRefs} from 'pinia'
+import { storeToRefs } from 'pinia'
 import challengeRepository from '~/repository/challenge.repository'
-import {useChallengeStore} from '~/stores/challenge.store'
-import {useUserStore} from '~/stores/userStore'
+import { useChallengeStore } from '~/stores/challenge.store'
+import { useUserStore } from '~/stores/userStore'
 
 const toast = useToast()
-const {t} = useI18n()
+const { t } = useI18n()
 const router = useRouter()
 
 const challengeStore = useChallengeStore()
-const {user} = useUserStore()
-const {fetchChallengeDetail} = challengeStore
-const {image} = storeToRefs(challengeStore)
-const {params, fullPath} = useRoute()
-const {id} = params
+const { user } = useUserStore()
+const { fetchChallengeDetail } = challengeStore
+const { image } = storeToRefs(challengeStore)
+const { params, fullPath } = useRoute()
+const { id } = params
 
 const openQrDialog = ref(false)
 const qrCodeDataUrl = ref('')
+const paymentId = ref(0)
 
 await useAsyncData('challenge', () => fetchChallengeDetail(+id))
 
@@ -47,6 +53,7 @@ const handleJoinChallenge = async () => {
   const res = await challengeRepository.join(+id)
   if (res) {
     qrCodeDataUrl.value = res.qrDataURL
+    paymentId.value = res.paymentId
     openQrDialog.value = true
     console.log(res)
   }
@@ -69,5 +76,9 @@ const handleJoinChallenge = async () => {
   //     title: t('you_have_joined_this_challenge'),
   //   })
   // }
+}
+
+const handleClosePaymentDialog = () => {
+  openQrDialog.value = false
 }
 </script>

@@ -5,8 +5,12 @@
     </div>
     <div v-else class="text-center">
       <div v-if="getUser">
-        <h1 class="text-cyan-700">Hi {{ `${getUser.firstName} ${getUser.lastName}` }}</h1>
-        <h2>Your account is verified!. You'll be redirect to app in: {{counter}}</h2>
+        <h1 class="text-cyan-700">
+          Hi {{ `${getUser.firstName} ${getUser.lastName}` }}
+        </h1>
+        <h2>
+          Your account is verified!. You'll be redirect to app in: {{ counter }}
+        </h2>
       </div>
     </div>
     <div class="flex items-center justify-center leading-10">
@@ -17,22 +21,24 @@
   </div>
 </template>
 <script setup lang="ts">
-import authRepository from "~/repository/auth.repository";
+import authRepository from '~/repository/auth.repository'
 
 definePageMeta({
   layout: 'empty',
 })
 
-const {params} = useRoute()
-const {capcha} = params
+const { params } = useRoute()
+const { capcha } = params
 const counter = ref(20)
 
-const {data} = await useAsyncData('user', () => authRepository.verify(`${capcha}`))
+const { data } = await useAsyncData('user', () =>
+  authRepository.verify(`${capcha}`),
+)
 const getError = computed(() => {
   if (!data.value) {
     return null
   }
-  const {error} = data.value
+  const { error } = data.value
 
   return error
 })

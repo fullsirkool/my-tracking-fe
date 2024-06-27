@@ -1,34 +1,21 @@
 <template>
   test
-  <div v-if="message " class="aaa">{{ message }}</div>
+  <!--  <div v-if="message " class="aaa">{{ message }}</div>-->
 </template>
 
 <script setup lang="ts">
 const runtimeConfig = useRuntimeConfig()
-const {BASE_URL} = runtimeConfig.public
-
-const message = ref(null);
-let eventSource;
+const { BASE_URL } = runtimeConfig.public
 
 const init = () => {
-  eventSource = new EventSource(`${BASE_URL}/payment/sse`);
-
-  eventSource.onmessage = (event) => {
-    console.log('event', event)
-    message.value = event.data;
-  };
-
-  eventSource.onerror = (event) => {
-    console.error('Error:', event);
-    eventSource.close();
-  };
+  const eventSource = new EventSource(`${BASE_URL}/payment/sse`)
+  eventSource.addEventListener('new-payment', () => {
+    console.log('new event')
+  })
+  return () => {
+    eventSource.close()
+  }
 }
 
 init()
-
-onBeforeUnmount(() => {
-  if (eventSource) {
-    eventSource.close();
-  }
-});
 </script>

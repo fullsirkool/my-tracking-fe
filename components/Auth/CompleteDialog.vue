@@ -35,8 +35,8 @@
           >
             <template #trailing>
               <div
-                @click="isShowPassword = !isShowPassword"
                 class="cursor-pointer"
+                @click="isShowPassword = !isShowPassword"
               >
                 <Icon
                   v-show="!isShowPassword"
@@ -66,8 +66,8 @@
           >
             <template #trailing>
               <div
-                @click="isShowConfirmPassword = !isShowConfirmPassword"
                 class="cursor-pointer"
+                @click="isShowConfirmPassword = !isShowConfirmPassword"
               >
                 <Icon
                   v-show="!isShowConfirmPassword"

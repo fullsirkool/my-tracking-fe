@@ -1,11 +1,11 @@
 <template>
   <UCard class="relative text-[#4B4B4B]" style="box-shadow: none">
     <div class="flex items-center gap-4">
-      <UAvatar size="xl" :src="userActivities.profile" alt="Avatar"/>
+      <UAvatar size="xl" :src="userActivities.profile" alt="Avatar" />
       <div class="w-full">
         <NuxtLink
-            class="hover:text-sky-900 font-semibold"
-            :to="`/profile/${userActivities.id}`"
+          class="hover:text-sky-900 font-semibold"
+          :to="`/profile/${userActivities.id}`"
         >
           {{ userDisplayName }}
         </NuxtLink>
@@ -16,7 +16,7 @@
         <template #indicator="{ percent }">
           <div class="text-right text-xs font-bold rounded-lg">
             <span :class="`text-${color}-500`"
-            >{{ percent.toFixed(1) }}% {{ $t('completed') }}</span
+              >{{ percent.toFixed(1) }}% {{ $t('completed') }}</span
             >
           </div>
         </template>
@@ -25,15 +25,15 @@
     <div>
       <div class="flex items-center justify-between w-full mt-2">
         <div class="flex items-center gap-2">
-          <Icon name="fa6-solid:route" width="1rem" height="1rem"/>
+          <Icon name="fa6-solid:route" width="1rem" height="1rem" />
           <span>{{ statistics.distance }}</span>
         </div>
         <div class="flex items-center gap-2">
-          <Icon name="fa6-solid:stopwatch" width="1rem" height="1rem"/>
+          <Icon name="fa6-solid:stopwatch" width="1rem" height="1rem" />
           <span>{{ statistics.avgPace }}</span>
         </div>
         <div class="flex items-center gap-2">
-          <Icon name="ic:outline-watch-later" width="1rem" height="1rem"/>
+          <Icon name="ic:outline-watch-later" width="1rem" height="1rem" />
           <span>{{ statistics.movingTime }}</span>
         </div>
       </div>
@@ -41,14 +41,14 @@
   </UCard>
 </template>
 <script setup lang="ts">
-import {useChallengeStore} from '~/stores/challenge.store'
-import {ChallengeUser} from '~/types/dto/challenge.dto'
+import { useChallengeStore } from '~/stores/challenge.store'
+import { ChallengeUser } from '~/types/dto/challenge.dto'
 
 interface IChallengeProcessCardProps {
   userActivities: ChallengeUser
 }
 
-const {target} = useChallengeStore()
+const { target } = useChallengeStore()
 
 const props = withDefaults(defineProps<IChallengeProcessCardProps>(), {})
 
@@ -61,7 +61,7 @@ const statistics = computed(() => {
       pace: '00:00',
     }
   }
-  const {challengeDailyActivity} = props.userActivities
+  const { challengeDailyActivity } = props.userActivities
 
   let distanceStr = '0km'
   let movingTimeStr = '00:00:00'
@@ -71,7 +71,7 @@ const statistics = computed(() => {
   let avgPace = '00:00'
 
   challengeDailyActivity.forEach((item) => {
-    const {distance, movingTime} = item
+    const { distance, movingTime } = item
     totalDistance += distance
     totalMovingTime += movingTime
   })
@@ -102,7 +102,9 @@ const statistics = computed(() => {
     avgPace = `${minute}:${+second > 9 ? second : '0' + second}`
   }
 
-  const totalDistanceFormatted = totalDistance ? (totalDistance / 1000).toFixed(2) : 0
+  const totalDistanceFormatted = totalDistance
+    ? (totalDistance / 1000).toFixed(2)
+    : 0
 
   return {
     totalDistance,
@@ -143,6 +145,8 @@ const color = computed(() => {
 })
 
 const userDisplayName = computed(() => {
-  return `${props.userActivities.firstName? props.userActivities.firstName : ''} ${props.userActivities.lastName ? props.userActivities.lastName : ''}`
+  return `${
+    props.userActivities.firstName ? props.userActivities.firstName : ''
+  } ${props.userActivities.lastName ? props.userActivities.lastName : ''}`
 })
 </script>

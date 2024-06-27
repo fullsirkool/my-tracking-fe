@@ -4,7 +4,8 @@ import {
   PagingChallengeDto,
   PagingChallengeResponse,
   Challenge,
-  CreateChallengeDto, JoinChallengeResponse,
+  CreateChallengeDto,
+  JoinChallengeResponse,
 } from './../types/dto/challenge.dto'
 
 const runtimeConfig = useRuntimeConfig()
