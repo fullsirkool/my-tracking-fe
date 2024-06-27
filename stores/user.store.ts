@@ -5,8 +5,8 @@ import { UserClaims } from '~/types/dto/user.dto'
 export const useUserStore = defineStore('user', () => {
   const user = ref<UserClaims | null>()
 
-  const setUser = (u: UserClaims) => {
-    user.value = u
+  const setUser = (userInfo: UserClaims) => {
+    user.value = userInfo
   }
 
   const logout = () => {
@@ -14,12 +14,7 @@ export const useUserStore = defineStore('user', () => {
     const refreshTokenCookie = useCookie('refresh-token')
     accessTokenCookie.value = null
     refreshTokenCookie.value = null
-    localStorage.removeItem('user-info')
     user.value = null
-  }
-
-  const getUser = () => {
-    return user.value
   }
 
   const initValue = async () => {
@@ -63,8 +58,7 @@ export const useUserStore = defineStore('user', () => {
   initValue()
 
   return {
-    user,
-    getUser,
+    user: readonly(user),
     setUser,
     logout,
     initValue,

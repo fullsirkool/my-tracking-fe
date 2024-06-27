@@ -25,7 +25,7 @@
 import { storeToRefs } from 'pinia'
 import challengeRepository from '~/repository/challenge.repository'
 import { useChallengeStore } from '~/stores/challenge.store'
-import { useUserStore } from '~/stores/userStore'
+import { useUserStore } from '~/stores/user.store'
 
 const toast = useToast()
 const { t } = useI18n()

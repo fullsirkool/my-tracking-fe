@@ -88,7 +88,7 @@
 import { storeToRefs } from 'pinia'
 import activityRepository from '~/repository/activity.repository'
 import { useProfileStore } from '~/stores/profile.store'
-import { useUserStore } from '~/stores/userStore'
+import { useUserStore } from '~/stores/user.store'
 
 const profileStore = useProfileStore()
 const {

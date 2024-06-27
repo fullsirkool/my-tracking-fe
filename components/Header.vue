@@ -97,11 +97,15 @@
 </template>
 <script setup>
 import { useAdminStore } from '~/stores/admin.store'
-import { useUserStore } from '~/stores/userStore'
+import { useUserStore } from '~/stores/user.store'
 
 const userStore = useUserStore()
 const adminStore = useAdminStore()
-const { logout } = userStore
 
 const user = computed(() => userStore.user || adminStore.user)
+
+const logout = () => {
+  userStore.logout()
+  adminStore.logout()
+}
 </script>

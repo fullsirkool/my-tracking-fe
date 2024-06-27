@@ -14,15 +14,24 @@
   </div>
 </template>
 <script setup lang="ts">
-import { useUserStore } from '../stores/userStore'
+import { useUserStore } from '../stores/user.store'
+import { useAdminStore } from '~/stores/admin.store'
 const userStore = useUserStore()
-const { user } = userStore
-console.log('user', user)
+const adminStore = useAdminStore()
+// const { user } = userStore
+
 const isOpenCompleteModal = ref(false)
 
-if (user && !user.email) {
-  isOpenCompleteModal.value = true
-}
+// TODO(An): check if it is needed
+// if (user && !user.email) {
+//   isOpenCompleteModal.value = true
+// }
+
+const user = computed(() => userStore.user || adminStore.user)
+
+watch(user, (newValue) => console.log('User updated:', newValue), {
+  immediate: true,
+})
 </script>
 <style>
 .home-background {
@@ -39,4 +48,4 @@ if (user && !user.email) {
   filter: blur(8px);
   -webkit-mask: linear-gradient(rgb(255, 255, 255), transparent);
 }
-</style>
+</style>../stores/user.store

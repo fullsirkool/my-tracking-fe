@@ -1,13 +1,14 @@
 import { defineStore } from 'pinia'
 // import authRepository from '~/repository/auth.repository'
 import authAdminRepository from '~/repository/authAdmin.repository'
-import { UserClaims } from '~/types/dto/user.dto'
+// import { UserClaims } from '~/types/dto/user.dto'
+import { AdminInfoDto } from '~/types/dto/admin.dto'
 import { SignInAdminDto } from '~/types/dto/auth.dto'
 
 export const useAdminStore = defineStore('admin', () => {
-  const user = ref<UserClaims | null>()
+  const user = ref<AdminInfoDto | null>(null)
 
-  const setUser = (userInfo: UserClaims) => (user.value = userInfo)
+  const setUser = (adminInfo: AdminInfoDto) => (user.value = adminInfo)
 
   const login = async (payload: SignInAdminDto) => {
     const data = await authAdminRepository.signIn(payload)
@@ -16,67 +17,57 @@ export const useAdminStore = defineStore('admin', () => {
   }
 
   const logout = () => {
-    const accessTokenCookie = useCookie('access-token')
-    const refreshTokenCookie = useCookie('refresh-token')
+    const accessTokenCookie = useCookie('x-access-token')
+    const refreshTokenCookie = useCookie('x-refresh-token')
     accessTokenCookie.value = null
     refreshTokenCookie.value = null
     user.value = null
   }
 
-  const getUser = () => {
-    return readonly(user)
-  }
-
-  const verifyUser = async () => {
-    const accessTokenExpireTime = new Date(
-      new Date().getTime() + 48 * 60 * 60 * 1000,
-    )
-    const refreshTokenExpireTime = new Date(
-      new Date().getTime() + 7 * 24 * 60 * 60 * 1000,
-    )
-
-    const accessTokenCookie = useCookie('access-token', {
-      expires: accessTokenExpireTime,
+  const refreshToken = async () => {
+    const accessTokenCookie = useCookie('x-access-token', {
+      maxAge: 60 * 60 * 24 * 2, // 2days
     })
 
-    const refreshTokenCookie = useCookie('refresh-token', {
-      expires: refreshTokenExpireTime,
+    const refreshTokenCookie = useCookie('x-refresh-token', {
+      maxAge: 60 * 60 * 24 * 7, // 7days
     })
 
     try {
-      console.log('accessTokenCookie.value', accessTokenCookie.value)
-      if (!accessTokenCookie.value) {
-        const data = await authAdminRepository.renew(
-          `${refreshTokenCookie.value}`,
-        )
-        if (data) {
-          const { accessToken, refreshToken } = data
-          accessTokenCookie.value = accessToken
-          refreshTokenCookie.value = refreshToken
-          console.log(data)
-        }
-      }
-      // const loadedInfo = localStorage.getItem('user-info')
-      // if (loadedInfo) {
-      //   const loadedUser = JSON.parse(loadedInfo)
-      //   if (loadedUser?.activated) {
-      //     user.value = loadedUser
-      //   } else {
-      //     localStorage.removeItem('user-info')
-      //   }
-      // }
+      if (!refreshTokenCookie.value) throw new Error('No refresh token found')
 
-      // asign admin info
+      const data = await authAdminRepository.renew(
+        refreshTokenCookie.value as string,
+      )
+
+      if (!data) throw new Error('Invalid refresh token')
+
+      const { accessToken, refreshToken } = data
+      accessTokenCookie.value = accessToken
+      refreshTokenCookie.value = refreshToken
     } catch (error) {
       console.error(error)
     }
   }
 
+  const fetchUserInfo = async () => {
+    const accessTokenCookie = useCookie('x-access-token')
+    const refreshTokenCookie = useCookie('x-refresh-token')
+
+    if (!accessTokenCookie.value && refreshTokenCookie.value) {
+      await refreshToken()
+    }
+
+    const response = await authAdminRepository.fetchInfo()
+    response.data && setUser(response.data)
+  }
+
   return {
-    verifyUser,
-    getUser,
     setUser,
+    user: readonly(user),
     login,
     logout,
+    fetchUserInfo,
+    refreshToken,
   }
 })

@@ -108,7 +108,7 @@
 <script setup lang="ts">
 import type { FormError, FormSubmitEvent } from '#ui/types'
 import authRepository from '~/repository/auth.repository'
-import { useUserStore } from '~/stores/userStore'
+import { useUserStore } from '~/stores/user.store'
 
 const dayjs = useDayjs()
 const toast = useToast()
