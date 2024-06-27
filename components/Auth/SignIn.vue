@@ -112,7 +112,7 @@ import { useUserStore } from '~/stores/user.store'
 
 const dayjs = useDayjs()
 const toast = useToast()
-const { setUser } = useUserStore()
+const userStore = useUserStore()
 
 const state = reactive({
   email: undefined,
@@ -204,8 +204,8 @@ const onSubmit = async (event: FormSubmitEvent<any>) => {
       const { user, accessToken, refreshToken } = data
       accessTokenCookie.value = accessToken
       refreshTokenCookie.value = refreshToken
-      setUser(user)
-      localStorage.setItem('user-info', JSON.stringify(user))
+      console.log('User:', user)
+      userStore.setUser(user)
       navigateTo('/')
     }
   } catch (error) {
@@ -235,8 +235,7 @@ const handleSignInGoogle = async (token: string) => {
     const { user, accessToken, refreshToken } = data
     accessTokenCookie.value = accessToken
     refreshTokenCookie.value = refreshToken
-    setUser(user)
-    localStorage.setItem('user-info', JSON.stringify(user))
+    userStore.setUser(user)
     navigateTo('/')
   }
 }
