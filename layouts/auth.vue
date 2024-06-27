@@ -1,13 +1,24 @@
 <template>
   <div class="relative">
-    <nuxt-link to="/">
-      <UButton color="white" variant="solid" icon="i-heroicons-chevron-left-20-solid">Back</UButton>
-    </nuxt-link>
+    <div class="m-5">
+      <nuxt-link
+        to="/"
+        class="text-2xl no-underline text-grey-darkest hover:text-blue-dark inline-flex items-center justify-center w-[45px] h-[45px] rounded-full text-slate-100 bg-orange-600 shadow-xl mx-2"
+      >
+        <Icon
+          name="heroicons:chevron-left-20-solid"
+          width="38"
+          height="38"
+          class="relative"
+          style="top: -1px"
+        />
+      </nuxt-link>
+    </div>
     <div class="flex min-h-full flex-col justify-center px-6 py-20 lg:px-8">
       <slot></slot>
     </div>
     <UNotifications />
+    <CommonAlert />
   </div>
 </template>
-<script setup lang="ts">
-</script>
+<script setup lang="ts"></script>

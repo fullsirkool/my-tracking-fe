@@ -88,7 +88,7 @@ const dayjs = useDayjs()
 
 interface IChallengeCardProps {
   challenge: Challenge
-  customClass: string
+  customClass?: string
 }
 
 const props = withDefaults(defineProps<IChallengeCardProps>(), {})

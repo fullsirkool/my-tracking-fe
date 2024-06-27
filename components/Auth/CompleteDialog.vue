@@ -163,12 +163,13 @@ const onSubmit = async (event: FormSubmitEvent<any>) => {
   console.log(event.data)
   const { email, password } = event.data
 
-  const user = await authRepository.complete({ email, password })
-  if (user) {
-    setUser(user)
-    localStorage.setItem('user-info', JSON.stringify(user))
-    emit('close')
-  }
+  // TODO(an): need check undefined function
+  // const user = await authRepository.complete({ email, password })
+  // if (user) {
+  //   setUser(user)
+  //   localStorage.setItem('user-info', JSON.stringify(user))
+  //   emit('close')
+  // }
 }
 </script>
 <style></style>

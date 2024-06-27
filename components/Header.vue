@@ -96,10 +96,12 @@
   </nav>
 </template>
 <script setup>
-import { storeToRefs } from 'pinia'
+import { useAdminStore } from '~/stores/admin.store'
 import { useUserStore } from '~/stores/userStore'
 
 const userStore = useUserStore()
+const adminStore = useAdminStore()
 const { logout } = userStore
-const { user } = storeToRefs(userStore)
+
+const user = computed(() => userStore.user || adminStore.user)
 </script>

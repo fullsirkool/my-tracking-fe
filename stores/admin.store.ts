@@ -1,12 +1,18 @@
 import { defineStore } from 'pinia'
-import authRepository from '~/repository/auth.repository'
+// import authRepository from '~/repository/auth.repository'
+import authAdminRepository from '~/repository/authAdmin.repository'
 import { UserClaims } from '~/types/dto/user.dto'
+import { SignInAdminDto } from '~/types/dto/auth.dto'
 
-export const useUserStore = defineStore('user', () => {
+export const useAdminStore = defineStore('admin', () => {
   const user = ref<UserClaims | null>()
 
-  const setUser = (u: UserClaims) => {
-    user.value = u
+  const setUser = (userInfo: UserClaims) => (user.value = userInfo)
+
+  const login = async (payload: SignInAdminDto) => {
+    const data = await authAdminRepository.signIn(payload)
+
+    return data
   }
 
   const logout = () => {
@@ -14,15 +20,14 @@ export const useUserStore = defineStore('user', () => {
     const refreshTokenCookie = useCookie('refresh-token')
     accessTokenCookie.value = null
     refreshTokenCookie.value = null
-    localStorage.removeItem('user-info')
     user.value = null
   }
 
   const getUser = () => {
-    return user.value
+    return readonly(user)
   }
 
-  const initValue = async () => {
+  const verifyUser = async () => {
     const accessTokenExpireTime = new Date(
       new Date().getTime() + 48 * 60 * 60 * 1000,
     )
@@ -33,40 +38,45 @@ export const useUserStore = defineStore('user', () => {
     const accessTokenCookie = useCookie('access-token', {
       expires: accessTokenExpireTime,
     })
+
     const refreshTokenCookie = useCookie('refresh-token', {
       expires: refreshTokenExpireTime,
     })
 
     try {
+      console.log('accessTokenCookie.value', accessTokenCookie.value)
       if (!accessTokenCookie.value) {
-        const data = await authRepository.renew(`${refreshTokenCookie.value}`)
+        const data = await authAdminRepository.renew(
+          `${refreshTokenCookie.value}`,
+        )
         if (data) {
           const { accessToken, refreshToken } = data
           accessTokenCookie.value = accessToken
           refreshTokenCookie.value = refreshToken
+          console.log(data)
         }
       }
-      const loadedInfo = localStorage.getItem('user-info')
-      if (loadedInfo) {
-        const loadedUser = JSON.parse(loadedInfo)
-        if (loadedUser?.activated) {
-          user.value = loadedUser
-        } else {
-          localStorage.removeItem('user-info')
-        }
-      }
+      // const loadedInfo = localStorage.getItem('user-info')
+      // if (loadedInfo) {
+      //   const loadedUser = JSON.parse(loadedInfo)
+      //   if (loadedUser?.activated) {
+      //     user.value = loadedUser
+      //   } else {
+      //     localStorage.removeItem('user-info')
+      //   }
+      // }
+
+      // asign admin info
     } catch (error) {
-      localStorage.removeItem('user-info')
+      console.error(error)
     }
   }
 
-  initValue()
-
   return {
-    user,
+    verifyUser,
     getUser,
     setUser,
+    login,
     logout,
-    initValue,
   }
 })

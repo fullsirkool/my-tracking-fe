@@ -38,7 +38,7 @@ localStorage.setItem('nuxt-color-mode', 'light')
 const { data } = await useAsyncData('challenge', () =>
   challengeRepository.find({ size: 4, page: 1 }),
 )
-const challenges = ref<Challenge[]>()
+const challenges = ref<Challenge[]>([])
 if (data.value?.data) {
   challenges.value = data.value.data
   setTopChallenge(challenges.value[0])

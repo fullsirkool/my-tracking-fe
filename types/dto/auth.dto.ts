@@ -30,6 +30,11 @@ export interface SignInDto {
     password: string
 }
 
+export interface SignInAdminDto {
+    username: string
+    password: string
+}
+
 export interface SignInGoogleDto {
     token: string
     deviceToken?: string;
