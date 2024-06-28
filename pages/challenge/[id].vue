@@ -4,7 +4,7 @@
       <img
         :src="image"
         alt=""
-        class="h-[600px] w-full object-cover rounded-3xl"
+        class="h-[200px] md:h-[600px] w-full object-cover rounded-3xl"
       />
     </div>
     <UContainer class="p-6 flex items-center justify-center">
