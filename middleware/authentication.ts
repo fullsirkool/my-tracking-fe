@@ -13,6 +13,11 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
   const authUserPaths = ['/signin', '/signup']
   const authAdminPaths = ['/admin/signin']
 
+  const isSignedIn = computed(
+    () => adminStore.isSignedIn || userStore.isSignedIn,
+  )
+  // DEBUG
+  console.log('isSignedIn', isSignedIn.value)
   // console.log('to.fullPath', to.fullPath)
   // console.log('userStore.user', userStore.user)
   // console.log('adminStore.user', adminStore.user)
