@@ -68,14 +68,28 @@ export interface ChallengeDailyActivity {
   challengeId: number
 }
 
-export interface ChallengeUser extends UserClaims {
-  challengeDailyActivity: ChallengeDailyActivity[]
+export interface ChallengeUser {
+  id: number
+  name: string
+  last_name: string
+  profilelong: string
+  target: number
+  totaldistance: number
+  process: number
 }
+
+export interface ChallengeUserParam extends BasePagingDto {
+  id: number
+  sort?: string
+}
+
+export interface ChallengeUserResponse
+  extends BasePagingResponse<ChallengeUser> {}
 
 export interface JoinChallengeResponse {
   qrCode: string
   qrDataURL: string
   paymentId: number
-  accountNo: string,
+  accountNo: string
   bankName: string
 }

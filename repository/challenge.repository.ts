@@ -1,11 +1,12 @@
 import {
   ChallengeDetailDto,
-  ChallengeUser,
+  ChallengeUserResponse,
   PagingChallengeDto,
   PagingChallengeResponse,
   Challenge,
   CreateChallengeDto,
   JoinChallengeResponse,
+  ChallengeUserParam,
 } from './../types/dto/challenge.dto'
 
 const runtimeConfig = useRuntimeConfig()
@@ -45,10 +46,14 @@ export default {
     return data.value
   },
 
-  async findChallengeUser(id: number): Promise<ChallengeUser[] | null> {
+  async findChallengeUser(
+    id: number,
+    params: ChallengeUserParam,
+  ): Promise<ChallengeUserResponse | null> {
     const url = `${BASE_URL}/challenge/${id}/user`
-    const { data } = await useFetch<ChallengeUser[]>(url, {
+    const { data } = await useFetch<ChallengeUserResponse>(url, {
       method: 'get',
+      params,
     })
     return data.value
   },

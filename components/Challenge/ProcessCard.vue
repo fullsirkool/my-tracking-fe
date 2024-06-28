@@ -1,7 +1,7 @@
 <template>
   <UCard class="relative text-[#4B4B4B]" style="box-shadow: none">
     <div class="flex items-center gap-4">
-      <UAvatar size="xl" :src="userActivities.profile" alt="Avatar" />
+      <UAvatar size="xl" :src="userActivities.profile_long" alt="Avatar" />
       <div class="w-full">
         <NuxtLink
           class="hover:text-sky-900 font-semibold"
@@ -61,7 +61,7 @@ const statistics = computed(() => {
       pace: '00:00',
     }
   }
-  const { challengeDailyActivity } = props.userActivities
+  // const { challengeDailyActivity } = props.userActivities
 
   let distanceStr = '0km'
   let movingTimeStr = '00:00:00'
@@ -70,11 +70,11 @@ const statistics = computed(() => {
   let totalMovingTime = 0
   let avgPace = '00:00'
 
-  challengeDailyActivity.forEach((item) => {
-    const { distance, movingTime } = item
-    totalDistance += distance
-    totalMovingTime += movingTime
-  })
+  // challengeDailyActivity.forEach((item) => {
+  //   const { distance, movingTime } = item
+  //   totalDistance += distance
+  //   totalMovingTime += movingTime
+  // })
 
   if (totalDistance !== 0) {
     distanceStr = `${(totalDistance / 1000).toFixed(2)}km`
@@ -145,8 +145,6 @@ const color = computed(() => {
 })
 
 const userDisplayName = computed(() => {
-  return `${
-    props.userActivities.name ? props.userActivities.name : ''
-  }`
+  return `${props.userActivities.name ? props.userActivities.name : ''}`
 })
 </script>

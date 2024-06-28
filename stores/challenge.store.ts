@@ -4,12 +4,17 @@ import {
   ChallengeDetailDto,
   ChallengeUser,
   Challenge,
+  ChallengeUserParam,
 } from '~/types/dto/challenge.dto'
 
 export const useChallengeStore = defineStore('challenge', () => {
   const challengeId = ref<number>()
   const challengeDetail = ref<ChallengeDetailDto>()
   const challengeUsers = ref<ChallengeUser[]>()
+  const challengeUsersPage = ref(1)
+  const challengeUsersPageSize = ref(9)
+  const totalChallengeUsers = ref(0)
+  const totalChallengeUsersPage = ref(1)
   const topChallenge = ref<Challenge>()
 
   const fetchChallengeDetail = async (id?: number) => {
@@ -20,7 +25,6 @@ export const useChallengeStore = defineStore('challenge', () => {
       const data = await challengeRepository.findOne(challengeId.value)
       if (data) {
         challengeDetail.value = data
-        await fetchChallengeUsers()
       }
     }
   }
@@ -29,16 +33,42 @@ export const useChallengeStore = defineStore('challenge', () => {
     topChallenge.value = challenge
   }
 
-  const fetchChallengeUsers = async (id?: number) => {
-    if (id) {
-      challengeId.value = id
+  const fetchChallengeUsers = async (params: {
+    id?: number
+    page?: number
+    size?: number
+    sort?: string
+  }) => {
+    if (params?.id) {
+      challengeId.value = params.id
     }
+    if (params.page) {
+      challengeUsersPage.value = params.page
+    }
+    if (params.size) {
+      challengeUsersPageSize.value = params.size
+    }
+
     if (challengeId.value) {
-      const data = await challengeRepository.findChallengeUser(
+      const param: ChallengeUserParam = {
+        id: challengeId.value,
+        page: challengeUsersPage.value,
+        size: challengeUsersPageSize.value,
+      }
+
+      if (params.sort) {
+        console.log(params.sort)
+        param.sort = params.sort
+      }
+
+      const res = await challengeRepository.findChallengeUser(
         challengeId.value,
+        param,
       )
-      if (data) {
-        challengeUsers.value = data
+      if (res) {
+        challengeUsers.value = res.data
+        totalChallengeUsers.value = res.totalElement
+        totalChallengeUsersPage.value = res.totalPages
       }
     }
   }
@@ -129,6 +159,10 @@ export const useChallengeStore = defineStore('challenge', () => {
     challengeId,
     challengeDetail,
     challengeUsers,
+    challengeUsersPage,
+    challengeUsersPageSize,
+    totalChallengeUsers,
+    totalChallengeUsersPage,
     topChallenge,
     image,
     rule,
