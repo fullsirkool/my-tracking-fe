@@ -98,7 +98,6 @@ const {
   fetchMonthlyActivitiesDetail,
   fetchUserInfo,
   fetchDailyActivityStatistics,
-  fetchCreatedChallenge,
   fetchJoinedChallenge,
 } = profileStore
 
@@ -115,7 +114,6 @@ const { data } = await useAsyncData('profile', async () => {
       fetchDailyActivityStatistics(),
       activityRepository.fetchStatistics(id),
       fetchMonthlyActivitiesDetail(id),
-      fetchCreatedChallenge(id),
       fetchJoinedChallenge(id),
     ])
 

@@ -89,12 +89,6 @@
           </div>
         </div>
         <div v-show="['rules', 'review'].includes(selectedStep.key)">
-          <UFormGroup class="py-2" :label="$t('rule_title')" name="ruleTitle">
-            <UInput
-              v-model="state.ruleTitle"
-              :disabled="selectedStep.key === 'review'"
-            />
-          </UFormGroup>
           <UFormGroup class="py-2" :label="$t('target')" name="target">
             <UInput
               v-model="state.target"
@@ -263,7 +257,6 @@ const state = ref({
   challengeType: getTypes.value[0],
   startDate: new Date(),
   endDate: new Date(),
-  ruleTitle: '',
   target: undefined,
   minPace: '04:00',
   maxPace: '15:00',
@@ -396,7 +389,6 @@ const submit = async (event: FormSubmitEvent<any>) => {
     challengeType,
     startDate,
     endDate,
-    ruleTitle,
     target,
     minPace,
     maxPace,
@@ -413,7 +405,6 @@ const submit = async (event: FormSubmitEvent<any>) => {
     startDate,
     endDate,
     image,
-    ruleTitle,
     status,
     challengeType,
     target,
@@ -423,9 +414,6 @@ const submit = async (event: FormSubmitEvent<any>) => {
     maxDistance: maxDistance * 1000,
   }
 
-  if (!ruleTitle) {
-    delete payload.ruleTitle
-  }
   if (!target) {
     delete payload.target
   }

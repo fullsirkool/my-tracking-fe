@@ -21,7 +21,6 @@
           <span class="text-sm">{{ getDisplayDate }}</span>
         </div>
         <div class="flex items-center justify-start gap-4">
-          <UAvatar size="md" :src="challenge.owner.profile" alt="Avatar" />
           <div class="w-full">
             <NuxtLink
               :to="`/challenge/${challenge.id}`"
