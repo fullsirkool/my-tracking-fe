@@ -6,7 +6,7 @@
     <div v-else class="text-center">
       <div v-if="getUser">
         <h1 class="text-cyan-700">
-          Hi {{ `${getUser.firstName} ${getUser.lastName}` }}
+          Hi {{ `${getUser.name}` }}
         </h1>
         <h2>
           Your account is verified!. You'll be redirect to app in: {{ counter }}

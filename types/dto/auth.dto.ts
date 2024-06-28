@@ -20,8 +20,7 @@ export interface CompleteDto {
 export interface SignUpDto {
   email: string
   password: string
-  firstName: string
-  lastName: string
+  name: string
   sex: string
 }
 
