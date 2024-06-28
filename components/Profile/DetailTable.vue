@@ -20,30 +20,17 @@
         <template #activities>
           <ProfileActivityTable></ProfileActivityTable>
         </template>
-        <template #joined-challenges> joined-challenges </template>
-        <template #created-challenges> created-challenges </template>
       </UTabs>
     </div>
   </UCard>
 </template>
 <script setup lang="ts">
+const { t } = useI18n()
 const tabs = [
   {
     slot: 'activities',
     icon: 'i-heroicons-bolt',
-    label: 'Activities',
-  },
-  {
-    slot: 'joined-challenges',
-    icon: 'i-heroicons-rocket-launch',
-    disabled: true,
-    label: 'Joined Challenges',
-  },
-  {
-    slot: 'created-challenges',
-    icon: 'i-heroicons-rocket-launch-20-solid',
-    disabled: true,
-    label: 'Created Challenges',
-  },
+    label: t('activities'),
+  }
 ]
 </script>
