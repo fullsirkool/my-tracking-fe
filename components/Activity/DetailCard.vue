@@ -13,13 +13,13 @@
         <Icon name="fluent:run-16-filled" width="1.75rem" height="1.75rem" />
         <a
           href="javascript:void(0)"
-          class="text-orange-500"
+          class="text-primary-500"
           @click="handleRedirect(activity.id)"
           >{{ activity.name }}</a
         >
       </div>
       <div
-        class="w-7 h-7 bg-orange-500 rounded-full flex items-center justify-center"
+        class="w-7 h-7 bg-primary-500 rounded-full flex items-center justify-center"
       >
         <Icon
           name="mdi:strava"

@@ -18,17 +18,17 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
   )
   // DEBUG
   console.log('isSignedIn', isSignedIn.value)
-  // console.log('to.fullPath', to.fullPath)
-  // console.log('userStore.user', userStore.user)
-  // console.log('adminStore.user', adminStore.user)
-  // console.log(
-  //   'accessToken.value || refreshToken.value',
-  //   accessToken.value || refreshToken.value,
-  // )
-  // console.log(
-  //   'xAccessToken.value || xRefreshToken.value',
-  //   xAccessToken.value || xRefreshToken.value,
-  // )
+  console.log('to.fullPath', to.fullPath)
+  console.log('userStore.user', userStore.user)
+  console.log('adminStore.user', adminStore.user)
+  console.log(
+    'accessToken.value || refreshToken.value',
+    accessToken.value || refreshToken.value,
+  )
+  console.log(
+    'xAccessToken.value || xRefreshToken.value',
+    xAccessToken.value || xRefreshToken.value,
+  )
 
   if (!userStore.user && (accessToken.value || refreshToken.value)) {
     console.log('has user refresh-token')
@@ -40,11 +40,11 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     adminStore.refreshToken()
   }
 
-  if (authUserPaths.some((p) => p === to.fullPath)) {
+  if (userStore.user && authUserPaths.some((p) => p === to.fullPath)) {
     return navigateTo('/')
   }
 
-  if (authAdminPaths.some((p) => p === to.fullPath)) {
+  if (adminStore.user && authAdminPaths.some((p) => p === to.fullPath)) {
     return navigateTo('/')
   }
 })

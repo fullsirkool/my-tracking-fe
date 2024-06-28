@@ -1,7 +1,7 @@
 <template>
   <div class="relative" :class="customClass">
     <UCard
-      class="rounded-3xl bg-[#f5f5f5] text-[#4B4B4B] max-w-[500px] relative group hover:bg-orange-50 transition-all shadow-none hover:-translate-y-2 duration-300 hover:shadow-xl scale-90 hover:scale-100"
+      class="rounded-3xl bg-[#f5f5f5] text-[#4B4B4B] max-w-[500px] relative group hover:bg-primary-50 transition-all shadow-none hover:-translate-y-2 duration-300 hover:shadow-xl scale-90 hover:scale-100"
     >
       <div
         v-show="isEnded"
@@ -25,13 +25,13 @@
           <div class="w-full">
             <NuxtLink
               :to="`/challenge/${challenge.id}`"
-              class="font-bold text-xl hover:text-orange-500 transition-colors duration-300"
+              class="font-bold text-xl hover:text-primary-500 transition-colors duration-300"
               >{{ challenge.title }}
             </NuxtLink>
             <div class="flex items-center justify-between">
               <NuxtLink
                 :to="`/challenge/${challenge.id}`"
-                class="mt-1 text-md flex items-center gap-2 hover:text-orange-500 hover:translate-x-1 transition-transform"
+                class="mt-1 text-md flex items-center gap-2 hover:text-primary-500 hover:translate-x-1 transition-transform"
               >
                 {{ $t('join') }}
                 <UIcon name="i-heroicons-arrow-right-20-solid" />

@@ -3,7 +3,7 @@
     <div class="m-5">
       <nuxt-link
         to="/"
-        class="text-2xl no-underline text-grey-darkest hover:text-blue-dark inline-flex items-center justify-center w-[45px] h-[45px] rounded-full text-slate-100 bg-orange-600 shadow-xl mx-2"
+        class="text-2xl no-underline text-grey-darkest hover:text-blue-dark inline-flex items-center justify-center w-[45px] h-[45px] rounded-full text-slate-100 bg-primary-600 shadow-xl mx-2"
       >
         <Icon
           name="heroicons:chevron-left-20-solid"

@@ -76,7 +76,7 @@
         :ui="{ rounded: 'rounded-lg' }"
         block
         :loading="isLoading"
-        class="bg-orange-500 hover:bg-orange-600"
+        class="bg-primary-500 hover:bg-primary-600"
       >
         Submit
       </UButton>

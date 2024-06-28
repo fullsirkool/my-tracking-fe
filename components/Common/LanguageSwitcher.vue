@@ -1,7 +1,7 @@
 <template>
   <div>
     <button
-      class="inline-flex flex-col items-center hover:text-orange-600 px-4 py-2"
+      class="inline-flex flex-col items-center hover:text-primary-600 px-4 py-2"
       @click="isOpen = true"
     >
       {{ $t('settings') }}
