@@ -14,10 +14,23 @@
     </UContainer>
     <ChallengeDetailTable></ChallengeDetailTable>
   </UContainer>
+  <UModal v-model="isOpenConfirmDialog">
+    <div class="p-8">
+      <h1 class="text-xl font-semibold text-center">{{ $t('confirm_join_challenge') }}</h1>
+      <div class="pt-4 flex items-center justify-center gap-2">
+        <UButton size="lg" :loading="isConfirmingJoinChallenge" @click="handleConfirmJoinChallenge">
+          {{ $t('confirm') }}
+        </UButton>
+        <UButton size="lg" variant="outline" :loading="isConfirmingJoinChallenge" @click="isOpenConfirmDialog = false">
+          {{ $t('cancel') }}
+        </UButton>
+      </div>
+
+    </div>
+  </UModal>
   <PaymentQRCodeDialog
     :is-open="openQrDialog"
-    :qr-data-url="qrCodeDataUrl"
-    :payment-id="paymentId"
+    :payment-infor="paymentInfor"
     @close="handleClosePaymentDialog"
   ></PaymentQRCodeDialog>
 </template>
@@ -26,6 +39,7 @@ import { storeToRefs } from 'pinia'
 import challengeRepository from '~/repository/challenge.repository'
 import { useChallengeStore } from '~/stores/challenge.store'
 import { useUserStore } from '~/stores/user.store'
+import {TPaymentInfor} from "~/types/type/payment.type";
 
 const toast = useToast()
 const { t } = useI18n()
@@ -39,21 +53,35 @@ const { params, fullPath } = useRoute()
 const { id } = params
 
 const openQrDialog = ref(false)
-const qrCodeDataUrl = ref('')
-const paymentId = ref(0)
+const paymentInfor = ref<TPaymentInfor>({
+  qrDataUrl: '',
+  paymentId: 0,
+  accountNo: "",
+  bankName: ""
+})
+const isOpenConfirmDialog = ref(false)
+const isConfirmingJoinChallenge = ref(false)
 
 await useAsyncData('challenge', () => fetchChallengeDetail(+id))
 
-const handleJoinChallenge = async  () => {
+const handleJoinChallenge = async () => {
+  isOpenConfirmDialog.value = true
+}
+const handleConfirmJoinChallenge = async  () => {
   if (isEmpty(user) || !user) {
     localStorage.setItem('saved-path', fullPath)
     navigateTo('/signin')
     return
   }
+  isConfirmingJoinChallenge.value = true
   const res = await challengeRepository.join(+id)
   if (res) {
-    qrCodeDataUrl.value = res.qrDataURL
-    paymentId.value = res.paymentId
+    isOpenConfirmDialog.value = false
+    isConfirmingJoinChallenge.value = false
+    paymentInfor.value.qrDataUrl = res.qrDataURL
+    paymentInfor.value.paymentId = res.paymentId
+    paymentInfor.value.accountNo = res.accountNo
+    paymentInfor.value.bankName = res.bankName
     openQrDialog.value = true
     console.log(res)
   }

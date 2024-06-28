@@ -56,5 +56,10 @@
   "sign_up_failed": "Sign up failed",
   "sign_out": "Sign Out",
   "total_distance": "Total Distance",
-  "settings": "Settings"
+  "settings": "Settings",
+  "confirm_join_challenge": "Are you sure you want to join this challenge?",
+  "confirm": "Confirm",
+  "cancel": "Cancel",
+  "bank_name": "Bank",
+  "account_number": "Account Number"
 }

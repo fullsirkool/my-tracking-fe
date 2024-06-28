@@ -15,6 +15,7 @@
             class="relative"
             style="top: -1px"
           />
+          <img src="~/assets/logo.png"/>
         </NuxtLink>
       </UTooltip>
     </div>

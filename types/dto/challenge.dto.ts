@@ -78,6 +78,7 @@ export interface ChallengeUser extends UserClaims {
 export interface JoinChallengeResponse {
   qrCode: string
   qrDataURL: string
-
   paymentId: number
+  accountNo: string,
+  bankName: string
 }
