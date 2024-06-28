@@ -1,12 +1,21 @@
 <template>
   <UModal v-model="props.isOpen">
     <div class="p-4">
-      <Placeholder class="h-48"/>
-      <img :src="paymentInfor.qrDataUrl"/>
-    </div>
-    <div class="text-center">
-      <p>{{ $t('bank_name') }}: {{ paymentInfor.bankName }}</p>
-      <p>{{ $t('account_number') }}: {{ paymentInfor.accountNo }}</p>
+      <div class="p-4">
+        <Placeholder class="h-48"/>
+        <img :src="paymentInfor.qrDataUrl"/>
+      </div>
+      <div class="text-center text-xl">
+        <p>{{ $t('bank_name') }}: {{ paymentInfor.bankName }}</p>
+        <p>{{ $t('account_number') }}: {{ paymentInfor.accountNo }}</p>
+
+      </div>
+      <div class="p-2 text-center text-xl">
+        <p>{{ $t('payment_wait')}}</p>
+      </div>
+      <div class="text-center pt-2 text-red-500">
+        <i class="text-sm">*{{ $t('payment_warning') }}</i>
+      </div>
     </div>
   </UModal>
 </template>

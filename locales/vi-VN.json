@@ -61,5 +61,7 @@
   "confirm": "Đồng ý",
   "cancel": "Đóng",
   "bank_name": "Ngân hàng",
-  "account_number": "Số Tài Khoản"
+  "account_number": "Số Tài Khoản",
+  "payment_warning": "Thông tin đăng ký ở trên chỉ dùng được 1 lần. Để đăng kí giải chạy mới hoặc người khác, bạn phải tạo Mã mới.",
+  "payment_wait": "Sau khi thanh toán hoàn tất, vui lòng đợi vài phút để hoàn tất việc tham gia thử thách."
 }
