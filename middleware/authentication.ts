@@ -44,6 +44,10 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     return navigateTo('/')
   }
 
+  if (userStore.user && to.fullPath === '/profile') {
+    return navigateTo('/profile/' + userStore.user.id)
+  }
+
   if (adminStore.user && authAdminPaths.some((p) => p === to.fullPath)) {
     return navigateTo('/')
   }

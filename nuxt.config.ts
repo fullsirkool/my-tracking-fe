@@ -18,7 +18,6 @@ export default defineNuxtConfig({
     'nuxt-icon',
     'vue3-carousel-nuxt',
     'nuxt-vuefire',
-    '@nuxtjs/tailwindcss'
   ],
   colorMode: {
     preference: 'light',
