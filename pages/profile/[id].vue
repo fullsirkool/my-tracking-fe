@@ -86,7 +86,7 @@
 </template>
 <script setup>
 definePageMeta({
-  middleware: ['profile'],
+  middleware: ['authentication'],
 })
 import { storeToRefs } from 'pinia'
 import activityRepository from '~/repository/activity.repository'

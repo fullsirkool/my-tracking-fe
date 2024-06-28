@@ -6,6 +6,6 @@ import authentication from '~/middleware/authentication';
 
 definePageMeta({
   layout: 'auth',
-  middleware: [authentication]
+  middleware: ['authentication']
 })
 </script>

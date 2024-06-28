@@ -28,10 +28,6 @@ const isOpenCompleteModal = ref(false)
 // }
 
 const user = computed(() => userStore.user || adminStore.user)
-
-watch(user, (newValue) => console.log('User updated:', newValue), {
-  immediate: true,
-})
 </script>
 <style>
 .home-background {

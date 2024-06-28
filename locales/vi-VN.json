@@ -56,5 +56,10 @@
   "complete_information": "Hoàn Thiện Thông Tin",
   "sign_out": "Đăng Xuất",
   "total_distance": "Tổng quãng đường",
-  "settings": "Cài đặt"
+  "settings": "Cài đặt",
+  "confirm_join_challenge": "Bạn có chắc chắn muốn tham gia thử thách hay không?",
+  "confirm": "Đồng ý",
+  "cancel": "Đóng",
+  "bank_name": "Ngân hàng",
+  "account_number": "Số Tài Khoản"
 }

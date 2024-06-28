@@ -89,25 +89,23 @@
 import type { FormError, FormSubmitEvent } from '#ui/types'
 import { useAdminStore } from '~/stores/admin.store'
 import { useAlertStore } from '~/stores/alert.store'
+import { useUserStore } from '~/stores/user.store';
 
 const dayjs = useDayjs()
 const router = useRouter()
 const toast = useToast()
 const adminStore = useAdminStore()
+const userStore = useUserStore()
 const alertStore = useAlertStore()
 const accessTokenExpireTime = dayjs(new Date()).add(2, 'day').toDate()
 const refreshTokenExpireTime = dayjs(new Date()).add(1, 'week').toDate()
 const roleExpireTime = dayjs(new Date()).add(1, 'week').toDate()
 
-const accessTokenCookie = useCookie('access-token', {
+const accessTokenCookie = useCookie('x-access-token', {
   expires: accessTokenExpireTime,
 })
-const refreshTokenCookie = useCookie('refresh-token', {
+const refreshTokenCookie = useCookie('x-refresh-token', {
   expires: refreshTokenExpireTime,
-})
-
-const roleCookie = useCookie('role', {
-  expires: roleExpireTime,
 })
 
 const isShowPassword = ref(false)
@@ -123,6 +121,7 @@ const onSubmit = async () => {
 
     if (!response.data && response.error) {
       toast.add({
+        title: 'Error',
         color: 'red',
         description: 'Invalid username or password',
         timeout: 2000,
@@ -132,10 +131,10 @@ const onSubmit = async () => {
 
     accessTokenCookie.value = response.data?.accessToken
     refreshTokenCookie.value = response.data?.refreshToken
-    roleCookie.value = 'admin'
-
+    userStore.logout()
     router.push('/')
     toast.add({
+      title: 'Success',
       description: 'Login successful',
       timeout: 2000,
     })

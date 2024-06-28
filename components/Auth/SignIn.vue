@@ -110,11 +110,13 @@
 <script setup lang="ts">
 import type { FormError, FormSubmitEvent } from '#ui/types'
 import authRepository from '~/repository/auth.repository'
+import { useAdminStore } from '~/stores/admin.store';
 import { useUserStore } from '~/stores/user.store'
 
 const dayjs = useDayjs()
 const toast = useToast()
 const userStore = useUserStore()
+const adminStore= useAdminStore()
 
 const state = reactive({
   email: undefined,
@@ -206,8 +208,9 @@ const onSubmit = async (event: FormSubmitEvent<any>) => {
       const { user, accessToken, refreshToken } = data
       accessTokenCookie.value = accessToken
       refreshTokenCookie.value = refreshToken
-      console.log('User:', user)
+      adminStore.logout()
       userStore.setUser(user)
+
       navigateTo('/')
     }
   } catch (error) {
@@ -238,6 +241,7 @@ const handleSignInGoogle = async (token: string) => {
     accessTokenCookie.value = accessToken
     refreshTokenCookie.value = refreshToken
     userStore.setUser(user)
+    adminStore.logout()
     navigateTo('/')
   }
 }

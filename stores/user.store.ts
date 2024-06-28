@@ -4,7 +4,7 @@ import userRepository from '~/repository/user.repository'
 import { UserClaims } from '~/types/dto/user.dto'
 
 export const useUserStore = defineStore('user', () => {
-  const user = ref<UserClaims | null>()
+  const user = ref<UserClaims | null>(null)
 
   const setUser = (userInfo: UserClaims) => {
     user.value = userInfo
@@ -19,15 +19,12 @@ export const useUserStore = defineStore('user', () => {
   }
 
   const fetchUserInfo = async () => {
-    // await userRepository.fetchUserInfo()
     try {
       const response = await authRepository.fetchUserInfo()
       if (!response) throw new Error('Fail')
       const { data, error } = response
-      // setUser(data)
-      if (data) {
-        
-      }
+      if (data) setUser(data)
+      console.log(data)
     } catch (error) {
       console.error(error)
     }

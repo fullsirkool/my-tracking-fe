@@ -15,6 +15,7 @@
             class="relative"
             style="top: -1px"
           />
+          <img src="~/assets/logo.png" />
         </NuxtLink>
       </UTooltip>
     </div>
@@ -81,6 +82,46 @@
         </UPopover>
       </template>
 
+      <template v-else-if="adminUser">
+        <UPopover class="inline-flex items-center">
+          <NuxtLink
+            class="text-lg text-grey-darkest hover:text-blue-dark ml-2 bg-transparent inline-flex items-center"
+          >
+            <UAvatar
+              alt="Profile"
+              size="lg"
+              class="shadow-md"
+              :src="adminUser.username"
+            />
+          </NuxtLink>
+
+          <template #panel>
+            <ul class="flex flex-col w-36">
+              <NuxtLink
+                class="inline-flex items-center px-4 py-2 gap-2 cursor-pointer hover:text-orange-600"
+                to="/admin/profile"
+              >
+                View Profile
+              </NuxtLink>
+              <div class="border-b border-slate-100"></div>
+              <CommonLanguageSwitcher></CommonLanguageSwitcher>
+              <div class="border-b border-slate-100"></div>
+              <NuxtLink
+                class="inline-flex items-center px-4 py-2 gap-2 cursor-pointer hover:text-orange-600"
+                @click="logout"
+              >
+                <Icon
+                  name="heroicons:arrow-right-on-rectangle-solid"
+                  width="1.25rem"
+                  height="1.25rem"
+                />
+                {{ $t('sign_out') }}
+              </NuxtLink>
+            </ul>
+          </template>
+        </UPopover>
+      </template>
+
       <UTooltip v-else :text="$t('sign_in')">
         <NuxtLink
           to="/signin"
@@ -102,7 +143,11 @@ import { useUserStore } from '~/stores/user.store'
 const userStore = useUserStore()
 const adminStore = useAdminStore()
 
-const user = computed(() => userStore.user || adminStore.user)
+// const user = computed(() => userStore.user || adminStore.user)
+const user = computed(() => userStore.user)
+const adminUser = computed(() => adminStore.user)
+
+watchEffect(() => adminUser.value)
 
 const logout = () => {
   userStore.logout()
