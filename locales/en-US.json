@@ -63,5 +63,6 @@
   "bank_name": "Bank",
   "account_number": "Account Number",
   "payment_warning": "The registration information above can only be used once. To register for new race or for other person, you have to generate new code.",
-  "payment_wait": "After complete payment, please wait for few minutes to complete joining."
+  "payment_wait": "After complete payment, please wait for few minutes to complete joining.",
+  "payment": "Payment"
 }
