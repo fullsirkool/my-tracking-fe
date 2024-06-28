@@ -8,7 +8,7 @@
       />
     </div>
     <UContainer class="p-6 flex items-center justify-center">
-      <UButton size="xl" @click="handleJoinChallenge">
+      <UButton v-if="!isJoinedChallenge" size="xl" @click="handleJoinChallenge">
         {{ $t('join_challenge') }}
       </UButton>
     </UContainer>
@@ -58,7 +58,12 @@ const router = useRouter()
 
 const challengeStore = useChallengeStore()
 const { user } = useUserStore()
-const { fetchChallengeDetail, fetchChallengeUsers } = challengeStore
+const {
+  fetchChallengeDetail,
+  fetchChallengeUsers,
+  fetchJoinedChallenge,
+  joinedChallenge,
+} = challengeStore
 const { image } = storeToRefs(challengeStore)
 const { params, fullPath } = useRoute()
 const { id } = params
@@ -69,19 +74,25 @@ const paymentInfor = ref<TPaymentInfor>({
   paymentId: 0,
   accountNo: '',
   bankName: '',
+  ticketPrice: 0,
 })
 const isOpenConfirmDialog = ref(false)
 const isConfirmingJoinChallenge = ref(false)
+const isJoinedChallenge = ref(false)
 
 await useAsyncData('challenge', async () => {
-  await Promise.all([
+  const [_a, _b, checkJoined] = await Promise.all([
     fetchChallengeDetail(+id),
     fetchChallengeUsers({
       id: +id,
       page: 1,
       size: 10,
     }),
+    challengeRepository.checkJoinedChallenge(+id),
   ])
+  console.log('😻 ~ awaituseAsyncData ~ checkJoined:', checkJoined)
+
+  isJoinedChallenge.value = checkJoined?.joined || false
 })
 
 const handleJoinChallenge = async () => {
@@ -102,6 +113,7 @@ const handleConfirmJoinChallenge = async () => {
     paymentInfor.value.paymentId = res.paymentId
     paymentInfor.value.accountNo = res.accountNo
     paymentInfor.value.bankName = res.bankName
+    paymentInfor.value.ticketPrice = res.ticketPrice
     openQrDialog.value = true
     console.log(res)
   }

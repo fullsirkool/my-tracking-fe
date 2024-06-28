@@ -8,6 +8,10 @@
       <div class="text-center text-xl">
         <p>{{ $t('bank_name') }}: {{ paymentInfor.bankName }}</p>
         <p>{{ $t('account_number') }}: {{ paymentInfor.accountNo }}</p>
+        <p>
+          {{ $t('price') }}:
+          {{ `${number.format(paymentInfor.ticketPrice)} VNĐ` }}
+        </p>
       </div>
       <div class="p-2 text-center text-xl">
         <p>{{ $t('payment_wait') }}</p>
@@ -20,6 +24,7 @@
 </template>
 <script setup lang="ts">
 import { TPaymentInfor } from '~/types/type/payment.type'
+import { number } from '~/utils/numberWithCommas'
 
 const runtimeConfig = useRuntimeConfig()
 const { BASE_URL } = runtimeConfig.public
@@ -39,6 +44,7 @@ const props = withDefaults(defineProps<IPaymentDialogProps>(), {
     paymentId: 0,
     accountNo: '',
     bankName: '',
+    ticketPrice: 0,
   },
 })
 
