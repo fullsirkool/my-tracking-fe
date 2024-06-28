@@ -44,7 +44,7 @@ export const useUserStore = defineStore('user', () => {
       const { accessToken, refreshToken } = data
       accessTokenCookie.value = accessToken
       refreshTokenCookie.value = refreshToken
-      fetchUserInfo()
+      await fetchUserInfo()
     } catch (error) {
       console.error(error)
     }
