@@ -59,6 +59,8 @@ export const useAdminStore = defineStore('admin', () => {
     }
   }
 
+  const isSignedIn = computed(() => !!user.value)
+
   return {
     setUser,
     user: readonly(user),
@@ -66,5 +68,6 @@ export const useAdminStore = defineStore('admin', () => {
     logout,
     fetchUserInfo,
     refreshToken,
+    isSignedIn
   }
 })

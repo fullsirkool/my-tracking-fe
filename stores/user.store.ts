@@ -50,10 +50,13 @@ export const useUserStore = defineStore('user', () => {
     }
   }
 
+  const isSignedIn = computed(() => !!user.value)
+
   return {
     user: readonly(user),
     setUser,
     logout,
     refreshToken,
+    isSignedIn
   }
 })
