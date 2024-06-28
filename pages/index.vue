@@ -12,7 +12,7 @@
           version of yourself
         </div>
       </div>
-      <div class="h-fit p-12 flex items-center justify-center">
+      <div class="h-fit sm:p-12 flex items-center justify-center">
         <ChallengeCard :challenge="challenges[0]"></ChallengeCard>
       </div>
     </div>

@@ -6,11 +6,10 @@
     >
       {{ $t('settings') }}
     </button>
-    <USlideover v-model="isOpen">
+    <USlideover v-model="isOpen" :ui="{ width: 'w-screen max-w-xs' }">
       <UCard
         class="flex flex-col flex-1"
         :ui="{
-          body: { base: 'flex-1' },
           ring: '',
           divide: 'divide-y divide-gray-100 dark:divide-gray-800',
         }"
@@ -33,7 +32,6 @@
           </USelectMenu>
         </div>
         <template #footer>
-          <!-- <Placeholder class="h-8" /> -->
           <div class="h-8"></div>
         </template>
       </UCard>
