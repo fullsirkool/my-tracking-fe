@@ -1,7 +1,8 @@
 <template>
   <UModal v-model="props.isOpen">
     <div class="p-4">
-      <Placeholder class="h-48" />
+      <!-- <Placeholder class="h-48" /> -->
+      <div class="h-48"></div>
       <img :src="qrDataUrl" />
     </div>
   </UModal>

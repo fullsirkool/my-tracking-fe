@@ -29,6 +29,7 @@ import { useChallengeStore } from '~/stores/challenge.store'
 
 definePageMeta({
   layout: 'home',
+  middleware: ['authentication'],
 })
 
 const { setTopChallenge } = useChallengeStore()

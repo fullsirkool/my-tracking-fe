@@ -111,4 +111,16 @@ export default {
       error: error.value?.data,
     }
   },
+
+  async fetchUserInfo(): Promise<BaseFetchResponse<AuthResponseDto | null>> {
+    const url = `${BASE_URL}/auth/self`
+    const { data, error } = await useFetch<AuthResponseDto>(url, {
+      method: 'GET',
+    })
+
+    return {
+      data: data.value,
+      error: error.value?.data
+    }
+  },
 }

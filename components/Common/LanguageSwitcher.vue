@@ -33,7 +33,8 @@
           </USelectMenu>
         </div>
         <template #footer>
-          <Placeholder class="h-8" />
+          <!-- <Placeholder class="h-8" /> -->
+          <div class="h-8"></div>
         </template>
       </UCard>
     </USlideover>

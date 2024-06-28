@@ -2,7 +2,7 @@
   <div class="sm:mx-auto sm:w-full sm:max-w-sm">
     <img
       class="mx-auto h-10 w-auto"
-      src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+      src="https://tailwindui.com/img/logos/mark.svg?color=orange&shade=600"
       alt="Your Company"
     />
     <h2
@@ -76,7 +76,9 @@
         :ui="{ rounded: 'rounded-lg' }"
         block
         :loading="isLoading"
-        >Submit
+        class="bg-orange-500 hover:bg-orange-600"
+      >
+        Submit
       </UButton>
 
       <UDivider label="OR" color="gray" />
