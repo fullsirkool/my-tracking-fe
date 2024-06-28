@@ -128,7 +128,7 @@ const getChartSeries = computed(() => {
     }
 
     return {
-      name: `${user.firstName} ${user.lastName}`,
+      name: `${user.name}`,
       data,
     }
   })

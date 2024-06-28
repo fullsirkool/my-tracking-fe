@@ -98,7 +98,6 @@ const {
   fetchMonthlyActivitiesDetail,
   fetchUserInfo,
   fetchDailyActivityStatistics,
-  fetchCreatedChallenge,
   fetchJoinedChallenge,
 } = profileStore
 
@@ -115,7 +114,6 @@ const { data } = await useAsyncData('profile', async () => {
       fetchDailyActivityStatistics(),
       activityRepository.fetchStatistics(id),
       fetchMonthlyActivitiesDetail(id),
-      fetchCreatedChallenge(id),
       fetchJoinedChallenge(id),
     ])
 
@@ -136,9 +134,7 @@ const totalMovingTime = ref((statistics.totalMovingTime / 3600).toFixed(2))
 
 const getFullName = computed(
   () =>
-    `${user.value.firstName ? user.value.firstName : ''} ${
-      user.value.lastName ? user.value.lastName : ''
-    }`,
+    `${user.value.name ? user.value.name : ''}`,
 )
 const getPaceMinute = computed(() => {
   const minutes = Math.floor(avgPace.value / 1)

@@ -19,43 +19,12 @@ export const useProfileStore = defineStore('profile', () => {
   const totalDetailPage = ref(1)
   const totalActivities = ref(0)
 
-  const createdChallenges = ref<Challenge[]>([])
-  const createdChallengePage = ref(1)
-  const createdChallengePageSize = ref(9)
-  const totalCreatedChallenge = ref(1)
-  const totalCreatedChallengePage = ref(0)
-
   const joinedChallenges = ref<Challenge[]>([])
   const joinedChallengePage = ref(1)
   const joinedChallengePageSize = ref(9)
   const totalJoinedChallenge = ref(1)
   const totalJoinedChallengePage = ref(0)
 
-  const fetchCreatedChallenge = async (params: { page?: number }) => {
-    try {
-      const { page } = params
-      if (page) {
-        createdChallengePage.value = page
-      }
-
-      const param = {
-        page: createdChallengePage.value,
-        size: createdChallengePageSize.value,
-      }
-
-      const response = await challengeRepository.findCreatedChallenge(
-        userId.value,
-        param,
-      )
-
-      if (response) {
-        const { data, totalPages, totalElement } = response
-        createdChallenges.value = data
-        totalCreatedChallenge.value = totalElement
-        totalCreatedChallengePage.value = totalPages
-      }
-    } catch (error) {}
-  }
 
   const fetchJoinedChallenge = async (params: { page?: number }) => {
     try {
@@ -164,7 +133,6 @@ export const useProfileStore = defineStore('profile', () => {
     fetchDailyActivityStatistics,
     fetchMonthlyActivitiesDetail,
     fetchUserInfo,
-    fetchCreatedChallenge,
     fetchJoinedChallenge,
   }
 })

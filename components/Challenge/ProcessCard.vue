@@ -145,8 +145,6 @@ const color = computed(() => {
 })
 
 const userDisplayName = computed(() => {
-  return `${
-    props.userActivities.first_name ? props.userActivities.first_name : ''
-  } ${props.userActivities.last_name ? props.userActivities.last_name : ''}`
+  return `${props.userActivities.name ? props.userActivities.name : ''}`
 })
 </script>

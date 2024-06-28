@@ -17,12 +17,10 @@ export interface Challenge {
   title: string
   startDate: Date
   endDate: Date
-  ownerId: number
   code: string
   challengeType: ChallengeType
   status: ChallengeStatus
   image: string
-  owner: UserClaims
   rule: Rule
 }
 
@@ -31,7 +29,6 @@ export interface CreateChallengeDto {
   startDate: Date
   endDate: Date
   image: string | null | undefined
-  ruleTitle: string | undefined
   target: number | undefined
   minPace: number | undefined
   maxPace: number | undefined
