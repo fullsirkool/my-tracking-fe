@@ -1,69 +1,74 @@
 <template>
   <div class="mt-10 px-4 sm:px-6 lg:px-8 max-w-7xl">
-    <h1 class="text-2xl font-semibold mb-2">{{ t('rank') }}</h1>
-    <div>
-      <UTable
-        v-model:sort="sort"
-        :rows="rows"
-        :columns="columns"
-        :ui="{
-          th: {
-            size: 'text-md',
-          },
-        }"
-        @update:sort="handleSort"
-      >
-        <template #name-data="{ row }">
-          <div class="flex items-center gap-3">
-            <UAvatar :src="row.avatar" alt="Avatar" size="md" />
-            <span class="text-gray-900 dark:text-white font-medium text-xl">{{
-              row.name
-            }}</span>
-          </div>
-        </template>
+    <UCard
+      class="rounded-2xl bg-[#f5f5f5] overflow-auto min-h-[300px]"
+      style="box-shadow: none"
+    >
+      <h1 class="text-2xl font-semibold mb-2">{{ t('rank') }}</h1>
+      <div>
+        <UTable
+          v-model:sort="sort"
+          :rows="rows"
+          :columns="columns"
+          :ui="{
+            th: {
+              size: 'text-md',
+            },
+          }"
+          @update:sort="handleSort"
+        >
+          <template #name-data="{ row }">
+            <div class="flex items-center gap-3">
+              <UAvatar :src="row.avatar" alt="Avatar" size="md" />
+              <span class="text-gray-900 dark:text-white font-medium text-xl">{{
+                row.name
+              }}</span>
+            </div>
+          </template>
 
-        <template #totaldistance-data="{ row }">
-          <span class="text-gray-900 dark:text-white font-medium text-xl"
-            >{{ number.format(row.distance) }}
-          </span>
-        </template>
+          <template #totaldistance-data="{ row }">
+            <span class="text-gray-900 dark:text-white font-medium text-xl"
+              >{{ number.format(row.distance) }}
+            </span>
+          </template>
 
-        <template #target-data="{ row }">
-          <span class="text-gray-900 dark:text-white font-medium text-xl"
-            >{{ number.format(row.target) }}
-          </span>
-        </template>
+          <template #target-data="{ row }">
+            <span class="text-gray-900 dark:text-white font-medium text-xl"
+              >{{ number.format(row.target) }}
+            </span>
+          </template>
 
-        <template #process-data="{ row }">
-          <div>
-            <UProgress
-              :value="row.process"
-              size="md"
-              :color="colorProcess(row.process)"
-            >
-              <template #indicator="{ percent }">
-                <div class="text-right text-xs font-bold rounded-lg">
-                  <span :class="`text-${colorProcess(row.process)}-500`"
-                    >{{ percent.toFixed(1) }}% {{ $t('completed') }}</span
-                  >
-                </div>
-              </template>
-            </UProgress>
-          </div>
-        </template>
-      </UTable>
+          <template #process-data="{ row }">
+            <div>
+              <UProgress
+                :value="row.process"
+                size="md"
+                :color="colorProcess(row.process)"
+              >
+                <template #indicator="{ percent }">
+                  <div class="text-right text-xs font-bold rounded-lg">
+                    <span :class="`text-${colorProcess(row.process)}-500`"
+                      >{{ percent.toFixed(1) }}% {{ $t('completed') }}</span
+                    >
+                  </div>
+                </template>
+              </UProgress>
+            </div>
+          </template>
+        </UTable>
 
-      <div
-        class="flex justify-end px-3 py-3.5 border-t border-gray-200 dark:border-gray-700"
-      >
-        <UPagination
-          v-model="page"
-          :page-count="challengeUsersPageSize"
-          :total="totalChallengeUsers"
-          @update:model-value="handleChangePage"
-        />
+        <div
+          class="flex justify-end px-3 py-3.5 border-t border-gray-200 dark:border-gray-700"
+        >
+          <UPagination
+            v-model="page"
+            :page-count="challengeUsersPageSize"
+            :total="totalChallengeUsers"
+            @update:model-value="handleChangePage"
+          />
+        </div>
       </div>
-    </div>
+    </UCard>
   </div>
 </template>
 <script setup lang="ts">

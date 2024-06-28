@@ -92,4 +92,9 @@ export interface JoinChallengeResponse {
   paymentId: number
   accountNo: string
   bankName: string
+  ticketPrice: number
+}
+
+export interface CheckedJoinChallengeResponse {
+  joined: boolean
 }

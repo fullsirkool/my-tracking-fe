@@ -66,5 +66,6 @@
   "payment_wait": "Sau khi thanh toán hoàn tất, vui lòng đợi vài phút để hoàn tất việc tham gia thử thách.",
   "name": "Tên",
   "rank": "Bảng xếp hạng",
-  "process": "Tiến độ"
+  "process": "Tiến độ",
+  "price": "Giá"
 }

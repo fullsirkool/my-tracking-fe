@@ -66,5 +66,6 @@
   "payment_wait": "After complete payment, please wait for few minutes to complete joining.",
   "name": "Name",
   "rank": "Rank",
-  "process": "Process"
+  "process": "Process",
+  "price": "Price"
 }
