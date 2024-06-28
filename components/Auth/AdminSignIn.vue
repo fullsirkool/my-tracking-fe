@@ -89,17 +89,15 @@
 import type { FormError, FormSubmitEvent } from '#ui/types'
 import { useAdminStore } from '~/stores/admin.store'
 import { useAlertStore } from '~/stores/alert.store'
-import { useUserStore } from '~/stores/user.store';
+import { useUserStore } from '~/stores/user.store'
 
 const dayjs = useDayjs()
 const router = useRouter()
 const toast = useToast()
 const adminStore = useAdminStore()
 const userStore = useUserStore()
-const alertStore = useAlertStore()
 const accessTokenExpireTime = dayjs(new Date()).add(2, 'day').toDate()
 const refreshTokenExpireTime = dayjs(new Date()).add(1, 'week').toDate()
-const roleExpireTime = dayjs(new Date()).add(1, 'week').toDate()
 
 const accessTokenCookie = useCookie('x-access-token', {
   expires: accessTokenExpireTime,

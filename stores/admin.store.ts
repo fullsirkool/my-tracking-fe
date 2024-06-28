@@ -53,7 +53,7 @@ export const useAdminStore = defineStore('admin', () => {
       accessTokenCookie.value = accessToken
       refreshTokenCookie.value = refreshToken
 
-      fetchUserInfo()
+      await fetchUserInfo()
     } catch (error) {
       console.error(error)
     }
@@ -68,6 +68,6 @@ export const useAdminStore = defineStore('admin', () => {
     logout,
     fetchUserInfo,
     refreshToken,
-    isSignedIn
+    isSignedIn,
   }
 })

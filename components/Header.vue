@@ -143,7 +143,6 @@ import { useUserStore } from '~/stores/user.store'
 const userStore = useUserStore()
 const adminStore = useAdminStore()
 
-// const user = computed(() => userStore.user || adminStore.user)
 const user = computed(() => userStore.user)
 const adminUser = computed(() => adminStore.user)
 
@@ -152,5 +151,6 @@ watchEffect(() => adminUser.value)
 const logout = () => {
   userStore.logout()
   adminStore.logout()
+  location.reload()
 }
 </script>
