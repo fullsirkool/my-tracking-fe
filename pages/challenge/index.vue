@@ -17,7 +17,7 @@
         <UPagination
           v-model="paging.page"
           :total="challenges.length"
-          :active-button="{ class: 'bg-orange-500' }"
+          :active-button="{ class: 'bg-primary-500' }"
         />
       </div>
     </div>

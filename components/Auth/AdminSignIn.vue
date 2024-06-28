@@ -75,7 +75,7 @@
         variant="solid"
         size="md"
         :ui="{ rounded: 'rounded-lg' }"
-        class="bg-orange-600 hover:bg-orange-700"
+        class="bg-primary-600 hover:bg-primary-700"
         block
         :loading="isLoading"
       >

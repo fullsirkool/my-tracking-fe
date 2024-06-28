@@ -2,7 +2,7 @@
   <UContainer>
     <div class="relative">
       <UCard
-        class="flex justify-center p-10 pb-20 border-none rounded-3xl bg-gradient-to-tl from-orange-500 to-yellow-500"
+        class="flex justify-center p-10 pb-20 border-none rounded-3xl bg-gradient-to-tl from-primary-500 to-yellow-500"
       >
         <div
           class="w-fit grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 font-semibold"
