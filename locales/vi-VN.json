@@ -64,5 +64,9 @@
   "account_number": "Số Tài Khoản",
   "payment_warning": "Thông tin đăng ký ở trên chỉ dùng được 1 lần. Để đăng kí giải chạy mới hoặc người khác, bạn phải tạo Mã mới.",
   "payment_wait": "Sau khi thanh toán hoàn tất, vui lòng đợi vài phút để hoàn tất việc tham gia thử thách.",
+  "name": "Tên",
+  "rank": "Bảng xếp hạng",
+  "process": "Tiến độ",
+  "price": "Giá",
   "payment": "Thanh toán"
 }

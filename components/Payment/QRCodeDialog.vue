@@ -1,17 +1,20 @@
 <template>
-  <UModal v-model="props.isOpen">
+  <UModal v-model="props.isOpen" prevent-close>
     <div class="p-4">
       <div class="p-4">
-        <Placeholder class="h-48"/>
-        <img :src="paymentInfor.qrDataUrl"/>
+        <Placeholder class="h-48" />
+        <img :src="paymentInfor.qrDataUrl" />
       </div>
       <div class="text-center text-xl">
         <p>{{ $t('bank_name') }}: {{ paymentInfor.bankName }}</p>
         <p>{{ $t('account_number') }}: {{ paymentInfor.accountNo }}</p>
-
+        <p>
+          {{ $t('price') }}:
+          {{ `${number.format(paymentInfor.ticketPrice)} VNĐ` }}
+        </p>
       </div>
       <div class="p-2 text-center text-xl">
-        <p>{{ $t('payment_wait')}}</p>
+        <p>{{ $t('payment_wait') }}</p>
       </div>
       <div class="text-center pt-2 text-red-500">
         <i class="text-sm">*{{ $t('payment_warning') }}</i>
@@ -20,11 +23,12 @@
   </UModal>
 </template>
 <script setup lang="ts">
-import {TPaymentInfor} from "~/types/type/payment.type";
+import { TPaymentInfor } from '~/types/type/payment.type'
+import { number } from '~/utils/numberWithCommas'
 
 const runtimeConfig = useRuntimeConfig()
-const {BASE_URL} = runtimeConfig.public
-const {t} = useI18n()
+const { BASE_URL } = runtimeConfig.public
+const { t } = useI18n()
 
 interface IPaymentDialogProps {
   isOpen: boolean
@@ -38,14 +42,15 @@ const props = withDefaults(defineProps<IPaymentDialogProps>(), {
   paymentInfor: {
     qrDataUrl: '',
     paymentId: 0,
-    accountNo: "",
-    bankName: ""
-  }
+    accountNo: '',
+    bankName: '',
+    ticketPrice: 0,
+  },
 })
 
 const init = () => {
   const eventSource = new EventSource(
-      `${BASE_URL}/payment/event/${props.paymentInfor.paymentId}`,
+    `${BASE_URL}/payment/event/${props.paymentInfor.paymentId}`,
   )
   eventSource.addEventListener('complete-payment', () => {
     console.log('payment complete')
@@ -56,11 +61,14 @@ const init = () => {
   }
 }
 
-watch(() => props.isOpen, (newVal) => {
-  if (newVal) {
-    console.log('open dialog')
-    init()
-  }
-})
+watch(
+  () => props.isOpen,
+  (newVal) => {
+    if (newVal) {
+      console.log('open dialog')
+      init()
+    }
+  },
+)
 </script>
 <style scoped></style>

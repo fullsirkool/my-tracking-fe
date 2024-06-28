@@ -95,28 +95,16 @@
         </UInput>
       </UFormGroup>
       <div class="flex items-center gap-4">
-        <UFormGroup name="firstName" size="lg">
+        <UFormGroup name="name" size="lg">
           <template #label>
             <label class="text-md font-medium text-gray-900 leading-6"
-              >First Name</label
+              >Name</label
             >
           </template>
           <UInput
-            v-model="state.firstName"
+            v-model="state.name"
             icon="i-heroicons-user"
-            placeholder="First Name"
-          />
-        </UFormGroup>
-        <UFormGroup name="lastName" size="lg">
-          <template #label>
-            <label class="text-md font-medium text-gray-900 leading-6"
-              >Last Name</label
-            >
-          </template>
-          <UInput
-            v-model="state.lastName"
-            icon="i-heroicons-user"
-            placeholder="Last Name"
+            placeholder="Name"
           />
         </UFormGroup>
       </div>
@@ -185,8 +173,7 @@ const schema = object({
     .test('passwords-match', 'Passwords must match', function (value) {
       return value === this.parent.password
     }),
-  firstName: string().required('Fist name is required'),
-  lastName: string().required('Last name is required'),
+  name: string().required('Name is required'),
   sex: string().required('Last name is required').oneOf(genderOptions.value),
 })
 
@@ -195,8 +182,7 @@ const state = ref({
   email: '',
   password: '',
   confirmPassword: '',
-  firstName: '',
-  lastName: '',
+  name: '',
   sex: '',
 })
 
@@ -207,13 +193,12 @@ const isLoading = ref(false)
 const onSubmit = async (event: FormSubmitEvent<any>) => {
   // Do something with data
   console.log(event.data)
-  const { email, password, firstName, lastName, sex } = event.data
+  const { email, password, name, sex } = event.data
 
   const { data, error } = await authRepository.signUp({
     email,
     password,
-    firstName,
-    lastName,
+    name,
     sex,
   })
 

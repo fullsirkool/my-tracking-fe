@@ -1,11 +1,13 @@
 import {
   ChallengeDetailDto,
-  ChallengeUser,
+  ChallengeUserResponse,
   PagingChallengeDto,
   PagingChallengeResponse,
   Challenge,
   CreateChallengeDto,
   JoinChallengeResponse,
+  ChallengeUserParam,
+  CheckedJoinChallengeResponse,
 } from './../types/dto/challenge.dto'
 
 const runtimeConfig = useRuntimeConfig()
@@ -45,10 +47,14 @@ export default {
     return data.value
   },
 
-  async findChallengeUser(id: number): Promise<ChallengeUser[] | null> {
+  async findChallengeUser(
+    id: number,
+    params: ChallengeUserParam,
+  ): Promise<ChallengeUserResponse | null> {
     const url = `${BASE_URL}/challenge/${id}/user`
-    const { data } = await useFetch<ChallengeUser[]>(url, {
+    const { data } = await useFetch<ChallengeUserResponse>(url, {
       method: 'get',
+      params,
     })
     return data.value
   },
@@ -85,6 +91,17 @@ export default {
     const { data } = await useFetch<PagingChallengeResponse>(url, {
       method: 'get',
       params,
+    })
+    return data.value
+  },
+
+  async checkJoinedChallenge(
+    id: number,
+  ): Promise<CheckedJoinChallengeResponse | null> {
+    const url = `${BASE_URL}/challenge/check-join/${id}`
+    const { data } = await useFetch<CheckedJoinChallengeResponse>(url, {
+      method: 'get',
+      headers: { Authorization: `Bearer ${accessTokenCookie.value}` },
     })
     return data.value
   },

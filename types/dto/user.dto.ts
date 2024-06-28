@@ -1,8 +1,7 @@
 export interface UserClaims {
   id: number
   stravaId: number
-  firstName: string
-  lastName: string
+  name: string
   profile: string
   email: string
 }
