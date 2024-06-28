@@ -1,9 +1,10 @@
 import { defineStore } from 'pinia'
 import authRepository from '~/repository/auth.repository'
+import userRepository from '~/repository/user.repository'
 import { UserClaims } from '~/types/dto/user.dto'
 
 export const useUserStore = defineStore('user', () => {
-  const user = ref<UserClaims | null>()
+  const user = ref<UserClaims | null>(null)
 
   const setUser = (userInfo: UserClaims) => {
     user.value = userInfo
@@ -17,50 +18,42 @@ export const useUserStore = defineStore('user', () => {
     user.value = null
   }
 
-  const initValue = async () => {
-    const accessTokenExpireTime = new Date(
-      new Date().getTime() + 48 * 60 * 60 * 1000,
-    )
-    const refreshTokenExpireTime = new Date(
-      new Date().getTime() + 7 * 24 * 60 * 60 * 1000,
-    )
-
-    const accessTokenCookie = useCookie('access-token', {
-      expires: accessTokenExpireTime,
-    })
-    const refreshTokenCookie = useCookie('refresh-token', {
-      expires: refreshTokenExpireTime,
-    })
-
+  const fetchUserInfo = async () => {
     try {
-      if (!accessTokenCookie.value) {
-        const data = await authRepository.renew(`${refreshTokenCookie.value}`)
-        if (data) {
-          const { accessToken, refreshToken } = data
-          accessTokenCookie.value = accessToken
-          refreshTokenCookie.value = refreshToken
-        }
-      }
-      const loadedInfo = localStorage.getItem('user-info')
-      if (loadedInfo) {
-        const loadedUser = JSON.parse(loadedInfo)
-        if (loadedUser?.activated) {
-          user.value = loadedUser
-        } else {
-          localStorage.removeItem('user-info')
-        }
-      }
+      const response = await authRepository.fetchUserInfo()
+      if (!response) throw new Error('Fail')
+      const { data, error } = response
+      if (data) setUser(data)
+      console.log(data)
     } catch (error) {
-      localStorage.removeItem('user-info')
+      console.error(error)
     }
   }
 
-  initValue()
+  const refreshToken = async () => {
+    const accessTokenCookie = useCookie('access-token', {
+      maxAge: 60 * 60 * 24 * 2, // 2days
+    })
+    const refreshTokenCookie = useCookie('refresh-token', {
+      maxAge: 60 * 60 * 24 * 7, // 7days
+    })
+
+    try {
+      const data = await authRepository.renew(`${refreshTokenCookie.value}`)
+      if (!data) throw new Error('Failed to refresh token')
+      const { accessToken, refreshToken } = data
+      accessTokenCookie.value = accessToken
+      refreshTokenCookie.value = refreshToken
+      fetchUserInfo()
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
   return {
     user: readonly(user),
     setUser,
     logout,
-    initValue,
+    refreshToken,
   }
 })

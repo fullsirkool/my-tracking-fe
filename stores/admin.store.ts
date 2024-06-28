@@ -24,6 +24,12 @@ export const useAdminStore = defineStore('admin', () => {
     user.value = null
   }
 
+  const fetchUserInfo = async () => {
+    const response = await authAdminRepository.fetchInfo()
+    console.log('fetchUserInfo > admin', response.data)
+    response.data && setUser(response.data)
+  }
+
   const refreshToken = async () => {
     const accessTokenCookie = useCookie('x-access-token', {
       maxAge: 60 * 60 * 24 * 2, // 2days
@@ -33,6 +39,7 @@ export const useAdminStore = defineStore('admin', () => {
       maxAge: 60 * 60 * 24 * 7, // 7days
     })
 
+    console.log('refresh token for admin')
     try {
       if (!refreshTokenCookie.value) throw new Error('No refresh token found')
 
@@ -45,21 +52,11 @@ export const useAdminStore = defineStore('admin', () => {
       const { accessToken, refreshToken } = data
       accessTokenCookie.value = accessToken
       refreshTokenCookie.value = refreshToken
+
+      fetchUserInfo()
     } catch (error) {
       console.error(error)
     }
-  }
-
-  const fetchUserInfo = async () => {
-    const accessTokenCookie = useCookie('x-access-token')
-    const refreshTokenCookie = useCookie('x-refresh-token')
-
-    if (!accessTokenCookie.value && refreshTokenCookie.value) {
-      await refreshToken()
-    }
-
-    const response = await authAdminRepository.fetchInfo()
-    response.data && setUser(response.data)
   }
 
   return {

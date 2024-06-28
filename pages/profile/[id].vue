@@ -85,6 +85,9 @@
   </UContainer>
 </template>
 <script setup>
+definePageMeta({
+  middleware: ['authentication'],
+})
 import { storeToRefs } from 'pinia'
 import activityRepository from '~/repository/activity.repository'
 import { useProfileStore } from '~/stores/profile.store'

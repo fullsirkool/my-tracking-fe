@@ -111,4 +111,17 @@ export default {
       error: error.value?.data,
     }
   },
+
+  async fetchUserInfo(): Promise<BaseFetchResponse<UserClaims | null>> {
+    const url = `${BASE_URL}/auth/self`
+    const { data, error } = await useFetch<UserClaims>(url, {
+      method: 'GET',
+      headers: { Authorization: `Bearer ${accessTokenCookie.value}` },
+    })
+
+    return {
+      data: data.value,
+      error: error.value?.data
+    }
+  },
 }

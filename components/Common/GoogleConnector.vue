@@ -5,6 +5,7 @@
       label=""
       icon="i-simple-icons-github"
       block
+      class="bg-red-500 hover:bg-red-600"
       @click="signinRedirect()"
     >
       <Icon name="simple-icons:google" width="1.25rem" height="1.25rem" />

@@ -2,7 +2,7 @@
   <div class="sm:mx-auto sm:w-full sm:max-w-sm">
     <img
       class="mx-auto h-10 w-auto"
-      src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+      src="https://tailwindui.com/img/logos/mark.svg?color=orange&shade=600"
       alt="Your Company"
     />
     <h2
@@ -76,7 +76,9 @@
         :ui="{ rounded: 'rounded-lg' }"
         block
         :loading="isLoading"
-        >Submit
+        class="bg-orange-500 hover:bg-orange-600"
+      >
+        Submit
       </UButton>
 
       <UDivider label="OR" color="gray" />
@@ -108,11 +110,13 @@
 <script setup lang="ts">
 import type { FormError, FormSubmitEvent } from '#ui/types'
 import authRepository from '~/repository/auth.repository'
+import { useAdminStore } from '~/stores/admin.store';
 import { useUserStore } from '~/stores/user.store'
 
 const dayjs = useDayjs()
 const toast = useToast()
-const { setUser } = useUserStore()
+const userStore = useUserStore()
+const adminStore= useAdminStore()
 
 const state = reactive({
   email: undefined,
@@ -204,8 +208,9 @@ const onSubmit = async (event: FormSubmitEvent<any>) => {
       const { user, accessToken, refreshToken } = data
       accessTokenCookie.value = accessToken
       refreshTokenCookie.value = refreshToken
-      setUser(user)
-      localStorage.setItem('user-info', JSON.stringify(user))
+      adminStore.logout()
+      userStore.setUser(user)
+
       navigateTo('/')
     }
   } catch (error) {
@@ -235,8 +240,8 @@ const handleSignInGoogle = async (token: string) => {
     const { user, accessToken, refreshToken } = data
     accessTokenCookie.value = accessToken
     refreshTokenCookie.value = refreshToken
-    setUser(user)
-    localStorage.setItem('user-info', JSON.stringify(user))
+    userStore.setUser(user)
+    adminStore.logout()
     navigateTo('/')
   }
 }

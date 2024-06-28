@@ -3,5 +3,9 @@
     <CommonStravaConnect></CommonStravaConnect>
   </UContainer>
 </template>
-<script setup></script>
+<script setup>
+definePageMeta({
+  
+})
+</script>
 <style></style>
