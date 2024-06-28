@@ -67,5 +67,6 @@
   "name": "Name",
   "rank": "Rank",
   "process": "Process",
-  "price": "Price"
+  "price": "Price",
+  "payment": "Payment"
 }

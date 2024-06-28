@@ -12,6 +12,11 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
   const publicPaths = ['/profile/']
   const authUserPaths = ['/signin', '/signup']
   const authAdminPaths = ['/admin/signin']
+  const privateAdminPaths = [
+    '/admin/profile',
+    '/admin/payment',
+    '/challenge/create',
+  ]
 
   const isSignedIn = computed(
     () => adminStore.isSignedIn || userStore.isSignedIn,
@@ -37,7 +42,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
 
   if (!adminStore.user && (xAccessToken.value || xRefreshToken.value)) {
     console.log('has admin refresh-token')
-    adminStore.refreshToken()
+    await adminStore.refreshToken()
   }
 
   if (userStore.user && authUserPaths.some((p) => p === to.fullPath)) {
@@ -48,7 +53,11 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     return navigateTo('/profile/' + userStore.user.id)
   }
 
-  if (adminStore.user && authAdminPaths.some((p) => p === to.fullPath)) {
+  if (adminStore.user && authAdminPaths.some((p) => to.fullPath.includes(p))) {
+    return navigateTo('/')
+  }
+
+  if (!adminStore.user && privateAdminPaths.some((p) => p === to.fullPath)) {
     return navigateTo('/')
   }
 })

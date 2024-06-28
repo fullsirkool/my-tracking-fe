@@ -8,6 +8,9 @@ const adminStore = useAdminStore()
 const user = computed(() => userStore.user)
 const adminUser = computed(() => adminStore.user)
 
+const isAdmin = computed(() => !!adminUser.value)
+const isUser = computed(() => !!user.value)
+
 const logout = () => {
   userStore.logout()
   adminStore.logout()
@@ -17,7 +20,7 @@ const logout = () => {
 
 <template>
   <div
-    class="items-center sm:hidden fixed flex flex-col-reverse gap-3 left-3 bottom-3 z-50"
+    class="items-center md:hidden fixed flex flex-col-reverse gap-3 left-3 bottom-3 z-50"
   >
     <UTooltip :text="$t('create_challenge')">
       <NuxtLink
@@ -36,7 +39,16 @@ const logout = () => {
       </NuxtLink>
     </UTooltip>
 
-    <template v-if="user && user.id">
+    <UTooltip v-if="isAdmin" :text="$t('payment')">
+      <NuxtLink
+        to="/admin/payment"
+        class="text-2xl no-underline text-grey-darkest hover:text-blue-dark inline-flex items-center justify-center w-[45px] h-[45px] rounded-full text-slate-100 bg-primary-600 shadow-xl mx-2"
+      >
+        <Icon name="fa6-solid:dollar-sign" class="relative" />
+      </NuxtLink>
+    </UTooltip>
+
+    <template v-if="isUser">
       <UPopover class="inline-flex items-center">
         <NuxtLink
           class="text-lg text-grey-darkest hover:text-blue-dark ml-2 bg-transparent inline-flex items-center"
@@ -76,7 +88,7 @@ const logout = () => {
       </UPopover>
     </template>
 
-    <template v-else-if="adminUser">
+    <template v-else-if="isAdmin">
       <UPopover class="inline-flex items-center">
         <NuxtLink
           class="text-lg text-grey-darkest hover:text-blue-dark ml-2 bg-transparent inline-flex items-center"

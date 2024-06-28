@@ -6,13 +6,18 @@ import { UserClaims } from '~/types/dto/user.dto'
 export const useUserStore = defineStore('user', () => {
   const user = ref<UserClaims | null>(null)
 
+  const accessTokenCookie = useCookie('access-token', {
+    maxAge: 60 * 60 * 24 * 2,
+  })
+  const refreshTokenCookie = useCookie('refresh-token', {
+    maxAge: 60 * 60 * 24 * 7,
+  })
+
   const setUser = (userInfo: UserClaims) => {
     user.value = userInfo
   }
 
   const logout = () => {
-    const accessTokenCookie = useCookie('access-token')
-    const refreshTokenCookie = useCookie('refresh-token')
     accessTokenCookie.value = null
     refreshTokenCookie.value = null
     user.value = null
@@ -31,13 +36,6 @@ export const useUserStore = defineStore('user', () => {
   }
 
   const refreshToken = async () => {
-    const accessTokenCookie = useCookie('access-token', {
-      maxAge: 60 * 60 * 24 * 2, // 2days
-    })
-    const refreshTokenCookie = useCookie('refresh-token', {
-      maxAge: 60 * 60 * 24 * 7, // 7days
-    })
-
     try {
       const data = await authRepository.renew(`${refreshTokenCookie.value}`)
       if (!data) throw new Error('Failed to refresh token')
@@ -57,6 +55,6 @@ export const useUserStore = defineStore('user', () => {
     setUser,
     logout,
     refreshToken,
-    isSignedIn
+    isSignedIn,
   }
 })

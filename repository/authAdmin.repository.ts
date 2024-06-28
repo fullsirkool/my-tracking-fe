@@ -9,7 +9,7 @@ import { BaseFetchResponse } from '~/types/dto/base.dto'
 const runtimeConfig = useRuntimeConfig()
 const { BASE_URL } = runtimeConfig.public
 
-const accessTokenCookie = useCookie('x-access-token')
+
 
 export default {
   async signIn(
@@ -38,6 +38,7 @@ export default {
   },
 
   async fetchInfo(): Promise<BaseFetchResponse<AdminInfoDto | null>> {
+    const accessTokenCookie = useCookie('x-access-token')
     const url = `${BASE_URL}/auth/admin/self`
     const { data, error } = await useFetch<AdminInfoDto>(url, {
       method: 'GET',

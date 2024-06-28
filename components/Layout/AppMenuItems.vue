@@ -8,6 +8,9 @@ const adminStore = useAdminStore()
 const user = computed(() => userStore.user)
 const adminUser = computed(() => adminStore.user)
 
+const isUser = computed(() => userStore.isSignedIn)
+const isAdmin = computed(() => adminStore.isSignedIn)
+
 const logout = () => {
   userStore.logout()
   adminStore.logout()
@@ -16,8 +19,8 @@ const logout = () => {
 </script>
 
 <template>
-  <div class="items-center hidden sm:flex">
-    <UTooltip :text="$t('create_challenge')">
+  <div class="items-center hidden md:flex">
+    <UTooltip v-if="isAdmin" :text="$t('create_challenge')">
       <NuxtLink
         to="/challenge/create"
         class="text-2xl no-underline text-grey-darkest hover:text-blue-dark inline-flex items-center justify-center w-[45px] h-[45px] rounded-full bg-slate-100 text-primary-600 shadow-xl mx-2"
@@ -25,7 +28,7 @@ const logout = () => {
         <Icon name="system-uicons:create" />
       </NuxtLink>
     </UTooltip>
-    <UTooltip :text="$t('view_challenge')">
+    <UTooltip v-if="isAdmin || isUser" :text="$t('view_challenge')">
       <NuxtLink
         to="/challenge"
         class="text-2xl no-underline text-grey-darkest hover:text-blue-dark inline-flex items-center justify-center w-[45px] h-[45px] rounded-full bg-slate-100 text-primary-600 shadow-xl mx-2"
@@ -34,7 +37,7 @@ const logout = () => {
       </NuxtLink>
     </UTooltip>
 
-    <template v-if="user && user.id">
+    <template v-if="isUser">
       <UPopover class="inline-flex items-center">
         <NuxtLink
           class="text-lg text-grey-darkest hover:text-blue-dark ml-2 bg-transparent inline-flex items-center"
@@ -74,7 +77,7 @@ const logout = () => {
       </UPopover>
     </template>
 
-    <template v-else-if="adminUser">
+    <template v-else-if="isAdmin">
       <UPopover class="inline-flex items-center">
         <NuxtLink
           class="text-lg text-grey-darkest hover:text-blue-dark ml-2 bg-transparent inline-flex items-center"
@@ -94,6 +97,12 @@ const logout = () => {
               to="/admin/profile"
             >
               View Profile
+            </NuxtLink>
+            <NuxtLink
+              class="inline-flex items-center px-4 py-2 gap-2 cursor-pointer hover:text-primary-600"
+              to="/admin/payment"
+            >
+              View Payment
             </NuxtLink>
             <div class="border-b border-slate-100"></div>
             <CommonLanguageSwitcher></CommonLanguageSwitcher>

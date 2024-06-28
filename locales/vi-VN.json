@@ -67,5 +67,6 @@
   "name": "Tên",
   "rank": "Bảng xếp hạng",
   "process": "Tiến độ",
-  "price": "Giá"
+  "price": "Giá",
+  "payment": "Thanh toán"
 }
