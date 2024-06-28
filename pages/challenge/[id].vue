@@ -13,19 +13,30 @@
       </UButton>
     </UContainer>
     <ChallengeDetailTable></ChallengeDetailTable>
+    <ChallengeProgressTable :id="id"></ChallengeProgressTable>
   </UContainer>
   <UModal v-model="isOpenConfirmDialog">
     <div class="p-8">
-      <h1 class="text-xl font-semibold text-center">{{ $t('confirm_join_challenge') }}</h1>
+      <h1 class="text-xl font-semibold text-center">
+        {{ $t('confirm_join_challenge') }}
+      </h1>
       <div class="pt-4 flex items-center justify-center gap-2">
-        <UButton size="lg" :loading="isConfirmingJoinChallenge" @click="handleConfirmJoinChallenge">
+        <UButton
+          size="lg"
+          :loading="isConfirmingJoinChallenge"
+          @click="handleConfirmJoinChallenge"
+        >
           {{ $t('confirm') }}
         </UButton>
-        <UButton size="lg" variant="outline" :loading="isConfirmingJoinChallenge" @click="isOpenConfirmDialog = false">
+        <UButton
+          size="lg"
+          variant="outline"
+          :loading="isConfirmingJoinChallenge"
+          @click="isOpenConfirmDialog = false"
+        >
           {{ $t('cancel') }}
         </UButton>
       </div>
-
     </div>
   </UModal>
   <PaymentQRCodeDialog
@@ -39,7 +50,7 @@ import { storeToRefs } from 'pinia'
 import challengeRepository from '~/repository/challenge.repository'
 import { useChallengeStore } from '~/stores/challenge.store'
 import { useUserStore } from '~/stores/user.store'
-import {TPaymentInfor} from "~/types/type/payment.type";
+import { TPaymentInfor } from '~/types/type/payment.type'
 
 const toast = useToast()
 const { t } = useI18n()
@@ -47,7 +58,7 @@ const router = useRouter()
 
 const challengeStore = useChallengeStore()
 const { user } = useUserStore()
-const { fetchChallengeDetail } = challengeStore
+const { fetchChallengeDetail, fetchChallengeUsers } = challengeStore
 const { image } = storeToRefs(challengeStore)
 const { params, fullPath } = useRoute()
 const { id } = params
@@ -56,18 +67,27 @@ const openQrDialog = ref(false)
 const paymentInfor = ref<TPaymentInfor>({
   qrDataUrl: '',
   paymentId: 0,
-  accountNo: "",
-  bankName: ""
+  accountNo: '',
+  bankName: '',
 })
 const isOpenConfirmDialog = ref(false)
 const isConfirmingJoinChallenge = ref(false)
 
-await useAsyncData('challenge', () => fetchChallengeDetail(+id))
+await useAsyncData('challenge', async () => {
+  await Promise.all([
+    fetchChallengeDetail(+id),
+    fetchChallengeUsers({
+      id: +id,
+      page: 1,
+      size: 10,
+    }),
+  ])
+})
 
 const handleJoinChallenge = async () => {
   isOpenConfirmDialog.value = true
 }
-const handleConfirmJoinChallenge = async  () => {
+const handleConfirmJoinChallenge = async () => {
   if (isEmpty(user) || !user) {
     localStorage.setItem('saved-path', fullPath)
     navigateTo('/signin')
