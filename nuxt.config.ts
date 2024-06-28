@@ -45,7 +45,7 @@ export default defineNuxtConfig({
         file: 'vi-VN.json',
       },
     ],
-    defaultLocale: 'en-US',
+    defaultLocale: 'vi-VN',
   },
   vuefire: {
     auth: {

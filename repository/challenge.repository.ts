@@ -13,17 +13,18 @@ import {
 const runtimeConfig = useRuntimeConfig()
 const { BASE_URL } = runtimeConfig.public
 const accessTokenCookie = useCookie('access-token')
+const adminAccessTokenCookie = useCookie('x-access-token')
 
 export default {
   async createChallenge(body: CreateChallengeDto): Promise<Challenge | null> {
-    if (!accessTokenCookie.value) {
-      navigateTo('/signin')
+    if (!adminAccessTokenCookie.value) {
+      navigateTo('/admin/signin')
     }
     const url = `${BASE_URL}/challenge`
     const { data } = await useFetch<Challenge>(url, {
       method: 'post',
       body,
-      headers: { Authorization: `Bearer ${accessTokenCookie.value}` },
+      headers: { Authorization: `Bearer ${adminAccessTokenCookie.value}` },
     })
     return data.value
   },
