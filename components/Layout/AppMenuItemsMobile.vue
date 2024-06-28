@@ -16,11 +16,13 @@ const logout = () => {
 </script>
 
 <template>
-  <div class="items-center sm:hidden fixed flex flex-col-reverse gap-3 left-3 bottom-3 z-50">
+  <div
+    class="items-center sm:hidden fixed flex flex-col-reverse gap-3 left-3 bottom-3 z-50"
+  >
     <UTooltip :text="$t('create_challenge')">
       <NuxtLink
         to="/challenge/create"
-        class="text-2xl no-underline text-grey-darkest hover:text-blue-dark inline-flex items-center justify-center w-[45px] h-[45px] rounded-full bg-slate-100 text-primary-600 shadow-xl mx-2"
+        class="text-2xl no-underline text-grey-darkest hover:text-blue-dark inline-flex items-center justify-center w-[45px] h-[45px] rounded-full text-slate-100 bg-primary-600 shadow-xl mx-2"
       >
         <Icon name="system-uicons:create" />
       </NuxtLink>
@@ -28,7 +30,7 @@ const logout = () => {
     <UTooltip :text="$t('view_challenge')">
       <NuxtLink
         to="/challenge"
-        class="text-2xl no-underline text-grey-darkest hover:text-blue-dark inline-flex items-center justify-center w-[45px] h-[45px] rounded-full bg-slate-100 text-primary-600 shadow-xl mx-2"
+        class="text-2xl no-underline text-grey-darkest hover:text-blue-dark inline-flex items-center justify-center w-[45px] h-[45px] rounded-full text-slate-100 bg-primary-600 shadow-xl mx-2"
       >
         <Icon name="ep:aim" class="relative" />
       </NuxtLink>
