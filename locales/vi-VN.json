@@ -68,5 +68,15 @@
   "rank": "Bảng xếp hạng",
   "process": "Tiến độ",
   "price": "Giá",
-  "payment": "Thanh toán"
+  "payment": "Thanh toán",
+  "search_by_keyword": "Tìm kiếm bằng từ khoá",
+  "created_date": "Ngày tạo",
+  "created_hour": "Giờ tạo",
+  "created_at": "Thời điểm tạo",
+  "completed_at": "Thời điểm hoàn thành",
+  "search": "Tìm kiếm",
+  "amount": "Số tiền",
+  "type": "Loại",
+  "username": "Tên người dùng",
+  "all_time": "Mọi thời điểm"
 }

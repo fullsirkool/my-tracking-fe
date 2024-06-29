@@ -37,6 +37,15 @@ const logout = () => {
       </NuxtLink>
     </UTooltip>
 
+    <UTooltip v-if="isAdmin" :text="$t('payment')">
+      <NuxtLink
+        to="/admin/payment"
+        class="text-2xl no-underline text-grey-darkest hover:text-blue-dark inline-flex items-center justify-center w-[45px] h-[45px] rounded-full bg-slate-100 text-primary-600 shadow-xl mx-2"
+      >
+        <Icon name="ph-currency-dollar-simple-bold" class="relative" />
+      </NuxtLink>
+    </UTooltip>
+
     <template v-if="isUser">
       <UPopover class="inline-flex items-center">
         <NuxtLink
@@ -98,12 +107,12 @@ const logout = () => {
             >
               View Profile
             </NuxtLink>
-            <NuxtLink
+            <!-- <NuxtLink
               class="inline-flex items-center px-4 py-2 gap-2 cursor-pointer hover:text-primary-600"
               to="/admin/payment"
             >
               View Payment
-            </NuxtLink>
+            </NuxtLink> -->
             <div class="border-b border-slate-100"></div>
             <CommonLanguageSwitcher></CommonLanguageSwitcher>
             <div class="border-b border-slate-100"></div>
