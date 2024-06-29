@@ -68,5 +68,15 @@
   "rank": "Rank",
   "process": "Process",
   "price": "Price",
-  "payment": "Payment"
+  "payment": "Payment",
+  "search_by_keyword": "Search by keyword",
+  "created_date": "Created Date",
+  "created_hour": "Created Hour",
+  "created_at": "Created At",
+  "completed_at": "Completed At",
+  "search": "Search",
+  "amount": "Amount",
+  "type": "Type",
+  "username": "Username",
+  "all_time": "All Time"
 }

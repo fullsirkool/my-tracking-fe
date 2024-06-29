@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import paymentRepository from '~/repository/payment.repository'
 import { PaymentDto } from '~/types/dto/payment.dto'
+import DatePicker from '~/components/Common/DatePicker.vue'
 
 definePageMeta({
   // layout: 'home',
@@ -8,6 +9,7 @@ definePageMeta({
 })
 
 const dayjs = useDayjs()
+const { t } = useI18n()
 
 const pagination = reactive({
   page: 1,
@@ -25,59 +27,112 @@ const columns = ref([
   },
   {
     key: 'user.name',
-    label: 'Username',
+    label: t('username'),
   },
   {
     key: 'challenge.title',
-    label: 'Challenge',
+    label: t('challenge'),
   },
   {
     key: 'completedAt',
-    label: 'Completed At',
+    label: t('completed_at'),
     align: 'center',
   },
   {
     key: 'createdAt',
-    label: 'Created At',
+    label: t('created_at'),
   },
   {
     key: 'paymentType',
-    label: 'Type',
+    label: t('type'),
+  },
+  {
+    key: 'amount',
+    label: t('amount'),
   },
 ])
 
 const filter = reactive({
-  createdAt: '',
+  createdDate: new Date(),
   query: '',
 })
 
-const { data } = await paymentRepository.fetchPaymentList({
-  page: pagination.page,
-  size: pagination.size,
-  createdAt: filter.createdAt,
-  query: filter.query,
-})
+const isFilterByCreatedDateEnabled = ref(false)
 
-if (data) {
-  paymentList.value = data.data
-  pagination.totalElements = data.totalElement
-  pagination.totalPages = data.totalPages
+const onFilter = async () => {
+  const { data } = await paymentRepository.fetchPaymentList({
+    page: pagination.page,
+    size: pagination.size,
+    createdAt: isFilterByCreatedDateEnabled.value
+      ? dayjs(filter.createdDate).toISOString()
+      : '',
+    query: filter.query,
+  })
+
+  if (data) {
+    paymentList.value = data.data
+    pagination.totalElements = data.totalElement
+    pagination.totalPages = data.totalPages
+  }
 }
+
+const onKeydown = (event: KeyboardEvent) => {
+  event.key == 'Enter' && onFilter()
+}
+
+const onDateChange = (event: Date) => {
+  filter.createdDate = event
+}
+
+await onFilter()
 </script>
 
 <template>
   <div class="p-5">
     <!-- Filter -->
-    <div class="bg-white shadow rounded-xl flex p-2.5 gap-2.5">
-      <UInput placeholder="Created At" />
-      <UInput v-model="filter.query" placeholder="Search By" />
+    <div class="bg-white shadow rounded-xl flex items-end p-5 gap-5">
+      <div>
+        <label class="text-sm inline-flex gap-2.5" for="createdDate">
+          <UCheckbox v-model="isFilterByCreatedDateEnabled" />
+          {{ $t('created_date') }}
+        </label>
 
-      <UButton>Filter</UButton>
+        <div class="flex items-center gap-5">
+          <UPopover :popper="{ placement: 'bottom-start' }">
+            <UButton
+              icon="i-heroicons-calendar-days-20-solid"
+              :label="dayjs(filter.createdDate).format('DD/MM/YYYY')"
+              :disabled="!isFilterByCreatedDateEnabled"
+            />
+
+            <template #panel="{ close }">
+              <DatePicker
+                :model-value="filter.createdDate"
+                is-required
+                @update:model-value="onDateChange"
+                @close="close"
+              />
+            </template>
+          </UPopover>
+        </div>
+      </div>
+
+      <div class="flex-1">
+        <label class="text-sm" for="query">{{ $t('search_by_keyword') }}</label>
+        <UInput
+          v-model="filter.query"
+          placeholder="Keyword"
+          name="query"
+          @keydown="onKeydown"
+        />
+      </div>
+
+      <UButton @click="onFilter">{{ $t('search') }}</UButton>
     </div>
 
-    <!-- Table -->
     <div class="h-5"></div>
 
+    <!-- Table -->
     <UTable
       :rows="paymentList"
       :columns="columns"
@@ -100,9 +155,6 @@ if (data) {
 <style scoped lang="scss">
 .custom-table {
   :deep(th) {
-    // background-color: rgb(var(--color-primary-600) / var(--tw-bg-opacity));
-    // color: rgb(241 245 249 / var(--tw-text-opacity))
-
     color: rgb(var(--color-primary-600) / var(--tw-bg-opacity));
     background-color: rgb(var(--color-primary-50) / var(--tw-bg-opacity));
   }
