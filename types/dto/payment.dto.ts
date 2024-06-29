@@ -30,6 +30,7 @@ export interface PaymentDto {
   createdAt: Date
   completedAt: Date
   challenge: IChallenge
+  user: IUser
 }
 
 export interface PaymentQueryDto {
