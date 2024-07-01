@@ -8,7 +8,7 @@
       <div class="text-center text-xl">
         <p>{{ $t('bank_name') }}: {{ paymentInfor.bankName }}</p>
         <p>{{ $t('account_number') }}: {{ paymentInfor.accountNo }}</p>
-        <p>
+        <p v-if="paymentInfor.ticketPrice">
           {{ $t('price') }}:
           {{ `${number.format(paymentInfor.ticketPrice)} VNĐ` }}
         </p>

@@ -67,7 +67,11 @@ const logout = () => {
               class="inline-flex items-center px-4 py-2 gap-2 cursor-pointer hover:text-primary-600"
               to="/profile"
             >
-              View Profile
+              <Icon
+                  name="heroicons:user"
+                  width="1.25rem"
+                  height="1.25rem"
+              />{{$t('view_profile')}}
             </NuxtLink>
             <div class="border-b border-slate-100"></div>
             <CommonLanguageSwitcher></CommonLanguageSwitcher>
@@ -107,7 +111,11 @@ const logout = () => {
               class="inline-flex items-center px-4 py-2 gap-2 cursor-pointer hover:text-primary-600"
               to="/admin/profile"
             >
-              View Profile
+              <Icon
+                  name="heroicons:user"
+                  width="1.25rem"
+                  height="1.25rem"
+              />{{$t('view_profile')}}
             </NuxtLink>
             <div class="border-b border-slate-100"></div>
             <CommonLanguageSwitcher></CommonLanguageSwitcher>

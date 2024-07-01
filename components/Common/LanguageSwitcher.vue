@@ -1,10 +1,14 @@
 <template>
   <div>
     <button
-      class="inline-flex flex-col items-center hover:text-primary-600 px-4 py-2"
+      class="inline-flex gap-2 items-center hover:text-primary-600 px-4 py-2"
       @click="isOpen = true"
     >
-      {{ $t('settings') }}
+      <Icon
+          name="heroicons:cog-6-tooth"
+          width="1.25rem"
+          height="1.25rem"
+      /> {{ $t('settings') }}
     </button>
     <USlideover v-model="isOpen" :ui="{ width: 'w-screen max-w-xs' }">
       <UCard

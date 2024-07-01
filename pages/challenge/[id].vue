@@ -1,72 +1,82 @@
 <template>
   <UContainer>
-    <div>
-      <img
-        :src="image"
-        alt=""
-        class="h-[200px] md:h-[600px] w-full object-cover rounded-3xl"
-      />
+    <div class="mt-10 px-0 sm:px-6 lg:px-8 max-w-7xl">
+      <UCard
+          class="rounded-2xl bg-[#f5f5f5] overflow-auto min-h-[300px] p-4"
+          style="box-shadow: none"
+      >
+        <div>
+          <img
+              :src="image"
+              alt=""
+              class="h-[200px] md:h-[600px] w-full object-cover rounded-3xl"
+          />
+        </div>
+        <div class="text-center">
+          <h1 class="text-2xl font-semibold p-4">{{challengeDetail?.title}}</h1>
+        </div>
+        <div class="p-2 flex items-center justify-center">
+          <UButton v-if="!isJoinedChallenge" size="xl" @click="handleJoinChallenge">
+            {{ $t('join_challenge') }}
+          </UButton>
+        </div>
+      </UCard>
     </div>
-    <UContainer class="p-6 flex items-center justify-center">
-      <UButton v-if="!isJoinedChallenge" size="xl" @click="handleJoinChallenge">
-        {{ $t('join_challenge') }}
-      </UButton>
-    </UContainer>
     <ChallengeDetailTable></ChallengeDetailTable>
     <ChallengeProgressTable :id="id"></ChallengeProgressTable>
-  </UContainer>
-  <UModal v-model="isOpenConfirmDialog">
-    <div class="p-8">
-      <h1 class="text-xl font-semibold text-center">
-        {{ $t('confirm_join_challenge') }}
-      </h1>
-      <div class="pt-4 flex items-center justify-center gap-2">
-        <UButton
-          size="lg"
-          :loading="isConfirmingJoinChallenge"
-          @click="handleConfirmJoinChallenge"
-        >
-          {{ $t('confirm') }}
-        </UButton>
-        <UButton
-          size="lg"
-          variant="outline"
-          :loading="isConfirmingJoinChallenge"
-          @click="isOpenConfirmDialog = false"
-        >
-          {{ $t('cancel') }}
-        </UButton>
+    <UModal v-model="isOpenConfirmDialog">
+      <div class="p-8">
+        <h1 class="text-xl font-semibold text-center">
+          {{ $t('confirm_join_challenge') }}
+        </h1>
+        <div class="pt-4 flex items-center justify-center gap-2">
+          <UButton
+              size="lg"
+              :loading="isConfirmingJoinChallenge"
+              @click="handleConfirmJoinChallenge"
+          >
+            {{ $t('confirm') }}
+          </UButton>
+          <UButton
+              size="lg"
+              variant="outline"
+              :loading="isConfirmingJoinChallenge"
+              @click="isOpenConfirmDialog = false"
+          >
+            {{ $t('cancel') }}
+          </UButton>
+        </div>
       </div>
-    </div>
-  </UModal>
-  <PaymentQRCodeDialog
-    :is-open="openQrDialog"
-    :payment-infor="paymentInfor"
-    @close="handleClosePaymentDialog"
-  ></PaymentQRCodeDialog>
+    </UModal>
+    <PaymentQRCodeDialog
+        :is-open="openQrDialog"
+        :payment-infor="paymentInfor"
+        @complete="handleCompletePayment"
+        @close="handleClosePaymentDialog"
+    ></PaymentQRCodeDialog>
+  </UContainer>
 </template>
 <script setup lang="ts">
-import { storeToRefs } from 'pinia'
+import {storeToRefs} from 'pinia'
 import challengeRepository from '~/repository/challenge.repository'
-import { useChallengeStore } from '~/stores/challenge.store'
-import { useUserStore } from '~/stores/user.store'
-import { TPaymentInfor } from '~/types/type/payment.type'
+import {useChallengeStore} from '~/stores/challenge.store'
+import {useUserStore} from '~/stores/user.store'
+import {TPaymentInfor} from '~/types/type/payment.type'
+import {JoinChallengeStatus} from "~/types/dto/challenge.dto";
 
 const toast = useToast()
-const { t } = useI18n()
+const {t} = useI18n()
 const router = useRouter()
 
 const challengeStore = useChallengeStore()
-const { user } = useUserStore()
+const {user} = useUserStore()
 const {
   fetchChallengeDetail,
   fetchChallengeUsers,
-  fetchJoinedChallenge,
-  joinedChallenge,
 } = challengeStore
-const { image } = storeToRefs(challengeStore)
-const { params, fullPath } = useRoute()
-const { id } = params
+const {image, challengeDetail} = storeToRefs(challengeStore)
+const {params, fullPath} = useRoute()
+const {id} = params
 
 const openQrDialog = ref(false)
 const paymentInfor = ref<TPaymentInfor>({
@@ -107,35 +117,42 @@ const handleConfirmJoinChallenge = async () => {
   isConfirmingJoinChallenge.value = true
   const res = await challengeRepository.join(+id)
   if (res) {
+    const {status} = res
     isOpenConfirmDialog.value = false
     isConfirmingJoinChallenge.value = false
-    paymentInfor.value.qrDataUrl = res.qrDataURL
-    paymentInfor.value.paymentId = res.paymentId
-    paymentInfor.value.accountNo = res.accountNo
-    paymentInfor.value.bankName = res.bankName
-    paymentInfor.value.ticketPrice = res.ticketPrice
-    openQrDialog.value = true
-    console.log(res)
-  }
+    if (status === JoinChallengeStatus.COMPLETED) {
 
-  // if (res) {
-  //   toast.add({
-  //     id: 'copy-challenge',
-  //     icon: 'i-heroicons-check-circle',
-  //     timeout: 4000,
-  //     title: t('join_challenge_successfully'),
-  //   })
-  //   await fetchChallengeDetail(+id)
-  //   await router.replace({ query: { tab: 'joined-user' } })
-  // } else {
-  //   toast.add({
-  //     id: 'copy-challenge',
-  //     icon: 'i-heroicons-exclamation-circle',
-  //     color: 'red',
-  //     timeout: 4000,
-  //     title: t('you_have_joined_this_challenge'),
-  //   })
-  // }
+    } else {
+      if (res.paymentInfor) {
+        paymentInfor.value.qrDataUrl = res.paymentInfor.qrDataURL
+        paymentInfor.value.paymentId = res.paymentInfor.paymentId
+        paymentInfor.value.accountNo = res.paymentInfor.accountNo
+        paymentInfor.value.bankName = res.paymentInfor.bankName
+        paymentInfor.value.ticketPrice = res.paymentInfor.ticketPrice
+        openQrDialog.value = true
+      }
+    }
+  }
+}
+
+const handleCompletePayment = async (isCompleted: Boolean) => {
+  if (isCompleted) {
+    toast.add({
+      id: 'copy-challenge',
+      icon: 'i-heroicons-check-circle',
+      timeout: 4000,
+      title: t('join_challenge_successfully'),
+    })
+    await fetchChallengeDetail(+id)
+  } else {
+    toast.add({
+      id: 'copy-challenge',
+      icon: 'i-heroicons-exclamation-circle',
+      color: 'red',
+      timeout: 4000,
+      title: t('you_have_joined_this_challenge'),
+    })
+  }
 }
 
 const handleClosePaymentDialog = () => {

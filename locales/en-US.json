@@ -78,5 +78,6 @@
   "amount": "Amount",
   "type": "Type",
   "username": "Username",
-  "all_time": "All Time"
+  "all_time": "All Time",
+  "view_profile": "View Profile"
 }
