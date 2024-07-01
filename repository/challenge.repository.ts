@@ -17,16 +17,20 @@ const accessTokenCookie = useCookie('access-token')
 const adminAccessTokenCookie = useCookie('x-access-token')
 
 export default {
-  async createChallenge(body: CreateChallengeDto): Promise<BaseFetchResponse<Challenge | null>> {
+  async createChallenge(body: CreateChallengeDto)
+      // : Promise<BaseFetchResponse<Challenge | null>>
+  {
     if (!adminAccessTokenCookie.value) {
       navigateTo('/admin/signin')
     }
+    console.log('body', body)
     const url = `${BASE_URL}/challenge`
     const { data, error } = await useFetch<Challenge>(url, {
       method: 'post',
       body,
       headers: { Authorization: `Bearer ${adminAccessTokenCookie.value}` },
     })
+
     return {
       data: data.value,
       error: error.value?.data,
