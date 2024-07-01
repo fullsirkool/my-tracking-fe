@@ -35,6 +35,7 @@ export interface CreateChallengeDto {
     maxPace: number | undefined
     minDistance: number | undefined
     maxDistance: number | undefined
+    description: string
 }
 
 export class PagingChallengeDto extends BasePagingDto {
