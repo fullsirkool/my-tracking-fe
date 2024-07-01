@@ -28,14 +28,13 @@ export interface CreateChallengeDto {
     title: string
     startDate: Date
     endDate: Date
+    ticketPrice: number | undefined
     image: string | null | undefined
     target: number | undefined
     minPace: number | undefined
     maxPace: number | undefined
     minDistance: number | undefined
     maxDistance: number | undefined
-    status: ChallengeStatus
-    challengeType: ChallengeType
 }
 
 export class PagingChallengeDto extends BasePagingDto {

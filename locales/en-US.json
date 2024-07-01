@@ -79,5 +79,7 @@
   "type": "Type",
   "username": "Username",
   "all_time": "All Time",
-  "view_profile": "View Profile"
+  "view_profile": "View Profile",
+  "review": "Review",
+  "information": "Information"
 }

@@ -13,7 +13,7 @@
           />
         </div>
         <div class="text-center">
-          <h1 class="text-2xl font-semibold p-4">{{challengeDetail?.title}}</h1>
+          <h1 class="text-4xl font-semibold p-4">{{challengeDetail?.title}}</h1>
         </div>
         <div class="p-2 flex items-center justify-center">
           <UButton v-if="!isJoinedChallenge" size="xl" @click="handleJoinChallenge">

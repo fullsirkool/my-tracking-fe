@@ -79,5 +79,7 @@
   "type": "Loại",
   "username": "Tên người dùng",
   "all_time": "Mọi thời điểm",
-  "view_profile": "Thông tin"
+  "view_profile": "Thông tin",
+  "review": "Review",
+  "information": "Thông tin"
 }
