@@ -81,5 +81,7 @@
   "all_time": "All Time",
   "view_profile": "View Profile",
   "review": "Review",
-  "information": "Information"
+  "information": "Information",
+  "ticket_price": "Ticket Price",
+  "description": "Description"
 }

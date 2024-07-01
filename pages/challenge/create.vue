@@ -25,28 +25,6 @@
                   :disabled="selectedStep.key === 'review'"
               />
             </UFormGroup>
-<!--            <UFormGroup-->
-<!--                class="py-2"-->
-<!--                :label="$t('challenge_status')"-->
-<!--                name="status"-->
-<!--            >-->
-<!--              <USelect-->
-<!--                  v-model="state.status"-->
-<!--                  :options="getStates"-->
-<!--                  :disabled="selectedStep.key === 'review'"-->
-<!--              />-->
-<!--            </UFormGroup>-->
-<!--            <UFormGroup-->
-<!--                class="py-2"-->
-<!--                :label="$t('challenge_type')"-->
-<!--                name="challengeType"-->
-<!--            >-->
-<!--              <USelect-->
-<!--                  v-model="state.challengeType"-->
-<!--                  :options="getTypes"-->
-<!--                  :disabled="selectedStep.key === 'review'"-->
-<!--              />-->
-<!--            </UFormGroup>-->
             <UFormGroup class="py-2" :label="$t('target')" name="target">
               <UInput
                   v-model="state.target"
@@ -192,6 +170,18 @@
                 </UPopover>
               </UFormGroup>
             </div>
+            <UFormGroup
+                class="py-2"
+                :label="$t('description')"
+                name="tiketPrice"
+            >
+              <UTextarea
+                  v-model="state.description"
+                  autoresize
+                  :maxrows="5"
+                  placeholder="Search..."
+              />
+            </UFormGroup>
           </div>
           <div class="col-span-12 sm:col-span-4">
             <UFormGroup class="py-2" :label="$t('image_upload')" name="file">
@@ -282,18 +272,14 @@ const state = ref({
   enableMinDistance: true,
   enableMaxDistance: true,
   file: undefined,
+  description: '',
 })
 
 const validate = (state: any): FormError[] => {
+  console.log('validate', state)
   const errors = []
   if (!state.title) {
     errors.push({path: 'title', message: 'Required'})
-  }
-  if (!state.status) {
-    errors.push({path: 'status', message: 'Required'})
-  }
-  if (!state.challengeType) {
-    errors.push({path: 'challengeType', message: 'Required'})
   }
 
   if (!state.startDate) {
@@ -390,14 +376,15 @@ const handleNextStep = () => {
 }
 
 const uploadImgage = async () => {
+  console.log("uploadImgage", state.value.file)
   if (state.value.file) {
     return await fileRepository.upload(state.value.file, FileType.CHALLENGE_BACKGROUND)
   }
 }
 
 const submit = async (event: FormSubmitEvent<any>) => {
+  console.log("submit", event)
   const image = await uploadImgage()
-  // Do something with data
   const {
     title,
     ticketPrice,
