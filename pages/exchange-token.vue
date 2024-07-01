@@ -1,6 +1,6 @@
 <template>
   <div class="text-center">
-    <h1 class="text-cyan-700">{{ title }}</h1>
+    <h1 class="text-8xl text-cyan-700">{{ title }}</h1>
   </div>
 </template>
 <script setup>
@@ -8,7 +8,6 @@ import authRepository from '~/repository/auth.repository'
 import { useUserStore } from '~/stores/user.store'
 const dayjs = useDayjs()
 const userStore = useUserStore()
-const { setUser } = userStore
 const toast = useToast()
 const { query } = useRoute()
 const { code } = query
@@ -46,8 +45,7 @@ const exchangeToken = async () => {
   const { accessToken, refreshToken, user } = data
   accessTokenCookie.value = accessToken
   refreshTokenCookie.value = refreshToken
-  setUser(user)
-  localStorage.setItem('user-info', JSON.stringify(user))
+  await userStore.fetchUserInfo()
   const savedPath = localStorage.getItem('saved-path')
   if (!savedPath) {
     navigateTo('/challenge')
@@ -57,6 +55,6 @@ const exchangeToken = async () => {
 
 exchangeToken()
 
-const title = ref('Thanks for signing. App will be available soon!')
+const title = ref('Connecting!')
 </script>
 <style></style>

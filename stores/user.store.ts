@@ -55,6 +55,7 @@ export const useUserStore = defineStore('user', () => {
     setUser,
     logout,
     refreshToken,
+    fetchUserInfo,
     isSignedIn,
   }
 })
