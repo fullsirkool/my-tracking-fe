@@ -13,13 +13,14 @@ import {BaseFetchResponse} from "~/types/dto/base.dto";
 
 const runtimeConfig = useRuntimeConfig()
 const { BASE_URL } = runtimeConfig.public
-const accessTokenCookie = useCookie('access-token')
-const adminAccessTokenCookie = useCookie('x-access-token')
+// const accessTokenCookie = useCookie('access-token')
+// const adminAccessTokenCookie = useCookie('x-access-token')
 
 export default {
   async createChallenge(body: CreateChallengeDto)
       // : Promise<BaseFetchResponse<Challenge | null>>
   {
+    const adminAccessTokenCookie = useCookie('x-access-token')
     if (!adminAccessTokenCookie.value) {
       navigateTo('/admin/signin')
     }
@@ -69,6 +70,7 @@ export default {
   },
 
   async join(id: number): Promise<JoinChallengeResponse | null> {
+    const accessTokenCookie = useCookie('access-token')
     if (!accessTokenCookie.value) {
       navigateTo('/signin')
     }
@@ -107,6 +109,7 @@ export default {
   async checkJoinedChallenge(
     id: number,
   ): Promise<CheckedJoinChallengeResponse | null> {
+    const accessTokenCookie = useCookie('access-token')
     const url = `${BASE_URL}/challenge/check-join/${id}`
     const { data } = await useFetch<CheckedJoinChallengeResponse>(url, {
       method: 'get',

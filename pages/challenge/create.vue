@@ -435,7 +435,7 @@ const submit = async (event: FormSubmitEvent<any>) => {
     delete payload.maxDistance
   }
 
-  const {data, error} = await challengeRepository.createChallenge(payload)
+  const {data, error} = await challengeRepository.createChallenge({...payload, ticketPrice: +ticketPrice})
   if (error) {
     console.error(error)
     toast.add({
