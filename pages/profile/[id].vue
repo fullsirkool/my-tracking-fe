@@ -95,14 +95,14 @@ import { useUserStore } from '~/stores/user.store'
 
 const profileStore = useProfileStore()
 const {
-  fetchMonthlyActivitiesDetail,
   fetchUserInfo,
+  fetchMonthlyActivitiesDetail,
   fetchDailyActivityStatistics,
   fetchJoinedChallenge,
 } = profileStore
 
 const { user } = storeToRefs(profileStore)
-const { getUser } = useUserStore()
+const userStore = useUserStore()
 
 const { params } = useRoute()
 const { id } = params
@@ -114,7 +114,6 @@ const { data } = await useAsyncData('profile', async () => {
       fetchDailyActivityStatistics(),
       activityRepository.fetchStatistics(id),
       fetchMonthlyActivitiesDetail(id),
-      fetchJoinedChallenge(id),
     ])
 
   return {
@@ -127,10 +126,10 @@ const { data } = await useAsyncData('profile', async () => {
 
 const statistics = data.value.statictics
 
-const avgPace = ref(statistics.pace.toFixed(2))
-const totalDistance = ref((statistics.distance / 1000).toFixed(2))
-const count = ref(statistics.count)
-const totalMovingTime = ref((statistics.totalMovingTime / 3600).toFixed(2))
+const avgPace = ref(statistics?.pace.toFixed(2) || '0.00')
+const totalDistance = ref(((statistics?.distance || 0) / 1000).toFixed(2))
+const count = ref(statistics?.count || 0)
+const totalMovingTime = ref(((statistics?.totalMovingTime || 0) / 3600).toFixed(2))
 
 const getFullName = computed(
   () =>
@@ -151,7 +150,7 @@ const showConnectStravaButton = computed(() => {
   if (user.value.stravaId) {
     return false
   }
-  const currentUser = getUser()
+  const currentUser = userStore.user
   if (!currentUser || currentUser.id !== user.value.id) {
     return false
   }

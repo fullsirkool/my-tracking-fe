@@ -21,19 +21,6 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
   const isSignedIn = computed(
     () => adminStore.isSignedIn || userStore.isSignedIn,
   )
-  // DEBUG
-  console.log('isSignedIn', isSignedIn.value)
-  console.log('to.fullPath', to.fullPath)
-  console.log('userStore.user', userStore.user)
-  console.log('adminStore.user', adminStore.user)
-  console.log(
-    'accessToken.value || refreshToken.value',
-    accessToken.value || refreshToken.value,
-  )
-  console.log(
-    'xAccessToken.value || xRefreshToken.value',
-    xAccessToken.value || xRefreshToken.value,
-  )
 
   if (!userStore.user && (accessToken.value || refreshToken.value)) {
     console.log('has user refresh-token')
