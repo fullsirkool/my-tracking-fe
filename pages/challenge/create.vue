@@ -42,7 +42,7 @@
                 name="tiketPrice"
             >
               <UInput
-                  v-model="state.tiketPrice"
+                  v-model="state.ticketPrice"
                   type="number"
                   :disabled="selectedStep.key === 'review'"
               >
@@ -248,8 +248,6 @@ const selectedStep = ref({key: 'information', title: 'Information'})
 
 const dayjs = useDayjs()
 
-const getStates = computed(() => Object.values(ChallengeStatus))
-const getTypes = computed(() => Object.values(ChallengeType))
 const startDateLabel = computed(() => {
   return dayjs(state.value.startDate).format('ddd, MMM DD, YYYY')
 })
@@ -259,7 +257,7 @@ const endDateLabel = computed(() => {
 
 const state = ref({
   title: '',
-  tiketPrice: 0,
+  ticketPrice: 0,
   startDate: new Date(),
   endDate: new Date(),
   target: 0,
