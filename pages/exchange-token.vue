@@ -42,9 +42,6 @@ const exchangeToken = async () => {
     })
     return
   }
-  const { accessToken, refreshToken, user } = data
-  accessTokenCookie.value = accessToken
-  refreshTokenCookie.value = refreshToken
   await userStore.fetchUserInfo()
   const savedPath = localStorage.getItem('saved-path')
   if (!savedPath) {
