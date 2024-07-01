@@ -242,6 +242,7 @@ import challengeRepository from '~/repository/challenge.repository'
 import fileRepository from '~/repository/file.repository'
 import {CreateChallengeDto} from '~/types/dto/challenge.dto'
 import {ChallengeStatus, ChallengeType} from '~/types/enum/challenge.enum'
+import {FileType} from "~/types/enum/file.enum";
 
 definePageMeta({
   middleware: ['authentication'],
@@ -390,7 +391,7 @@ const handleNextStep = () => {
 
 const uploadImgage = async () => {
   if (state.value.file) {
-    return await fileRepository.upload(state.value.file)
+    return await fileRepository.upload(state.value.file, FileType.CHALLENGE_BACKGROUND)
   }
 }
 

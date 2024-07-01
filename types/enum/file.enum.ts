@@ -1,0 +1,4 @@
+export enum FileType {
+    CHALLENGE_BACKGROUND = 'USER_AVATAR',
+    TRACKLOG_EVIDENT = 'TRACKLOG_EVIDENT',
+}

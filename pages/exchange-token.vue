@@ -12,15 +12,6 @@ const toast = useToast()
 const { query } = useRoute()
 const { code } = query
 
-const accessTokenExpireTime = dayjs(new Date()).add(2, 'day').toDate()
-const refreshTokenExpireTime = dayjs(new Date()).add(1, 'week').toDate()
-const accessTokenCookie = useCookie('access-token', {
-  expires: accessTokenExpireTime,
-})
-const refreshTokenCookie = useCookie('refresh-token', {
-  expires: refreshTokenExpireTime,
-})
-
 const actions = [
   {
     label: 'Back to profile',
