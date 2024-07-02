@@ -1,22 +1,25 @@
 <template>
   <UContainer>
-    <div class="mt-10 px-0 sm:px-6 lg:px-8 max-w-7xl">
-      <UCard
-          class="rounded-2xl bg-[#f5f5f5] overflow-auto min-h-[300px] p-4"
-          style="box-shadow: none"
-      >
-        <div>
-          <img
-              :src="image"
-              alt=""
-              class="h-[200px] md:h-[600px] w-full object-cover rounded-3xl"
-          />
-        </div>
+    <div class="mt-10">
+      <UCard class="rounded-xl bg-[#f5f5f5] overflow-auto min-h-[300px]">
+        <div
+          class="custom-cover rounded-xl"
+          :style="{ background: `url(${image})` }"
+        ></div>
         <div class="text-center">
-          <h1 class="text-4xl font-semibold p-4">{{challengeDetail?.title}}</h1>
+          <h1 class="text-4xl font-semibold p-4">
+            {{ challengeDetail?.title }}
+          </h1>
+        </div>
+        <div v-if="challengeDetail?.description" class="h-32">
+          {{ challengeDetail?.description }}
         </div>
         <div class="p-2 flex items-center justify-center">
-          <UButton v-if="!isJoinedChallenge" size="xl" @click="handleJoinChallenge">
+          <UButton
+            v-if="!isJoinedChallenge"
+            size="xl"
+            @click="handleJoinChallenge"
+          >
             {{ $t('join_challenge') }}
           </UButton>
         </div>
@@ -31,17 +34,17 @@
         </h1>
         <div class="pt-4 flex items-center justify-center gap-2">
           <UButton
-              size="lg"
-              :loading="isConfirmingJoinChallenge"
-              @click="handleConfirmJoinChallenge"
+            size="lg"
+            :loading="isConfirmingJoinChallenge"
+            @click="handleConfirmJoinChallenge"
           >
             {{ $t('confirm') }}
           </UButton>
           <UButton
-              size="lg"
-              variant="outline"
-              :loading="isConfirmingJoinChallenge"
-              @click="isOpenConfirmDialog = false"
+            size="lg"
+            variant="outline"
+            :loading="isConfirmingJoinChallenge"
+            @click="isOpenConfirmDialog = false"
           >
             {{ $t('cancel') }}
           </UButton>
@@ -49,34 +52,35 @@
       </div>
     </UModal>
     <PaymentQRCodeDialog
-        :is-open="openQrDialog"
-        :payment-infor="paymentInfor"
-        @complete="handleCompletePayment"
-        @close="handleClosePaymentDialog"
+      :is-open="openQrDialog"
+      :payment-infor="paymentInfor"
+      @complete="handleCompletePayment"
+      @close="handleClosePaymentDialog"
     ></PaymentQRCodeDialog>
   </UContainer>
 </template>
 <script setup lang="ts">
-import {storeToRefs} from 'pinia'
+import { storeToRefs } from 'pinia'
 import challengeRepository from '~/repository/challenge.repository'
-import {useChallengeStore} from '~/stores/challenge.store'
-import {useUserStore} from '~/stores/user.store'
-import {TPaymentInfor} from '~/types/type/payment.type'
-import {JoinChallengeStatus} from "~/types/dto/challenge.dto";
+import { useChallengeStore } from '~/stores/challenge.store'
+import { useUserStore } from '~/stores/user.store'
+import { TPaymentInfor } from '~/types/type/payment.type'
+import { JoinChallengeStatus } from '~/types/dto/challenge.dto'
+
+definePageMeta({
+  middleware: ['authentication'],
+})
 
 const toast = useToast()
-const {t} = useI18n()
+const { t } = useI18n()
 const router = useRouter()
 
 const challengeStore = useChallengeStore()
-const {user} = useUserStore()
-const {
-  fetchChallengeDetail,
-  fetchChallengeUsers,
-} = challengeStore
-const {image, challengeDetail} = storeToRefs(challengeStore)
-const {params, fullPath} = useRoute()
-const {id} = params
+const { user } = useUserStore()
+const { fetchChallengeDetail, fetchChallengeUsers } = challengeStore
+const { image, challengeDetail } = storeToRefs(challengeStore)
+const { params, fullPath } = useRoute()
+const { id } = params
 
 const openQrDialog = ref(false)
 const paymentInfor = ref<TPaymentInfor>({
@@ -118,11 +122,10 @@ const handleConfirmJoinChallenge = async () => {
   isConfirmingJoinChallenge.value = true
   const res = await challengeRepository.join(+id)
   if (res) {
-    const {status} = res
+    const { status } = res
     isOpenConfirmDialog.value = false
     isConfirmingJoinChallenge.value = false
     if (status === JoinChallengeStatus.COMPLETED) {
-
     } else {
       if (res.paymentInfor) {
         paymentInfor.value.qrDataUrl = res.paymentInfor.qrDataURL

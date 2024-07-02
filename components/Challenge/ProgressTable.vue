@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-10 px-0 sm:px-6 lg:px-8 max-w-7xl">
+  <div class="mt-10">
     <UCard
       class="rounded-2xl bg-[#f5f5f5] overflow-auto min-h-[300px]"
       style="box-shadow: none"
@@ -20,9 +20,10 @@
           <template #name-data="{ row }">
             <div class="flex items-center gap-3">
               <UAvatar :src="row.avatar" alt="Avatar" size="md" />
-              <span class="text-gray-900 dark:text-white font-medium text-md md:text-xl">{{
-                row.name
-              }}</span>
+              <span
+                class="text-gray-900 dark:text-white font-medium text-md md:text-xl"
+                >{{ row.name }}</span
+              >
             </div>
           </template>
 
@@ -93,13 +94,12 @@ const columns = [
     key: 'totaldistance',
     label: t('distance') + ' (km)',
     sortable: true,
-    class: 'min-w-[170px] md:min-w-auto'
+    class: 'min-w-[170px] md:min-w-auto',
   },
   {
     key: 'target',
     label: t('target') + ' (km)',
-    class: 'min-w-[100px] md:min-w-auto'
-
+    class: 'min-w-[100px] md:min-w-auto',
   },
   {
     key: 'process',
