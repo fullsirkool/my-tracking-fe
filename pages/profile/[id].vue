@@ -2,42 +2,17 @@
   <UContainer>
     <div class="relative">
       <UCard
-        class="flex justify-center p-10 pb-20 border-none rounded-3xl bg-gradient-to-tl from-primary-500 to-yellow-500"
+        class="custom-cover flex justify-center p-10 pb-20 border-none rounded-3xl bg-gradient-to-r from-primary-500 to-primary-600"
+        :style="{
+          background: `url(${bgImage})`,
+        }"
       >
-        <div
-          class="w-fit grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 font-semibold"
-        >
-          <div
-            class="shadow rounded-full w-32 h-32 flex items-center justify-center flex-col text-center p-3 border-[1px] bg-white border-none text-gray-700"
-          >
-            <p class="text-red-500 text-4xl font-extrabold">
-              {{ totalDistance }}
-            </p>
-            {{ $t('distance') }} (km)
-          </div>
-          <div
-            class="shadow rounded-full w-32 h-32 flex items-center justify-center flex-col text-center p-3 border-[1px] bg-white border-none text-gray-700"
-          >
-            <p class="text-red-500 text-4xl font-extrabold">
-              {{ getPaceMinute }}
-            </p>
-            {{ $t('pace') }}
-          </div>
-          <div
-            class="shadow rounded-full w-32 h-32 flex items-center justify-center flex-col text-center p-3 border-[1px] bg-white border-none text-gray-700"
-          >
-            <p class="text-red-500 text-4xl font-extrabold">{{ count }}</p>
-            {{ $t('activities') }}
-          </div>
-          <div
-            class="shadow rounded-full w-32 h-32 flex items-center justify-center flex-col text-center p-3 border-[1px] bg-white border-none text-gray-700"
-          >
-            <p class="text-red-500 text-4xl font-extrabold">
-              {{ getTotalRuningMinute }}
-            </p>
-            {{ $t('time') }}
-          </div>
-        </div>
+        <ProfileStatistic
+          :distance="totalDistance"
+          :pace="getPaceMinute"
+          :activity="count"
+          :time="getTotalRuningMinute"
+        />
       </UCard>
       <div
         class="absolute rounded-full bg-white -translate-x-2/4 translate-y-2/4 z-[1] left-2/4 bottom-0"
@@ -47,12 +22,12 @@
           size="4xl"
           :src="user.profile"
           alt="Avatar"
-          class="h-44 w-44 rounded-full border-[5px] border-solid border-[white]"
+          class="sm:h-44 sm:w-44 rounded-full border-[5px] border-solid border-[white]"
         />
         <img
           v-else
           :src="user.profile"
-          class="h-44 w-44 rounded-full border-[5px] border-solid border-[white]"
+          class="sm:h-44 sm:w-44 rounded-full border-[5px] border-solid border-[white]"
         />
       </div>
     </div>
@@ -71,6 +46,12 @@
         </div>
       </div>
     </div>
+    <ProfileStatisticMobile
+      :distance="totalDistance"
+      :pace="getPaceMinute"
+      :activity="count"
+      :time="getTotalRuningMinute"
+    />
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-10">
       <div class="col-span-2">
         <profile-self-activity></profile-self-activity>
@@ -92,6 +73,9 @@ import { storeToRefs } from 'pinia'
 import activityRepository from '~/repository/activity.repository'
 import { useProfileStore } from '~/stores/profile.store'
 import { useUserStore } from '~/stores/user.store'
+import bgImage0 from '~/assets/bg-0.avif'
+import bgImage1 from '~/assets/bg-1.avif'
+import bgImage2 from '~/assets/bg-2.avif'
 
 const profileStore = useProfileStore()
 const {
@@ -129,12 +113,11 @@ const statistics = data.value.statictics
 const avgPace = ref(statistics?.pace.toFixed(2) || '0.00')
 const totalDistance = ref(((statistics?.distance || 0) / 1000).toFixed(2))
 const count = ref(statistics?.count || 0)
-const totalMovingTime = ref(((statistics?.totalMovingTime || 0) / 3600).toFixed(2))
-
-const getFullName = computed(
-  () =>
-    `${user.value.name ? user.value.name : ''}`,
+const totalMovingTime = ref(
+  ((statistics?.totalMovingTime || 0) / 3600).toFixed(2),
 )
+
+const getFullName = computed(() => `${user.value.name ? user.value.name : ''}`)
 const getPaceMinute = computed(() => {
   const minutes = Math.floor(avgPace.value / 1)
   const seconds = (avgPace.value % 1) * 60
@@ -156,14 +139,20 @@ const showConnectStravaButton = computed(() => {
   }
   return true
 })
+
+function getRandomValueFromArray(arr) {
+  if (arr.length === 0) {
+    return undefined // Handle empty array case if necessary
+  }
+  const randomIndex = Math.floor(Math.random() * arr.length)
+  return arr[randomIndex]
+}
+
+const bgImage = ref('')
+onMounted(() => {
+  bgImage.value = getRandomValueFromArray([bgImage0, bgImage1, bgImage2])
+})
 </script>
 <style scoped>
-.profile-header {
-  background: rgb(255, 244, 79);
-  background: radial-gradient(
-    circle,
-    rgba(255, 244, 79, 1) 0%,
-    rgba(224, 81, 49, 1) 100%
-  );
-}
+
 </style>
