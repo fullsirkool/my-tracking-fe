@@ -80,16 +80,6 @@
       <UDivider label="OR" color="gray" />
 
       <CommonGoogleConnector :handle-sign-in="handleSignInGoogle" />
-      <UButton
-        color="black"
-        label=""
-        icon="i-simple-icons-github"
-        block
-        disabled
-      >
-        <Icon name="simple-icons:facebook" width="1.25rem" height="1.25rem" />
-        Login with Facebook
-      </UButton>
     </UForm>
 
     <p class="mt-10 text-center text-sm text-gray-500">

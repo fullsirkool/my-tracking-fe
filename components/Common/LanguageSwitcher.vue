@@ -22,7 +22,7 @@
           <h1 class="text-center text-2xl font-semibold">Setting</h1>
         </template>
         <div class="flex items-center gap-4">
-          <label for="">Language:</label>
+          <label for="">{{$t('language')}}:</label>
           <USelectMenu
             v-model="language"
             :options="locales"

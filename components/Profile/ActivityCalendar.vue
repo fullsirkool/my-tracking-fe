@@ -37,7 +37,7 @@
             <template #panel>
               <div class="py-2 px-3">
                 <p class="text-center">{{ `${getDateDisplay(item.title)}` }}</p>
-                <p class="py-2 px-3">Distance: {{ item.distance }}km</p>
+                <p class="py-2 px-3">{{$t('distance')}}: {{ item.distance }}km</p>
               </div>
             </template>
           </UPopover>
@@ -129,7 +129,7 @@ const getMonthDisplay = computed(() => {
 })
 
 const getDateDisplay = (date) => {
-  return `${dayjs(chartDate.value).format('YYYY, MMM')} ${date}`
+  return `${dayjs(chartDate.value).format('DD/MM/YYYY')}`
 }
 
 setBlocks()

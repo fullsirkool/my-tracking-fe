@@ -88,10 +88,12 @@
   "hour": "Hour",
   "minute": "Minute",
   "second": "Second",
-  "moving_time": "Moving Time",
+  "total_moving_time": "Total moving time",
   "required_warning": "Required!",
   "payment_content": "Payment Content",
   "create_tracklog_success": "Create tracklog successfully",
   "m": "metre",
-  "submit": "Submit"
+  "submit": "Submit",
+  "no_items": "No athletes.",
+  "language": "Language"
 }

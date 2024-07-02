@@ -127,7 +127,7 @@ const getChartSeries = computed(() => {
   )
   return [
     {
-      name: 'activities',
+      name: `${t('distance')} (km)`,
       data,
     },
   ]

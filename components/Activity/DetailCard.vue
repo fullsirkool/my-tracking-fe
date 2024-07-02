@@ -59,8 +59,8 @@ const props = withDefaults(defineProps<IActivityDetailCardProps>(), {})
 const dayjs = useDayjs()
 
 const getDateFormated = computed(() => {
-  const { startDateLocal } = props.activity
-  return dayjs(startDateLocal).format('hh:mm, DD/MM/YYYY')
+  const { startDateLocal, timezone } = props.activity
+  return dayjs(startDateLocal, timezone).format('hh:mm, DD/MM/YYYY')
 })
 
 const getMovingTimeFormatted = computed(() => {

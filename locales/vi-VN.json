@@ -88,10 +88,12 @@
   "hour": "Giờ",
   "minute": "Phút",
   "second": "Giây",
-  "moving_time": "Thời gian di chuyển",
+  "total_moving_time": "Tổng thời gian di chuyển",
   "required_warning": "Đây là thông tin băt buộc!",
   "payment_content": "Nội dung chuyển khoản",
   "create_tracklog_success": "Tạo tracklog thành công",
   "m": "mét",
-  "submit": "Xác nhận"
+  "submit": "Xác nhận",
+  "no_items": "Chưa có vận động viên nào.",
+  "language": "Ngôn ngữ"
 }

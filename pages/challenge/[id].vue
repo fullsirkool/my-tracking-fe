@@ -40,7 +40,7 @@
           <UButton
               size="lg"
               variant="outline"
-              :loading="isConfirmingJoinChallenge"
+              :disabled="isConfirmingJoinChallenge"
               @click="isOpenConfirmDialog = false"
           >
             {{ $t('cancel') }}
