@@ -2,69 +2,75 @@
   <UCard class="rounded-2xl bg-white" style="box-shadow: none">
     <div class="flex gap-2 items-center text-sm">
       <Icon
-        name="mdi:calendar-month-outline"
-        width="1.25rem"
-        height="1.25rem"
+          name="mdi:calendar-month-outline"
+          width="1.25rem"
+          height="1.25rem"
       />
       <span>{{ getDateFormated }}</span>
     </div>
     <div class="text-lg font-semibold mt-2 flex justify-between">
       <div class="flex gap-2 items-center">
-        <Icon name="fluent:run-16-filled" width="1.75rem" height="1.75rem" />
+        <Icon name="fluent:run-16-filled" width="1.75rem" height="1.75rem"/>
         <a
-          href="javascript:void(0)"
-          class="text-primary-500"
-          @click="handleRedirect(activity.id)"
-          >{{ activity.name }}</a
+            href="javascript:void(0)"
+            class="text-primary-500"
+            @click="handleRedirect()"
+        >{{ activity.name }}</a
         >
       </div>
       <div
-        class="w-7 h-7 bg-primary-500 rounded-full flex items-center justify-center"
+          class="w-7 h-7 bg-primary-500 rounded-full flex items-center justify-center"
       >
         <Icon
-          name="mdi:strava"
-          width="1.25rem"
-          height="1.25rem"
-          color="white"
+            name="mdi:strava"
+            width="1.25rem"
+            height="1.25rem"
+            color="white"
         />
       </div>
     </div>
     <div class="flex items-center justify-between text-sm mt-2">
       <div class="flex items-center gap-2">
-        <Icon name="fa6-solid:route" width="1rem" height="1rem" />
+        <Icon name="fa6-solid:route" width="1rem" height="1rem"/>
         <span>{{ (activity.distance / 1000)?.toFixed(2) }} km</span>
       </div>
       <div class="flex items-center gap-2">
-        <Icon name="fa6-solid:stopwatch" width="1rem" height="1rem" />
+        <Icon name="fa6-solid:stopwatch" width="1rem" height="1rem"/>
         <span>{{ getAvgPace }}</span>
       </div>
       <div class="flex items-center gap-2">
-        <Icon name="ic:outline-watch-later" width="1rem" height="1rem" />
+        <Icon name="ic:outline-watch-later" width="1rem" height="1rem"/>
         <span>{{ getMovingTimeFormatted }}</span>
       </div>
     </div>
   </UCard>
+  <ManualCreateDialog :is-open="isOpenDetailDialog" :activity="activity" :readonly="true"
+                      @close="handleCloseDetailDialog"/>
 </template>
 <script setup lang="ts">
-import { ActivityDetail } from '~/types/dto/activity.dto'
+import {ActivityCreationType, ActivityDetail} from '~/types/dto/activity.dto'
+import ManualCreateDialog from "~/components/Activity/ManualCreateDialog.vue";
 
 const runtimeConfig = useRuntimeConfig()
-const { STRAVA_REDIRECT_URL } = runtimeConfig.public
+const {STRAVA_REDIRECT_URL} = runtimeConfig.public
 
 interface IActivityDetailCardProps {
   activity: ActivityDetail
 }
+
 const props = withDefaults(defineProps<IActivityDetailCardProps>(), {})
 
 const dayjs = useDayjs()
 
+const isOpenDetailDialog = ref(false)
+
 const getDateFormated = computed(() => {
-  const { startDateLocal, timezone } = props.activity
+  const {startDateLocal, timezone} = props.activity
   return dayjs(startDateLocal, timezone).format('hh:mm, DD/MM/YYYY')
 })
 
 const getMovingTimeFormatted = computed(() => {
-  const { movingTime } = props.activity
+  const {movingTime} = props.activity
   if (!movingTime) {
     return '00:00:00'
   }
@@ -82,7 +88,7 @@ const getMovingTimeFormatted = computed(() => {
 })
 
 const getAvgPace = computed(() => {
-  const { distance, movingTime } = props.activity
+  const {distance, movingTime} = props.activity
   if (!movingTime) {
     return '00:00'
   }
@@ -93,7 +99,15 @@ const getAvgPace = computed(() => {
   return `${minute}:${+second > 9 ? second : '0' + second}`
 })
 
-const handleRedirect = (activityId: string) => {
-  window.open(`${STRAVA_REDIRECT_URL}/${activityId}`)
+const handleRedirect = () => {
+  if (props.activity.activityType === ActivityCreationType.SYNCHRONOUS) {
+    window.open(`${STRAVA_REDIRECT_URL}/${props.activity.id}`)
+  } else {
+    isOpenDetailDialog.value = true
+  }
+}
+
+const handleCloseDetailDialog = () => {
+  isOpenDetailDialog.value = false
 }
 </script>

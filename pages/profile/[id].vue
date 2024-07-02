@@ -45,7 +45,8 @@
           </h3>
         </div>
         <div v-if="isProfileOwner">
-          <ActivityManualCreateDialog @complete="handleCompleteCreateAcvitiy" />
+          <UButton @click="handleOpenManualCreateDialog">{{ $t('manual_create_tracklog') }}</UButton>
+          <ActivityManualCreateDialog :is-open="isOpenManualDialog" @complete="handleCompleteCreateAcvitiy" @close="handleCloseManualCreateActivityDialog"/>
         </div>
       </div>
     </div>
@@ -114,6 +115,7 @@ const { data } = await useAsyncData('profile', async () => {
 
 const statistics = data.value.statictics
 
+const isOpenManualDialog = ref(false)
 const avgPace = ref(statistics?.pace.toFixed(2) || '0.00')
 const totalDistance = ref(((statistics?.distance || 0) / 1000).toFixed(2))
 const count = ref(statistics?.count || 0)
@@ -153,12 +155,12 @@ const isProfileOwner = computed(() => {
 })
 
 const handleCompleteCreateAcvitiy = async () => {
-  console.log('handleCompleteCreateAcvitiy')
   await Promise.all([
     fetchDailyActivityStatistics(),
     activityRepository.fetchStatistics(id),
     fetchMonthlyActivitiesDetail(id),
   ])
+  isOpenManualDialog.value = false
 }
 
 function getRandomValueFromArray(arr) {
@@ -170,6 +172,15 @@ function getRandomValueFromArray(arr) {
 }
 
 const bgImage = ref('')
+
+const handleOpenManualCreateDialog = () => {
+  isOpenManualDialog.value = true
+}
+
+const handleCloseManualCreateActivityDialog = () => {
+  isOpenManualDialog.value = false
+}
+
 onMounted(() => {
   bgImage.value = getRandomValueFromArray([bgImage0, bgImage1, bgImage2])
 })

@@ -10,7 +10,7 @@ const props = defineProps({
   maxDate: {
     type: Date,
     default: new Date('2100-01-01'),
-  }
+  },
 })
 const emit = defineEmits(['update:model-value', 'close'])
 const attrs = ref([

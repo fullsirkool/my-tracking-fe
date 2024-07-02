@@ -1,7 +1,7 @@
 <template>
   <div
       class="flex items-center justify-center border border-solid rounded-lg"
-      :class="{ 'text-gray-400': disabled }"
+      :class="{ 'text-gray-500': disabled }"
   >
     <UInput
         v-model="hour"

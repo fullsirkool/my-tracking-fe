@@ -4,7 +4,7 @@ export enum ActivityType {
     Run = 'RUN',
 }
 
-enum ActivityCreationType {
+export enum ActivityCreationType {
     SYNCHRONOUS = 'SYNCHRONOUS',
     MANUAL = 'MANUAL'
 }
@@ -55,6 +55,7 @@ export interface ActivityDetail {
     userId: 1
     visibility: string
     timezone: string
+    imageUrl: string
     activityType: ActivityCreationType
 }
 

@@ -4,7 +4,7 @@
       :class="{
       'rounded-full': circle,
       'rounded-lg': !circle,
-      'pointer-events-none border-[#A0A0A0]': disabled,
+      'pointer-events-none border-[#A0A0A0]': readonly,
     }"
       :style="{ width: `${width}px`, height: `${height}px` }"
       @dragover.prevent="dragOver"
@@ -35,13 +35,21 @@
           accept="image/*"
           type="file"
           class="hidden"
-          :disabled="disabled"
+          :disabled="readonly"
           tabindex="-1"
           @change="(e) => onChange(e)"
       />
       <img
+          v-if="!readonly || !defaultUrl"
           class="select-image"
           src="~/assets/icon/default-image.svg"
+          alt=""
+          :class="{ 'rounded-full': circle, 'rounded-lg': !circle }"
+      />
+      <img
+          v-else-if="defaultUrl"
+          class="select-image"
+          :src="defaultUrl"
           alt=""
           :class="{ 'rounded-full': circle, 'rounded-lg': !circle }"
       />
@@ -55,16 +63,15 @@ interface IFileUploadProps {
   height?: number
   circle?: boolean
   defaultImage?: string
-  disabled?: boolean
-  modelValue?: File | undefined
+  readonly?: boolean
+  defaultUrl?: string
 }
 
 const props = withDefaults(defineProps<IFileUploadProps>(), {
-
   circle: false,
   defaultImage: '',
-  disabled: false,
-  modelValue: undefined,
+  readonly: false,
+  defaultUrl: '',
 })
 
 const emit = defineEmits<{
@@ -76,7 +83,6 @@ const previewURL = ref<string>('')
 const selectedFile = ref<File | null>(null)
 
 const previewStyle = computed(() => {
-  console.log('selectedFile.value', selectedFile.value)
   return {}
 })
 
