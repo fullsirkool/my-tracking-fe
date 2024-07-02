@@ -63,14 +63,14 @@
           <CommonStravaConnect></CommonStravaConnect>
         </div>
         <div v-else class="flex gap-3 items-center mx-auto my-2 w-fit">
-          <CommonStravaIcon></CommonStravaIcon>
+          <CommonStravaIcon/>
           <h3 class="text-md">
             {{ $t('strava_id') }}:
             {{ user.stravaId ? user.stravaId : 'Not connected' }}
           </h3>
         </div>
         <div v-if="isProfileOwner">
-          <ActivityManualCreateDialog/>
+          <ActivityManualCreateDialog @complete="handleCompleteCreateAcvitiy"/>
         </div>
       </div>
     </div>
@@ -167,6 +167,15 @@ const isProfileOwner = computed(() => {
   }
   return true
 })
+
+const handleCompleteCreateAcvitiy = async () => {
+  console.log('handleCompleteCreateAcvitiy')
+  await Promise.all([
+    fetchDailyActivityStatistics(),
+    activityRepository.fetchStatistics(id),
+    fetchMonthlyActivitiesDetail(id),
+  ])
+}
 </script>
 <style scoped>
 .profile-header {

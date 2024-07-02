@@ -29,7 +29,7 @@
                       :label="startDateLabel"
                   />
                   <template #panel="{ close }">
-                    <CommonDatePicker v-model="state.startDate" @close="close">
+                    <CommonDatePicker v-model="state.startDate" :max-date="new Date()" @close="close">
                     </CommonDatePicker>
                   </template>
                 </UPopover>
@@ -62,9 +62,10 @@ import {FileType} from "~/types/enum/file.enum";
 import activityRepository from "~/repository/activity.repository";
 
 const {t} = useI18n()
-const isOpen = ref(false)
 const toast = useToast()
+const emit = defineEmits(['complete'])
 
+const isOpen = ref(false)
 const schema = object({
   distance: number().required(t('required_warning')),
   movingTime: string().required(t('required_warning')),
@@ -101,6 +102,7 @@ const onSubmit = async (event: FormSubmitEvent<Schema>) => {
   }
   const res = await activityRepository.manualCreate(payload)
   if (res) {
+    emit('complete')
     isOpen.value = false
     toast.add({
       id: 'copy-challenge',
@@ -109,6 +111,7 @@ const onSubmit = async (event: FormSubmitEvent<Schema>) => {
       title: t('create_tracklog_success'),
     })
   }
+
 }
 
 const startDateLabel = computed(() => {
