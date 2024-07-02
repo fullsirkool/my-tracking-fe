@@ -44,7 +44,7 @@
             {{ user.stravaId ? user.stravaId : 'Not connected' }}
           </h3>
         </div>
-        <div v-if="isProfileOwner">
+        <div v-if="isProfileOwner" class="p-4">
           <UButton @click="handleOpenManualCreateDialog">{{ $t('manual_create_tracklog') }}</UButton>
           <ActivityManualCreateDialog :is-open="isOpenManualDialog" @complete="handleCompleteCreateAcvitiy" @close="handleCloseManualCreateActivityDialog"/>
         </div>
