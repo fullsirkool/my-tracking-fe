@@ -2,26 +2,33 @@
   <UContainer>
     <div class="mt-10">
       <UCard class="rounded-xl bg-[#f5f5f5] overflow-auto min-h-[300px]">
-        <div
-          class="custom-cover rounded-xl"
-          :style="{ background: `url(${image})` }"
-        ></div>
-        <div class="text-center">
-          <h1 class="text-4xl font-semibold p-4">
-            {{ challengeDetail?.title }}
-          </h1>
-        </div>
-        <div v-if="challengeDetail?.description" class="h-32">
-          {{ challengeDetail?.description }}
-        </div>
-        <div class="p-2 flex items-center justify-center">
-          <UButton
-            v-if="!isJoinedChallenge"
-            size="xl"
-            @click="handleJoinChallenge"
-          >
-            {{ $t('join_challenge') }}
-          </UButton>
+        <div class="flex">
+          <div
+            class="custom-cover rounded-xl flex-1"
+            :style="{ background: `url(${image})` }"
+          />
+          <div class="flex-1 px-5 mb-5 h-full justify-between">
+            <div>
+              <h1 class="text-4xl font-semibold mb-2.5">
+                {{ challengeDetail?.title }}
+              </h1>
+              <div v-if="challengeDetail?.description" class="h-32 mb-5">
+                {{ challengeDetail?.description }}
+              </div>
+            </div>
+
+            <div
+              class="flex items-center justify-center justify-self-end mt-auto"
+            >
+              <UButton
+                v-if="!isJoinedChallenge"
+                size="xl"
+                @click="handleJoinChallenge"
+              >
+                {{ $t('join_challenge') }}
+              </UButton>
+            </div>
+          </div>
         </div>
       </UCard>
     </div>
@@ -89,7 +96,7 @@ const paymentInfor = ref<TPaymentInfor>({
   accountNo: '',
   bankName: '',
   ticketPrice: 0,
-  paymentMessage: ''
+  paymentMessage: '',
 })
 const isOpenConfirmDialog = ref(false)
 const isConfirmingJoinChallenge = ref(false)
