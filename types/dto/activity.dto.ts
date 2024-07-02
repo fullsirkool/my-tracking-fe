@@ -53,3 +53,11 @@ export interface ActivityDetail {
 
 export interface FindActivityResponse
   extends BasePagingResponse<ActivityDetail> {}
+
+
+export interface ManualCreateActivityDto {
+  distance: number
+  startDate: string
+  movingTime: string
+  imageUrl: string | undefined | null
+}

@@ -62,7 +62,7 @@
   "cancel": "Đóng",
   "bank_name": "Ngân hàng",
   "account_number": "Số Tài Khoản",
-  "payment_warning": "Thông tin đăng ký ở trên chỉ dùng được 1 lần. Để đăng kí giải chạy mới hoặc người khác, bạn phải tạo Mã mới.",
+  "payment_warning": "Thông tin đăng ký ở trên chỉ dùng được 1 lần. Để đăng kí giải chạy mới hoặc người khác, bạn phải tạo mã mới.",
   "payment_wait": "Sau khi thanh toán hoàn tất, vui lòng đợi vài phút để hoàn tất việc tham gia thử thách.",
   "name": "Tên",
   "rank": "Bảng xếp hạng",
@@ -83,5 +83,15 @@
   "review": "Review",
   "information": "Thông tin",
   "ticket_price": "Giá vé",
-  "description": "Chi tiết"
+  "description": "Chi tiết",
+  "manual_create_tracklog": "Tạo mới tracklog",
+  "hour": "Giờ",
+  "minute": "Phút",
+  "second": "Giây",
+  "moving_time": "Thời gian di chuyển",
+  "required_warning": "Đây là thông tin băt buộc!",
+  "payment_content": "Nội dung chuyển khoản",
+  "create_tracklog_success": "Tạo tracklog thành công",
+  "m": "mét",
+  "submit": "Xác nhận"
 }

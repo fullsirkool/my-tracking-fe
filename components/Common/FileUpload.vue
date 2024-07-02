@@ -1,48 +1,49 @@
 <template>
   <div
-    class="upload-box text-center p-8 flex justify-center items-center relative border-2 border-dashed border-[#4B4B4B]"
-    :class="{
+      class="upload-box text-center p-8 flex justify-center items-center relative border-2 border-dashed border-[#4B4B4B]"
+      :class="{
       'rounded-full': circle,
       'rounded-lg': !circle,
       'pointer-events-none border-[#A0A0A0]': disabled,
     }"
-    :style="{ width: `${width}px`, height: `${height}px` }"
-    @dragover.prevent="dragOver"
-    @dragleave.prevent="dragLeave"
-    @drop.prevent="drop($event)"
-    @click="open"
+      :style="{ width: `${width}px`, height: `${height}px` }"
+      @dragover.prevent="dragOver"
+      @dragleave.prevent="dragLeave"
+      @drop.prevent="drop($event)"
+      @click="open"
   >
     <div
-      class="preview-image"
-      :class="{
+        class="preview-image"
+        :class="{
         'bg-gray': previewURL,
         'rounded-full': circle,
         'rounded-lg': !circle,
       }"
+        :style="previewStyle"
     >
       <img
-        v-show="previewURL"
-        :src="previewURL"
-        alt=""
-        :class="{ 'rounded-full': circle, 'rounded-lg': !circle }"
+          v-show="previewURL"
+          :src="previewURL"
+          alt=""
+          :class="{ 'rounded-full': circle, 'rounded-lg': !circle }"
       />
     </div>
     <div class="flex items-center justify-center">
       <input
-        ref="mediaRef"
-        name="media"
-        accept="image/*"
-        type="file"
-        class="hidden"
-        :disabled="disabled"
-        tabindex="-1"
-        @change="(e) => onChange(e)"
+          ref="mediaRef"
+          name="media"
+          accept="image/*"
+          type="file"
+          class="hidden"
+          :disabled="disabled"
+          tabindex="-1"
+          @change="(e) => onChange(e)"
       />
       <img
-        class="select-image"
-        src="~/assets/icon/default-image.svg"
-        alt=""
-        :class="{ 'rounded-full': circle, 'rounded-lg': !circle }"
+          class="select-image"
+          src="~/assets/icon/default-image.svg"
+          alt=""
+          :class="{ 'rounded-full': circle, 'rounded-lg': !circle }"
       />
     </div>
   </div>
@@ -59,8 +60,7 @@ interface IFileUploadProps {
 }
 
 const props = withDefaults(defineProps<IFileUploadProps>(), {
-  width: 300,
-  height: 200,
+
   circle: false,
   defaultImage: '',
   disabled: false,
@@ -73,13 +73,22 @@ const emit = defineEmits<{
 
 const mediaRef = ref<HTMLInputElement>()
 const previewURL = ref<string>('')
+const selectedFile = ref<File | null>(null)
 
-const dragOver = () => {}
-const dragLeave = () => {}
+const previewStyle = computed(() => {
+  console.log('selectedFile.value', selectedFile.value)
+  return {}
+})
+
+const dragOver = () => {
+}
+const dragLeave = () => {
+}
 const drop = (e: DragEvent) => {
   const files = e?.dataTransfer?.files
   const file = files?.[0]
   if (file) {
+    selectedFile.value = file
     getFileUrl(file)
     emit('update:model-value', file)
   }
@@ -90,6 +99,7 @@ const onChange = (event: Event) => {
   if (target) {
     const file = target.files?.[0]
     if (file) {
+      selectedFile.value = file
       getFileUrl(file)
       emit('update:model-value', file)
     }

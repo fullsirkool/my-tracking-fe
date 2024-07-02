@@ -92,10 +92,11 @@ export interface ChallengeUserResponse
 export interface PaymentInfor {
     qrCode: string
     qrDataURL: string
-    paymentId: number
+    paymentCode: number
     accountNo: string
     bankName: string
     ticketPrice: number
+    paymentMessage: string
 }
 
 export enum JoinChallengeStatus {

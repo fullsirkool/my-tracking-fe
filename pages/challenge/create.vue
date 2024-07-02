@@ -58,12 +58,12 @@
                       $t('min_pace')
                     }}</label>
                   <div class="flex gap-2 items-center">
-                    <CommonHourInput
+                    <CommonMinuteInput
                         v-model="state.minPace"
                         :disabled="
                       !state.enableMinPace || selectedStep.key === 'review'
                     "
-                    ></CommonHourInput>
+                    ></CommonMinuteInput>
                     <UCheckbox
                         v-model="state.enableMinPace"
                         :disabled="selectedStep.key === 'review'"
@@ -75,12 +75,12 @@
                       $t('max_pace')
                     }}</label>
                   <div class="flex gap-2 items-center">
-                    <CommonHourInput
+                    <CommonMinuteInput
                         v-model="state.maxPace"
                         :disabled="
                       !state.enableMaxPace || selectedStep.key === 'review'
                     "
-                    ></CommonHourInput>
+                    ></CommonMinuteInput>
                     <UCheckbox
                         v-model="state.enableMaxPace"
                         :disabled="selectedStep.key === 'review'"

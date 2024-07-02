@@ -81,10 +81,11 @@ const {id} = params
 const openQrDialog = ref(false)
 const paymentInfor = ref<TPaymentInfor>({
   qrDataUrl: '',
-  paymentId: 0,
+  paymentCode: 0,
   accountNo: '',
   bankName: '',
   ticketPrice: 0,
+  paymentMessage: ''
 })
 const isOpenConfirmDialog = ref(false)
 const isConfirmingJoinChallenge = ref(false)
@@ -125,10 +126,11 @@ const handleConfirmJoinChallenge = async () => {
     } else {
       if (res.paymentInfor) {
         paymentInfor.value.qrDataUrl = res.paymentInfor.qrDataURL
-        paymentInfor.value.paymentId = res.paymentInfor.paymentId
+        paymentInfor.value.paymentCode = res.paymentInfor.paymentCode
         paymentInfor.value.accountNo = res.paymentInfor.accountNo
         paymentInfor.value.bankName = res.paymentInfor.bankName
         paymentInfor.value.ticketPrice = res.paymentInfor.ticketPrice
+        paymentInfor.value.paymentMessage = res.paymentInfor.paymentMessage
         openQrDialog.value = true
       }
     }
@@ -144,6 +146,7 @@ const handleCompletePayment = async (isCompleted: Boolean) => {
       title: t('join_challenge_successfully'),
     })
     await fetchChallengeDetail(+id)
+    handleClosePaymentDialog()
   } else {
     toast.add({
       id: 'copy-challenge',
