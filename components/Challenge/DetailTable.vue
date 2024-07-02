@@ -1,13 +1,11 @@
 <template>
-  <div class="mt-10 px-0 sm:px-6 lg:px-8 max-w-7xl">
+  <div class="mt-10">
     <UCard
       class="rounded-2xl bg-[#f5f5f5] overflow-auto min-h-[300px]"
       style="box-shadow: none"
     >
-
       <h1 class="text-2xl font-semibold mb-2">{{ t('rules') }}</h1>
       <ChallengeRuleTable></ChallengeRuleTable>
-
     </UCard>
   </div>
 </template>
