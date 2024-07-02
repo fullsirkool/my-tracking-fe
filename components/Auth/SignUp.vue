@@ -1,19 +1,19 @@
 <template>
   <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-    <img src="~/assets/logo.png" class="mx-auto h-20 w-auto"/>
+    <img src="~/assets/logo.png" class="mx-auto h-20 w-auto" />
     <h2
       class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900"
     >
-      Sign Up
+      {{ $t('sign_up') }}
     </h2>
   </div>
   <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
     <UForm :schema="schema" :state="state" class="space-y-4" @submit="onSubmit">
       <UFormGroup name="email" size="lg">
         <template #label>
-          <label class="text-md font-medium text-gray-900 leading-6"
-            >Email address</label
-          >
+          <label class="text-md font-medium text-gray-900 leading-6">{{
+            $t('email_address')
+          }}</label>
         </template>
         <UInput
           v-model="state.email"
@@ -24,9 +24,9 @@
 
       <UFormGroup label="Password" name="password" size="lg">
         <template #label>
-          <label class="text-md font-medium text-gray-900 leading-6"
-            >Password</label
-          >
+          <label class="text-md font-medium text-gray-900 leading-6">{{
+            $t('password')
+          }}</label>
         </template>
         <UInput
           v-model="state.password"
@@ -60,9 +60,9 @@
       </UFormGroup>
       <UFormGroup label="Confirm Password" name="confirmPassword" size="lg">
         <template #label>
-          <label class="text-md font-medium text-gray-900 leading-6"
-            >Confirm Password</label
-          >
+          <label class="text-md font-medium text-gray-900 leading-6">{{
+            $t('confirm_password')
+          }}</label>
         </template>
         <UInput
           v-model="state.confirmPassword"
@@ -94,27 +94,29 @@
           </template>
         </UInput>
       </UFormGroup>
-      <div class="flex items-center gap-4">
-        <UFormGroup name="name" size="lg">
-          <template #label>
-            <label class="text-md font-medium text-gray-900 leading-6"
-              >Name</label
-            >
-          </template>
-          <UInput
-            v-model="state.name"
-            icon="i-heroicons-user"
-            placeholder="Name"
-          />
-        </UFormGroup>
-      </div>
+      <UFormGroup name="name" size="lg">
+        <template #label>
+          <label class="text-md font-medium text-gray-900 leading-6">{{
+            $t('name')
+          }}</label>
+        </template>
+        <UInput
+          v-model="state.name"
+          icon="i-heroicons-user"
+          placeholder="Name"
+        />
+      </UFormGroup>
       <UFormGroup name="sex" size="lg">
         <template #label>
-          <label class="text-md font-medium text-gray-900 leading-6"
-            >Gender</label
-          >
+          <label class="text-md font-medium text-gray-900 leading-6">{{
+            $t('gender')
+          }}</label>
         </template>
-        <USelect v-model="state.sex" :options="genderOptions">
+        <USelect
+          v-model="state.sex"
+          :options="genderOptions"
+          option-attribute="name"
+        >
           <template #leading>
             <Icon
               name="ph:gender-intersex-light"
@@ -134,7 +136,7 @@
         :ui="{ rounded: 'rounded-lg' }"
         block
         :loading="isLoading"
-        >Submit
+        >{{ $t('sign_up') }}
       </UButton>
     </UForm>
 
@@ -156,25 +158,34 @@ import authRepository from '~/repository/auth.repository'
 const toast = useToast()
 const { t } = useI18n()
 
-const genderOptions = ref(['Male', 'Female', 'Other'])
-const passwordRegex =
-  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
+const genderOptions = ref([
+  {
+    name: t('male'),
+    value: 'Male',
+  },
+  {
+    name: t('female'),
+    value: 'Female',
+  },
+  {
+    name: t('other'),
+    value: 'Other',
+  },
+])
 const schema = object({
-  email: string().email('Invalid email').required('Required'),
+  email: string().email(t('invalid_email')).required(t('required_warning')),
   password: string()
-    .required('Required')
-    .min(8, 'Must be at least 8 characters')
-    .matches(
-      passwordRegex,
-      'Password must be at least 8 characters long and include at least one lowercase letter, one uppercase letter, one digit, and one special character.',
-    ),
+    .required(t('required_warning'))
+    .min(8, t('password_at_least_8')),
   confirmPassword: string()
-    .required('Confirm Password is required')
-    .test('passwords-match', 'Passwords must match', function (value) {
+    .required(t('required_warning'))
+    .test('passwords-match', t('password_doesnt_match'), function (value) {
       return value === this.parent.password
     }),
-  name: string().required('Name is required'),
-  sex: string().required('Last name is required').oneOf(genderOptions.value),
+  name: string().required(t('required_warning')),
+  sex: string()
+    .required(t('required_warning'))
+    .oneOf(genderOptions.value.map((item) => item.value)),
 })
 
 type Schema = InferType<typeof schema>
@@ -192,7 +203,6 @@ const isLoading = ref(false)
 
 const onSubmit = async (event: FormSubmitEvent<any>) => {
   // Do something with data
-  console.log(event.data)
   const { email, password, name, sex } = event.data
 
   const { data, error } = await authRepository.signUp({

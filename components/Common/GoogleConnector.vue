@@ -9,7 +9,7 @@
       @click="signinRedirect()"
     >
       <Icon name="simple-icons:google" width="1.25rem" height="1.25rem" />
-      Login with Google
+      {{$t('sign_in_with_google')}}
     </UButton>
   </div>
 </template>

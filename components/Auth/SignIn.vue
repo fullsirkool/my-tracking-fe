@@ -1,10 +1,10 @@
 <template>
   <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-    <img src="~/assets/logo.png" class="mx-auto h-20 w-auto"/>
+    <img src="~/assets/logo.png" class="mx-auto h-20 w-auto" />
     <h2
       class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900"
     >
-      Sign in to your account
+      {{ $t('sign_in') }}
     </h2>
   </div>
   <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
@@ -17,7 +17,7 @@
       <UFormGroup name="email" size="lg">
         <template #label>
           <label class="text-md font-medium text-gray-900 leading-6">
-            Email address
+            {{ $t('email_address') }}
           </label>
         </template>
         <UInput
@@ -30,7 +30,7 @@
       <UFormGroup label="Password" name="password" size="lg">
         <template #label>
           <label class="text-md font-medium text-gray-900 leading-6">
-            Password
+            {{ $t('password') }}
           </label>
         </template>
         <UInput
@@ -74,7 +74,7 @@
         :loading="isLoading"
         class="bg-primary-500 hover:bg-primary-600"
       >
-        Submit
+        {{ $t('sign_in') }}
       </UButton>
 
       <UDivider label="OR" color="gray" />
@@ -96,13 +96,13 @@
 <script setup lang="ts">
 import type { FormError, FormSubmitEvent } from '#ui/types'
 import authRepository from '~/repository/auth.repository'
-import { useAdminStore } from '~/stores/admin.store';
+import { useAdminStore } from '~/stores/admin.store'
 import { useUserStore } from '~/stores/user.store'
 
 const dayjs = useDayjs()
 const toast = useToast()
 const userStore = useUserStore()
-const adminStore= useAdminStore()
+const adminStore = useAdminStore()
 
 const state = reactive({
   email: undefined,
@@ -133,38 +133,6 @@ const tempAuthDto = {
   password: '',
 }
 
-const actions = [
-  {
-    label: 'Resend email',
-    click: async () => await handleResendEmail(),
-  },
-]
-
-const handleResendEmail = async () => {
-  const { data, error } = await authRepository.resendEmail(tempAuthDto)
-  if (error) {
-    const { message } = error
-    toast.add({
-      id: 'copy-challenge',
-      icon: 'i-heroicons-x-circle-solid',
-      color: 'red',
-      timeout: 5000,
-      title: message,
-      actions,
-    })
-    return
-  }
-
-  if (data) {
-    toast.add({
-      id: 'copy-challenge',
-      icon: 'i-heroicons-check-circle',
-      timeout: 5000,
-      title: 'Email has been sent!',
-    })
-  }
-}
-
 const onSubmit = async (event: FormSubmitEvent<any>) => {
   // Do something with data
 
@@ -185,7 +153,6 @@ const onSubmit = async (event: FormSubmitEvent<any>) => {
         color: 'red',
         timeout: 10000,
         title: message,
-        actions,
       })
       return
     }
@@ -217,7 +184,6 @@ const handleSignInGoogle = async (token: string) => {
       color: 'red',
       timeout: 10000,
       title: message,
-      actions,
     })
     return
   }

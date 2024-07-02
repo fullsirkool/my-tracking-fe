@@ -30,6 +30,7 @@
   "challenge": "Thử Thách",
   "home": "Home",
   "sign_in": "Đăng Nhập",
+  "sign_up": "Đăng Ký",
   "copied_challenge_url_to_clipboard": "Đã sao chép link thử thách!",
   "join_challenge": "Tham Gia Thử Thách",
   "challenge_activity_chart": "Biểu Đồ Hoạt Động Của Thử Thách",
@@ -95,5 +96,16 @@
   "m": "mét",
   "submit": "Xác nhận",
   "no_items": "Chưa có vận động viên nào.",
-  "language": "Ngôn ngữ"
+  "language": "Ngôn ngữ",
+  "invalid_email": "Email không hợp lệ",
+  "password_at_least_8": "Mật khẩu cần có ít nhất 8 kí tự",
+  "password_doesnt_match": "Mật khẩu không trùng khớp",
+  "male": "Nam",
+  "female": "Nữ",
+  "other": "Khác",
+  "email_address": "Địa chỉ email",
+  "password": "Mật khẩu",
+  "confirm_password": "Xác nhận mật khẩu",
+  "gender": "Giới tính",
+  "sign_in_with_google": "Đăng nhập với Google"
 }
