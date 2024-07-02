@@ -1,7 +1,8 @@
 export type TPaymentInfor = {
   qrDataUrl: string
-  paymentId: number
+  paymentCode: number
   accountNo: string
   bankName: string
   ticketPrice: number
+  paymentMessage: string
 }

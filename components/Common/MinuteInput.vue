@@ -4,17 +4,6 @@
       :class="{ 'text-gray-400': disabled }"
   >
     <UInput
-        v-model="hour"
-        type="number"
-        color="white"
-        variant="none"
-        name="input"
-        :placeholder="$t('hour')"
-        class="hour-input w-fit"
-        :disabled="disabled"
-    />
-    <span>:</span>
-    <UInput
         v-model="minute"
         type="number"
         color="white"
@@ -22,7 +11,6 @@
         name="input"
         :placeholder="$t('minute')"
         class="hour-input w-fit"
-        max="60"
         :disabled="disabled"
     />
     <span>:</span>
@@ -50,31 +38,18 @@ const props = defineProps({
   },
 })
 const emit = defineEmits(['update:model-value'])
-const hour = computed({
+const minute = computed({
   get: () => props.modelValue.split(':')[0],
   set: (value) => {
-    if (value < 24) {
-      const val = `${value}:${props.modelValue.split(':')[1]}:${props.modelValue.split(':')[2]}`
-      emit('update:model-value', val)
-    }
-  },
-})
-const minute = computed({
-  get: () => props.modelValue.split(':')[1],
-  set: (value) => {
-    if (value < 60) {
-      const val = `${props.modelValue.split(':')[0]}:${value}:${props.modelValue.split(':')[2]}`
-      emit('update:model-value', val)
-    }
+    const val = `${value}:${props.modelValue.split(':')[1]}`
+    emit('update:model-value', val)
   },
 })
 const second = computed({
-  get: () => props.modelValue.split(':')[2],
+  get: () => props.modelValue.split(':')[1],
   set: (value) => {
-    if (value < 60) {
-      const val = `${props.modelValue.split(':')[0]}:${props.modelValue.split(':')[1]}:${value}`
-      emit('update:model-value', val)
-    }
+    const val = `${props.modelValue.split(':')[0]}:${value}`
+    emit('update:model-value', val)
   },
 })
 </script>

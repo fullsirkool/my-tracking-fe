@@ -1,5 +1,5 @@
 <template>
-  <VDatePicker v-model="date" :attributes="attrs" />
+  <VDatePicker v-model="date" :attributes="attrs" :max-date="maxDate"/>
 </template>
 <script setup lang="ts">
 const props = defineProps({
@@ -7,6 +7,10 @@ const props = defineProps({
     type: Date,
     default: null,
   },
+  maxDate: {
+    type: Date,
+    default: new Date('2100-01-01'),
+  }
 })
 const emit = defineEmits(['update:model-value', 'close'])
 const attrs = ref([

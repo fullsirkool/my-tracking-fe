@@ -83,5 +83,15 @@
   "review": "Review",
   "information": "Information",
   "ticket_price": "Ticket Price",
-  "description": "Description"
+  "description": "Description",
+  "manual_create_tracklog": "Manual Create Tracklog",
+  "hour": "Hour",
+  "minute": "Minute",
+  "second": "Second",
+  "moving_time": "Moving Time",
+  "required_warning": "Required!",
+  "payment_content": "Payment Content",
+  "create_tracklog_success": "Create tracklog successfully",
+  "m": "metre",
+  "submit": "Submit"
 }

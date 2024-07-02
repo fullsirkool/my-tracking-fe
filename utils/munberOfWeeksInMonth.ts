@@ -1,5 +1,5 @@
 export default (date: Date = new Date()): number => {
-  const month = date.getMonth() + 1
+  const month = date.getMonth()
   const year = date.getFullYear()
 
   if (month < 1 || month > 12) {
@@ -22,6 +22,8 @@ export default (date: Date = new Date()): number => {
   const totalCountDays = lastDateOfMonth + startBonus + endBonus
 
   const weeksInMonth = Math.ceil(totalCountDays / 7)
+  console.log(weeksInMonth, totalCountDays, startBonus, endBonus, firstDayOfMonth, lastDayOfMonth)
+  console.log(new Date(year, month, 1), new Date(year, month + 1, 0))
 
   return weeksInMonth
 }

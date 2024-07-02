@@ -38,15 +38,19 @@
           <CommonStravaConnect></CommonStravaConnect>
         </div>
         <div v-else class="flex gap-3 items-center mx-auto my-2 w-fit">
-          <CommonStravaIcon></CommonStravaIcon>
+          <CommonStravaIcon />
           <h3 class="text-md">
             {{ $t('strava_id') }}:
             {{ user.stravaId ? user.stravaId : 'Not connected' }}
           </h3>
         </div>
+        <div v-if="isProfileOwner">
+          <ActivityManualCreateDialog @complete="handleCompleteCreateAcvitiy" />
+        </div>
       </div>
     </div>
     <ProfileStatisticMobile
+      class="my-5"
       :distance="totalDistance"
       :pace="getPaceMinute"
       :activity="count"
@@ -140,6 +144,23 @@ const showConnectStravaButton = computed(() => {
   return true
 })
 
+const isProfileOwner = computed(() => {
+  const currentUser = userStore.user
+  if (!currentUser || currentUser.id !== user.value.id) {
+    return false
+  }
+  return true
+})
+
+const handleCompleteCreateAcvitiy = async () => {
+  console.log('handleCompleteCreateAcvitiy')
+  await Promise.all([
+    fetchDailyActivityStatistics(),
+    activityRepository.fetchStatistics(id),
+    fetchMonthlyActivitiesDetail(id),
+  ])
+}
+
 function getRandomValueFromArray(arr) {
   if (arr.length === 0) {
     return undefined // Handle empty array case if necessary
@@ -153,6 +174,4 @@ onMounted(() => {
   bgImage.value = getRandomValueFromArray([bgImage0, bgImage1, bgImage2])
 })
 </script>
-<style scoped>
-
-</style>
+<style scoped></style>

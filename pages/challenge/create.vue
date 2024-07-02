@@ -58,12 +58,12 @@
                       $t('min_pace')
                     }}</label>
                   <div class="flex gap-2 items-center">
-                    <CommonHourInput
+                    <CommonMinuteInput
                         v-model="state.minPace"
                         :disabled="
                       !state.enableMinPace || selectedStep.key === 'review'
                     "
-                    ></CommonHourInput>
+                    ></CommonMinuteInput>
                     <UCheckbox
                         v-model="state.enableMinPace"
                         :disabled="selectedStep.key === 'review'"
@@ -75,12 +75,12 @@
                       $t('max_pace')
                     }}</label>
                   <div class="flex gap-2 items-center">
-                    <CommonHourInput
+                    <CommonMinuteInput
                         v-model="state.maxPace"
                         :disabled="
                       !state.enableMaxPace || selectedStep.key === 'review'
                     "
-                    ></CommonHourInput>
+                    ></CommonMinuteInput>
                     <UCheckbox
                         v-model="state.enableMaxPace"
                         :disabled="selectedStep.key === 'review'"
@@ -231,15 +231,14 @@ import type {FormError, FormSubmitEvent} from '@nuxt/ui/dist/runtime/types'
 import challengeRepository from '~/repository/challenge.repository'
 import fileRepository from '~/repository/file.repository'
 import {CreateChallengeDto} from '~/types/dto/challenge.dto'
-import {ChallengeStatus, ChallengeType} from '~/types/enum/challenge.enum'
 import {FileType} from "~/types/enum/file.enum";
 
 definePageMeta({
   middleware: ['authentication'],
 })
 
-const { t } = useI18n()
-
+const {t} = useI18n()
+const toast = useToast()
 const steps = ref([
   {key: 'information', title: t('information')},
   {key: 'review', title: t('review')},
@@ -397,6 +396,7 @@ const submit = async (event: FormSubmitEvent<any>) => {
     maxDistance,
     enableMinDistance,
     enableMaxDistance,
+    description,
   } = event.data
 
   const payload: CreateChallengeDto = {
@@ -410,10 +410,14 @@ const submit = async (event: FormSubmitEvent<any>) => {
     maxPace,
     minDistance: minDistance * 1000,
     maxDistance: maxDistance * 1000,
+    description
   }
 
   if (!target) {
     delete payload.target
+  }
+  if (!ticketPrice) {
+    delete payload.ticketPrice
   }
   if (!enableMinPace) {
     delete payload.minPace
@@ -431,7 +435,18 @@ const submit = async (event: FormSubmitEvent<any>) => {
     delete payload.maxDistance
   }
 
-  await challengeRepository.createChallenge(payload)
+  const {data, error} = await challengeRepository.createChallenge({...payload, ticketPrice: +ticketPrice})
+  if (error) {
+    console.error(error)
+    toast.add({
+      id: 'copy-challenge',
+      icon: 'i-heroicons-exclamation-circle',
+      color: 'red',
+      timeout: 4000,
+      title: error.message,
+    })
+    return
+  }
   navigateTo('/challenge')
 }
 </script>

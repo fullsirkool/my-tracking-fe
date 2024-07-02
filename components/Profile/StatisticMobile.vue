@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { tr } from 'date-fns/locale'
-
 const props = defineProps<{
   distance: string
   pace: string
@@ -31,7 +29,7 @@ const state = reactive({
 
 <template>
   <UContainer
-    class="md:hidden flex gap-1 z-10 mt-5 justify-between overflow-x-auto w-full"
+    class="md:hidden flex gap-1 z-10 justify-between py-2.5 overflow-x-auto w-full"
   >
     <div v-for="item in state" class="flex-col text-center text-slate-700">
       <div
