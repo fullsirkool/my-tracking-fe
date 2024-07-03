@@ -1,7 +1,6 @@
 <template>
   <UContainer>
     <h1 class="font-semibold text-2xl">{{ $t('create_challenge') }}</h1>
-    <CommonStepper v-model="selectedStep" :steps="steps"></CommonStepper>
     <div class="grid grid-cols-12">
       <div class="col-span-2 hidden sm:block"></div>
       <UForm
@@ -11,7 +10,6 @@
           @submit="submit"
       >
         <div
-            v-show="['information', 'review'].includes(selectedStep.key)"
             class="grid grid-cols-12 gap-4"
         >
           <div class="col-span-12 sm:col-span-8">
@@ -19,17 +17,18 @@
                 class="py-2"
                 :label="$t('challenge_title')"
                 name="title"
+                required
             >
               <UInput
                   v-model="state.title"
-                  :disabled="selectedStep.key === 'review'"
+
               />
             </UFormGroup>
-            <UFormGroup class="py-2" :label="$t('target')" name="target">
+            <UFormGroup class="py-2" :label="$t('target')" name="target" required>
               <UInput
                   v-model="state.target"
                   type="number"
-                  :disabled="selectedStep.key === 'review'"
+
               >
                 <template #trailing>
                   <span class="text-gray-400 text-sm">km(s)</span>
@@ -44,7 +43,7 @@
               <UInput
                   v-model="state.ticketPrice"
                   type="number"
-                  :disabled="selectedStep.key === 'review'"
+
               >
                 <template #trailing>
                   <span class="text-gray-400 text-sm">VND</span>
@@ -61,12 +60,12 @@
                     <CommonMinuteInput
                         v-model="state.minPace"
                         :disabled="
-                      !state.enableMinPace || selectedStep.key === 'review'
+                      !state.enableMinPace
                     "
                     ></CommonMinuteInput>
                     <UCheckbox
                         v-model="state.enableMinPace"
-                        :disabled="selectedStep.key === 'review'"
+
                     />
                   </div>
                 </div>
@@ -78,12 +77,12 @@
                     <CommonMinuteInput
                         v-model="state.maxPace"
                         :disabled="
-                      !state.enableMaxPace || selectedStep.key === 'review'
+                      !state.enableMaxPace
                     "
                     ></CommonMinuteInput>
                     <UCheckbox
                         v-model="state.enableMaxPace"
-                        :disabled="selectedStep.key === 'review'"
+
                     />
                   </div>
                 </div>
@@ -101,7 +100,7 @@
                       name="input"
                       placeholder="Min Distance"
                       :disabled="
-                    !state.enableMinDistance || selectedStep.key === 'review'
+                    !state.enableMinDistance
                   "
                   >
                     <template #trailing>
@@ -110,7 +109,7 @@
                   </UInput>
                   <UCheckbox
                       v-model="state.enableMinDistance"
-                      :disabled="selectedStep.key === 'review'"
+
                   />
                 </div>
               </UFormGroup>
@@ -126,7 +125,7 @@
                       name="input"
                       placeholder="Max Distance"
                       :disabled="
-                    !state.enableMaxDistance || selectedStep.key === 'review'
+                    !state.enableMaxDistance
                   "
                   >
                     <template #trailing>
@@ -135,19 +134,18 @@
                   </UInput>
                   <UCheckbox
                       v-model="state.enableMaxDistance"
-                      :disabled="selectedStep.key === 'review'"
                   />
                 </div>
               </UFormGroup>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <UFormGroup class="py-2" :label="$t('start_at')" name="startDate">
+              <UFormGroup class="py-2" :label="$t('start_at')" name="startDate" required>
                 <UPopover :popper="{ placement: 'bottom-start' }" class="w-fit">
                   <UButton
                       variant="outline"
                       icon="i-heroicons-calendar-days-20-solid"
                       :label="startDateLabel"
-                      :disabled="selectedStep.key === 'review'"
+
                   />
                   <template #panel="{ close }">
                     <CommonDatePicker v-model="state.startDate" @close="close">
@@ -155,13 +153,13 @@
                   </template>
                 </UPopover>
               </UFormGroup>
-              <UFormGroup class="py-2" :label="$t('end_at')" name="endDate">
+              <UFormGroup class="py-2" :label="$t('end_at')" name="endDate" required>
                 <UPopover :popper="{ placement: 'bottom-start' }" class="w-fit">
                   <UButton
                       variant="outline"
                       icon="i-heroicons-calendar-days-20-solid"
                       :label="endDateLabel"
-                      :disabled="selectedStep.key === 'review'"
+
                   />
                   <template #panel="{ close }">
                     <CommonDatePicker v-model="state.endDate" @close="close">
@@ -184,11 +182,11 @@
             </UFormGroup>
           </div>
           <div class="col-span-12 sm:col-span-4">
-            <UFormGroup class="py-2" :label="$t('image_upload')" name="file">
-              <!-- <input type="file" @change="(e) => handleSelectFile(e)" :disabled="selectedStep.key === 'review'" /> -->
+            <UFormGroup class="py-2" :label="$t('image_upload')" name="file" required>
+              <!-- <input type="file" @change="(e) => handleSelectFile(e)"  /> -->
               <CommonFileUpload
                   v-model="state.file"
-                  :disabled="selectedStep.key === 'review'"
+
               ></CommonFileUpload>
             </UFormGroup>
           </div>
@@ -197,23 +195,6 @@
 
         <div class="flex items-center justify-center mt-10 gap-4">
           <UButton
-              v-show="selectedStep.key !== 'information'"
-              :label="$t('back')"
-              size="xl"
-              variant="solid"
-              @click="handleBackStep"
-          >
-          </UButton>
-          <UButton
-              v-show="selectedStep.key !== 'review'"
-              :label="$t('next')"
-              size="xl"
-              variant="solid"
-              @click="handleNextStep"
-          >
-          </UButton>
-          <UButton
-              v-show="selectedStep.key === 'review'"
               :label="$t('create_challenge')"
               size="xl"
               type="submit"
@@ -239,11 +220,6 @@ definePageMeta({
 
 const {t} = useI18n()
 const toast = useToast()
-const steps = ref([
-  {key: 'information', title: t('information')},
-  {key: 'review', title: t('review')},
-])
-const selectedStep = ref({key: 'information', title: 'Information'})
 
 const dayjs = useDayjs()
 
@@ -358,18 +334,6 @@ const validate = (state: any): FormError[] => {
     }
   }
   return errors
-}
-
-const stepIndex = computed(() =>
-    steps.value.findIndex((item) => item.key === selectedStep.value.key),
-)
-
-const handleBackStep = () => {
-  selectedStep.value = steps.value[stepIndex.value - 1]
-}
-
-const handleNextStep = () => {
-  selectedStep.value = steps.value[+stepIndex.value + 1]
 }
 
 const uploadImgage = async () => {

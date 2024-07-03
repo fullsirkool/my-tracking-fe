@@ -1,15 +1,26 @@
 <template>
   <div>
     <UModal :model-value="isOpen" @close="handleClose">
-      <UForm :schema="schema" :state="state" class="space-y-4" @submit="onSubmit">
+      <UForm
+        :schema="schema"
+        :state="state"
+        class="space-y-4"
+        @submit="onSubmit"
+      >
         <div>
           <div class="p-4">
-            <h1 class="text-2xl font-semibold text-center">{{ $t('manual_create_tracklog') }}</h1>
+            <h1 class="text-2xl font-semibold text-center">
+              {{ $t('manual_create_tracklog') }}
+            </h1>
           </div>
 
-          <div style="max-height: 500px; overflow: auto;" class="px-4">
+          <div style="max-height: 500px; overflow: auto" class="px-4">
             <UFormGroup :label="$t('distance')" name="distance" class="p-2">
-              <UInput v-model="state.distance" :disabled="readonly">
+              <UInput
+                v-model="state.distance"
+                :disabled="readonly"
+                type="number"
+              >
                 <template #trailing>
                   <span class="text-gray-400 text-sm">{{ $t('m') }}</span>
                 </template>
@@ -17,20 +28,27 @@
             </UFormGroup>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-2">
-              <UFormGroup :label="$t('moving_time')" name="movingTime">
-                <CommonHourInput v-model="state.movingTime" :disabled="readonly"></CommonHourInput>
+              <UFormGroup :label="$t('total_moving_time')" name="movingTime">
+                <CommonHourInput
+                  v-model="state.movingTime"
+                  :disabled="readonly"
+                ></CommonHourInput>
               </UFormGroup>
               <UFormGroup :label="$t('start_at')" name="startDate">
                 <UPopover :popper="{ placement: 'bottom-start' }" class="w-fit">
                   <UButton
-                      variant="outline"
-                      icon="i-heroicons-calendar-days-20-solid"
-                      :label="startDateLabel"
-                      :color="getButtonColor"
-                      :disabled="readonly"
+                    variant="outline"
+                    icon="i-heroicons-calendar-days-20-solid"
+                    :label="startDateLabel"
+                    :color="getButtonColor"
+                    :disabled="readonly"
                   />
                   <template #panel="{ close }">
-                    <CommonDatePicker v-model="state.startDate" :max-date="new Date()" @close="close">
+                    <CommonDatePicker
+                      v-model="state.startDate"
+                      :max-date="new Date()"
+                      @close="close"
+                    >
                     </CommonDatePicker>
                   </template>
                 </UPopover>
@@ -39,7 +57,11 @@
             <div class="col-span-12 sm:col-span-4 p-2">
               <UFormGroup class="py-2" :label="$t('image_upload')" name="file">
                 <!-- <input type="file" @change="(e) => handleSelectFile(e)" :disabled="selectedStep.key === 'review'" /> -->
-                <CommonFileUpload v-model="state.file" :height="500" :default-image="state.file" :readonly="readonly"
+                <CommonFileUpload
+                  v-model="state.file"
+                  :height="500"
+                  :default-image="state.file"
+                  :readonly="readonly"
                 ></CommonFileUpload>
               </UFormGroup>
             </div>
@@ -55,34 +77,36 @@
   </div>
 </template>
 <script setup lang="ts">
-import {FormSubmitEvent} from "@nuxt/ui/dist/runtime/types";
-import {date, type InferType, mixed, number, object, string} from 'yup'
-import dayjs from "dayjs";
-import fileRepository from "~/repository/file.repository";
-import {FileType} from "~/types/enum/file.enum";
-import activityRepository from "~/repository/activity.repository";
-import {ActivityDetail} from "~/types/dto/activity.dto";
+import { FormSubmitEvent } from '@nuxt/ui/dist/runtime/types'
+import { date, type InferType, mixed, number, object, string } from 'yup'
+import dayjs from 'dayjs'
+import fileRepository from '~/repository/file.repository'
+import { FileType } from '~/types/enum/file.enum'
+import activityRepository from '~/repository/activity.repository'
+import { ActivityDetail } from '~/types/dto/activity.dto'
 
-const {t} = useI18n()
+const { t } = useI18n()
 const toast = useToast()
 const emit = defineEmits(['complete', 'close'])
 
 interface IActivityDetailCardProps {
-  activity?: ActivityDetail,
-  readonly: boolean,
+  activity?: ActivityDetail
+  readonly: boolean
   isOpen: boolean
 }
 
 const props = withDefaults(defineProps<IActivityDetailCardProps>(), {
   readonly: false,
-  isOpen: false
+  isOpen: false,
 })
 
 const schema = object({
-  distance: number().required(t('required_warning')),
+  distance: number()
+    .required(t('required_warning'))
+    .integer(t('number_field_required')),
   movingTime: string().required(t('required_warning')),
   startDate: date().required(t('required_warning')),
-  file: mixed()
+  file: mixed(),
 })
 
 type Schema = InferType<typeof schema>
@@ -91,7 +115,7 @@ const state = ref({
   distance: 0,
   movingTime: '00:00:00',
   startDate: new Date(),
-  file: undefined
+  file: undefined,
 })
 
 const uploadImgage = async (file: File) => {
@@ -104,13 +128,13 @@ const uploadImgage = async (file: File) => {
 const onSubmit = async (event: FormSubmitEvent<Schema>) => {
   // Do something with event.data
   console.log(event.data)
-  const {distance, startDate, movingTime, file} = event.data
+  const { distance, startDate, movingTime, file } = event.data
   const imageUrl = await uploadImgage(file)
   const payload = {
     distance,
     startDate: startDate.toISOString(),
     movingTime,
-    imageUrl
+    imageUrl,
   }
   const res = await activityRepository.manualCreate(payload)
   if (res) {
@@ -122,21 +146,22 @@ const onSubmit = async (event: FormSubmitEvent<Schema>) => {
       title: t('create_tracklog_success'),
     })
   }
-
 }
 
 const startDateLabel = computed(() => {
   return dayjs(state.value.startDate).format('ddd, MMM DD, YYYY')
 })
 
-const getButtonColor = computed(() => props.readonly ? 'white-400' : 'primary')
+const getButtonColor = computed(() =>
+  props.readonly ? 'white-400' : 'primary',
+)
 
 const resetForm = () => {
   state.value = {
     distance: 0,
     movingTime: '00:00:00',
     startDate: new Date(),
-    file: undefined
+    file: undefined,
   }
 }
 
@@ -144,24 +169,26 @@ const handleClose = () => {
   emit('close')
 }
 
-watch(() => props.isOpen, (newVal) => {
-  if (newVal) {
-    if (props.activity) {
-      const {distance, movingTime, startDate, imageUrl} = props.activity
-      const hour = Math.floor(movingTime / 3600)
-      const minute = Math.floor((movingTime - hour * 3600) / 60)
-      const second = (movingTime - hour * 3600 - minute * 60)
-      const movingTimeStr = `${hour}:${minute}:${second}`
-      state.value = {
-        distance: distance,
-        movingTime: movingTimeStr,
-        startDate: new Date(startDate),
-        file: imageUrl
+watch(
+  () => props.isOpen,
+  (newVal) => {
+    if (newVal) {
+      if (props.activity) {
+        const { distance, movingTime, startDate, imageUrl } = props.activity
+        const hour = Math.floor(movingTime / 3600)
+        const minute = Math.floor((movingTime - hour * 3600) / 60)
+        const second = movingTime - hour * 3600 - minute * 60
+        const movingTimeStr = `${hour}:${minute}:${second}`
+        state.value = {
+          distance,
+          movingTime: movingTimeStr,
+          startDate: new Date(startDate),
+          file: imageUrl,
+        }
       }
+    } else {
+      resetForm()
     }
-  } else {
-    resetForm()
-  }
-})
-
+  },
+)
 </script>

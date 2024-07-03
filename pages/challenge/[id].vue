@@ -81,7 +81,7 @@ const { image, challengeDetail } = storeToRefs(challengeStore)
 const { params, fullPath } = useRoute()
 const { id } = params
 
-const openQrDialog = ref(false)
+const openQrDialog = ref<Boolean>(false)
 const paymentInfor = ref<TPaymentInfor>({
   qrDataUrl: '',
   paymentCode: 0,
@@ -120,12 +120,14 @@ const handleConfirmJoinChallenge = async () => {
   }
   isConfirmingJoinChallenge.value = true
   const res = await challengeRepository.join(+id)
+  console.log('res', res)
   if (res) {
     const { status } = res
     isOpenConfirmDialog.value = false
     isConfirmingJoinChallenge.value = false
     if (status === JoinChallengeStatus.WAITING) {
       if (res.paymentInfor) {
+        console.log('here')
         paymentInfor.value.qrDataUrl = res.paymentInfor.qrDataURL
         paymentInfor.value.paymentCode = res.paymentInfor.paymentCode
         paymentInfor.value.accountNo = res.paymentInfor.accountNo
