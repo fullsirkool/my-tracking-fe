@@ -22,9 +22,24 @@
   </div>
 </template>
 <script setup lang="ts">
+import { ROUTE } from '~/types/enum/route.enum'
+const route = useRoute()
 const router = useRouter()
 
 const handleBack = () => {
-  router.back()
+  const pathName = route.path
+  switch (pathName) {
+    case ROUTE.USER_SIGNIN:
+      router.push(ROUTE.HOME)
+      return
+    case ROUTE.USER_SIGNUP:
+      router.push(ROUTE.USER_SIGNIN)
+      return
+    case ROUTE.ADMIN_SIGNIN:
+      router.push(ROUTE.HOME)
+      return
+    default:
+      router.back()
+  }
 }
 </script>
