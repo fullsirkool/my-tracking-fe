@@ -2,7 +2,6 @@
   <UModal v-model="props.isOpen" @close="handleClose">
     <div class="p-4">
       <div class="p-4">
-        <div class="h-48" />
         <img :src="paymentInfor.qrDataUrl" />
       </div>
       <div class="text-center text-lg">

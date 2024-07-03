@@ -41,10 +41,10 @@
             {{ $t('confirm') }}
           </UButton>
           <UButton
-              size="lg"
-              variant="outline"
-              :disabled="isConfirmingJoinChallenge"
-              @click="isOpenConfirmDialog = false"
+            size="lg"
+            variant="outline"
+            :disabled="isConfirmingJoinChallenge"
+            @click="isOpenConfirmDialog = false"
           >
             {{ $t('cancel') }}
           </UButton>
@@ -73,7 +73,6 @@ definePageMeta({
 
 const toast = useToast()
 const { t } = useI18n()
-const router = useRouter()
 
 const challengeStore = useChallengeStore()
 const { user } = useUserStore()
@@ -89,7 +88,7 @@ const paymentInfor = ref<TPaymentInfor>({
   accountNo: '',
   bankName: '',
   ticketPrice: 0,
-  paymentMessage: ''
+  paymentMessage: '',
 })
 const isOpenConfirmDialog = ref(false)
 const isConfirmingJoinChallenge = ref(false)
@@ -110,7 +109,7 @@ await useAsyncData('challenge', async () => {
   isJoinedChallenge.value = checkJoined?.joined || false
 })
 
-const handleJoinChallenge = async () => {
+const handleJoinChallenge = () => {
   isOpenConfirmDialog.value = true
 }
 const handleConfirmJoinChallenge = async () => {
@@ -125,8 +124,7 @@ const handleConfirmJoinChallenge = async () => {
     const { status } = res
     isOpenConfirmDialog.value = false
     isConfirmingJoinChallenge.value = false
-    if (status === JoinChallengeStatus.COMPLETED) {
-    } else {
+    if (status === JoinChallengeStatus.WAITING) {
       if (res.paymentInfor) {
         paymentInfor.value.qrDataUrl = res.paymentInfor.qrDataURL
         paymentInfor.value.paymentCode = res.paymentInfor.paymentCode
@@ -140,7 +138,8 @@ const handleConfirmJoinChallenge = async () => {
   }
 }
 
-const handleCompletePayment = async (isCompleted: Boolean) => {
+// eslint-disable-next-line require-await
+const handleCompletePayment = (isCompleted: Boolean) => {
   if (isCompleted) {
     toast.add({
       id: 'copy-challenge',
@@ -148,8 +147,10 @@ const handleCompletePayment = async (isCompleted: Boolean) => {
       timeout: 4000,
       title: t('join_challenge_successfully'),
     })
-    await fetchChallengeDetail(+id)
     handleClosePaymentDialog()
+    setTimeout(() => {
+      location.reload()
+    }, 4000)
   } else {
     toast.add({
       id: 'copy-challenge',
