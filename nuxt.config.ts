@@ -5,20 +5,13 @@ export default defineNuxtConfig({
   pages: true,
   css: ['~/assets/main.scss'],
   components: { global: true, dirs: ['~/components'] },
-  head: {
-    meta: [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' },
-      { name: 'format-detection', content: 'telephone=no' }
-    ],
-    link: [
-      { rel: 'icon', sizes: '380x380', type: 'image/x-icon', href: '/logo.png' }
-    ]
-
-  },
   app: {
-    // pageTransition: { name: 'page', mode: 'out-in' },
+    pageTransition: { name: 'page', mode: 'out-in' },
+    head: {
+      title: 'Warm Feet',
+      charset: 'utf-8',
+      viewport: 'width=device-width, initial-scale=1',
+    }
   },
   modules: [
     '@nuxt/ui',
