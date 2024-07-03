@@ -108,5 +108,6 @@
   "confirm_password": "Xác nhận mật khẩu",
   "gender": "Giới tính",
   "sign_in_with_google": "Đăng nhập với Google",
-  "number_field_required": "Thông tin này phải là dạng số"
+  "number_field_required": "Thông tin này phải là dạng số",
+  "free_to_join": "Tham gia miễn phí"
 }

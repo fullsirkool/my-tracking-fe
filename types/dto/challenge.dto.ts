@@ -23,20 +23,21 @@ export interface Challenge {
   image: string
   rule: Rule
   description: string
+  ticketPrice: number
 }
 
 export interface CreateChallengeDto {
-    title: string
-    startDate: Date
-    endDate: Date
-    ticketPrice: number | undefined
-    image: string | null | undefined
-    target: number | undefined
-    minPace: number | undefined
-    maxPace: number | undefined
-    minDistance: number | undefined
-    maxDistance: number | undefined
-    description: string
+  title: string
+  startDate: Date
+  endDate: Date
+  ticketPrice: number | undefined
+  image: string | null | undefined
+  target: number | undefined
+  minPace: number | undefined
+  maxPace: number | undefined
+  minDistance: number | undefined
+  maxDistance: number | undefined
+  description: string
 }
 
 export class PagingChallengeDto extends BasePagingDto {}
@@ -88,13 +89,13 @@ export interface ChallengeUserResponse
   extends BasePagingResponse<ChallengeUser> {}
 
 export interface PaymentInfor {
-    qrCode: string
-    qrDataURL: string
-    paymentCode: number
-    accountNo: string
-    bankName: string
-    ticketPrice: number
-    paymentMessage: string
+  qrCode: string
+  qrDataURL: string
+  paymentCode: number
+  accountNo: string
+  bankName: string
+  ticketPrice: number
+  paymentMessage: string
 }
 
 export enum JoinChallengeStatus {
@@ -108,5 +109,5 @@ export interface JoinChallengeResponse {
 }
 
 export interface CheckedJoinChallengeResponse {
-  joined: boolean
+    joined: boolean
 }

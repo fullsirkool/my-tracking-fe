@@ -88,6 +88,12 @@ export const useChallengeStore = defineStore('challenge', () => {
     }
     return challengeDetail.value?.rule.target
   })
+  const ticketPrice = computed(() => {
+    if (!challengeDetail.value) {
+      return 0
+    }
+    return challengeDetail.value?.ticketPrice
+  })
   const minDistance = computed(() => {
     if (!challengeDetail.value) {
       return 0
@@ -178,6 +184,7 @@ export const useChallengeStore = defineStore('challenge', () => {
     maxPaceFormatted,
     startDate,
     endDate,
+    ticketPrice,
     fetchChallengeDetail,
     fetchChallengeUsers,
     setTopChallenge,

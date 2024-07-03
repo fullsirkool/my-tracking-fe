@@ -108,5 +108,6 @@
   "confirm_password": "Confirm Password",
   "gender": "Gender",
   "sign_in_with_google": "Sign in with Google",
-  "number_field_required": "This field must be number"
+  "number_field_required": "This field must be number",
+  "free_to_join": "Free to join"
 }

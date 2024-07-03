@@ -1,6 +1,11 @@
 <template>
   <div class="text-slate-700">
     <div class="flex justify-between md:block mb-2.5">
+      <label>{{ $t('ticket_price') }}: </label>
+      <span v-if="ticketPrice">{{ `${number.format(ticketPrice)} VNĐ` }}</span>
+      <span v-else>{{ `` }}</span>
+    </div>
+    <div class="flex justify-between md:block mb-2.5">
       <label>{{ $t('start_date') }}: </label>
       <span>{{ startDateFormatted }}</span>
     </div>
@@ -49,6 +54,7 @@ const {
   maxPaceFormatted,
   startDate,
   endDate,
+  ticketPrice
 } = useChallengeStore()
 const startDateFormatted = computed(() => {
   if (!startDate) {
