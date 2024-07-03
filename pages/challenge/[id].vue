@@ -11,10 +11,10 @@
             {{ challengeDetail?.title }}
           </h1>
         </div>
-        <div v-if="challengeDetail?.description" class="h-32">
+        <div v-if="challengeDetail?.description" class="min-h-[120px]">
           {{ challengeDetail?.description }}
         </div>
-        <div class="p-2 flex items-center justify-center">
+        <div class="mt-5 p-2 flex items-center justify-center">
           <UButton
             v-if="!isJoinedChallenge"
             size="xl"
