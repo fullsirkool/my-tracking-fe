@@ -177,7 +177,7 @@
                   v-model="state.description"
                   autoresize
                   :maxrows="5"
-                  placeholder="Search..."
+                  :placeholder="$t('description')"
               />
             </UFormGroup>
           </div>
@@ -252,38 +252,38 @@ const validate = (state: any): FormError[] => {
   console.log('validate', state)
   const errors = []
   if (!state.title) {
-    errors.push({path: 'title', message: 'Required'})
+    errors.push({path: 'title', message: t('required_warning')})
   }
 
   if (!state.startDate) {
-    errors.push({path: 'startDate', message: 'Required'})
+    errors.push({path: 'startDate', message: t('required_warning')})
   }
 
   if (!state.endDate) {
-    errors.push({path: 'endDate', message: 'Required'})
+    errors.push({path: 'endDate', message: t('required_warning')})
   }
   if (!state.file) {
-    errors.push({path: 'file', message: 'Required'})
+    errors.push({path: 'file', message: t('required_warning')})
   }
-  if (state.file.size > 20971520) {
-    errors.push({path: 'file', message: 'Image size must less than 20mb'})
+  if (state.file?.size > 20971520) {
+    errors.push({path: 'file', message: t('image_size_warning')})
   }
 
   if (!state.target) {
-    errors.push({path: 'target', message: 'Required'})
+    errors.push({path: 'target', message: t('required_warning')})
   }
   if (state.target < 1) {
-    errors.push({path: 'target', message: 'Target must greater or equal 1km'})
+    errors.push({path: 'target', message: t('target_warning')})
   }
   if (state.startDate && state.endDate) {
     if (!dayjs(state.endDate).isAfter(state.startDate, 'day')) {
       errors.push({
         path: 'startDate',
-        message: 'Start date must before end date',
+        message: t('start_date_must_before_end_date'),
       })
       errors.push({
         path: 'endDate',
-        message: 'End date must after start date',
+        message: t('end_date_must_after_start_date'),
       })
     }
   }
@@ -296,22 +296,22 @@ const validate = (state: any): FormError[] => {
     if (maxPaceToMinute <= minPaceToMinute) {
       errors.push({
         path: 'pace',
-        message: 'Max pace must greater than min pace',
+        message: t('max_pace_greater_than_min_pace'),
       })
     }
   }
 
   if (state.enableMinDistance && !state.minDistance) {
-    errors.push({path: 'minDistance', message: 'Required'})
+    errors.push({path: 'minDistance', message: t('required_warning')})
   }
   if (state.enableMaxDistance && !state.maxDistance) {
-    errors.push({path: 'maxDistance', message: 'Required'})
+    errors.push({path: 'maxDistance', message: t('required_warning')})
   }
 
   if (state.enableMinDistance && state.minDistance < 1) {
     errors.push({
       path: 'minDistance',
-      message: 'Min distance must greater than 1km',
+      message: t('min_pace_greate_than_1km'),
     })
   }
 
@@ -325,11 +325,11 @@ const validate = (state: any): FormError[] => {
     if (+state.minDistance >= +state.maxDistance) {
       errors.push({
         path: 'minDistance',
-        message: 'Min distance must less than max distance',
+        message: t('min_distance_less_than_max'),
       })
       errors.push({
         path: 'maxDistance',
-        message: 'Max distance must greater than min distance',
+        message: t('min_distance_less_than_max'),
       })
     }
   }

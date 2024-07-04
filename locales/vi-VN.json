@@ -113,5 +113,12 @@
   "copied_content_to_clipboard": "Đã sao chép",
   "gender_must_be_options": "Giới tính là thông tin bắt buộc",
   "joined_challenge": "Thử thách đã tham gia",
-  "no_challenge_joined": "Chưa tham gia thử thách"
+  "no_challenge_joined": "Chưa tham gia thử thách",
+  "image_size_warning": "Vui lòng tải lên ảnh nhỏ hơn 20mb",
+  "target_warning": "Mục tiêu của thử thách phải lớn hơn hoặc bằng 1km",
+  "start_date_must_before_end_date": "Ngày bắt đầu phải sớm hơn ngày kết thúc",
+  "end_date_must_after_start_date": "Ngày kết thúc phải muộn hơn ngày bắt đầu",
+  "max_pace_greater_than_min_pace": "Pace chậm nhất phải có thời gian dài hơn pace nhanh nhất",
+  "min_pace_greate_than_1km": "Khoảng cách nhỏ nhất cần lớn hơn 1km",
+  "min_distance_less_than_max": "Khoảng cách nhỏ nhất phải nhỏ hơn khoảng cách lớn nhất"
 }

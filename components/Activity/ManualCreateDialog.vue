@@ -142,6 +142,7 @@ const onSubmit = async (event: FormSubmitEvent<Schema>) => {
     toast.add({
       id: 'copy-challenge',
       icon: 'i-heroicons-check-circle',
+      color: 'green',
       timeout: 4000,
       title: t('create_tracklog_success'),
     })

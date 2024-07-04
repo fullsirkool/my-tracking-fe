@@ -121,6 +121,7 @@ const handleShareChallenge = () => {
       id: 'copy-challenge',
       icon: 'i-heroicons-check-circle',
       timeout: 3000,
+      color: 'green',
       title: t('copied_challenge_url_to_clipboard'),
     })
   } catch (error) {}

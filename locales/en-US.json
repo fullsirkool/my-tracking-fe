@@ -113,5 +113,12 @@
   "copied_content_to_clipboard": "Copied content to clipboard",
   "gender_must_be_options": "Gender must be male, female, or other",
   "joined_challenge": "Joined challenge",
-  "no_challenge_joined": "No challenge joined"
+  "no_challenge_joined": "No challenge joined",
+  "image_size_warning": "Image size must less than 20mb",
+  "target_warning": "Target must greater or equal 1km",
+  "start_date_must_before_end_date": "Start date must before end date",
+  "end_date_must_after_start_date": "End date must after start date",
+  "max_pace_greater_than_min_pace": "Max pace must greater than min pace",
+  "min_pace_greate_than_1km": "Min distance must greater than 1km",
+  "min_distance_less_than_max": "Min distance must less than max distance"
 }

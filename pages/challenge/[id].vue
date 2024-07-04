@@ -147,6 +147,7 @@ const handleCompletePayment = (isCompleted: Boolean) => {
       id: 'copy-challenge',
       icon: 'i-heroicons-check-circle',
       timeout: 4000,
+      color: 'green',
       title: t('join_challenge_successfully'),
     })
     handleClosePaymentDialog()

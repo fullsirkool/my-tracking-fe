@@ -129,6 +129,7 @@ const onSubmit = async () => {
     router.push('/')
     toast.add({
       title: 'Success',
+      color: 'green',
       description: 'Login successful',
       timeout: 2000,
     })
