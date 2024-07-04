@@ -28,6 +28,7 @@ export const useProfileStore = defineStore('profile', () => {
 
   const fetchJoinedChallenge = async (params: { page?: number }) => {
     try {
+      console.log('fetch joined challenge')
       const { page } = params
       if (page) {
         joinedChallengePage.value = page
@@ -42,6 +43,8 @@ export const useProfileStore = defineStore('profile', () => {
         userId.value,
         param,
       )
+
+      console.log('joined challenge response', response)
 
       if (response) {
         const { data, totalPages, totalElement } = response
@@ -129,6 +132,11 @@ export const useProfileStore = defineStore('profile', () => {
     detailSize,
     totalDetailPage,
     totalActivities,
+    joinedChallenges,
+    joinedChallengePage,
+    joinedChallengePageSize,
+    totalJoinedChallenge,
+    totalJoinedChallengePage,
     handleChangeMonth,
     fetchDailyActivityStatistics,
     fetchMonthlyActivitiesDetail,

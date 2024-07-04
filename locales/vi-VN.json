@@ -110,5 +110,8 @@
   "sign_in_with_google": "Đăng nhập với Google",
   "number_field_required": "Thông tin này phải là dạng số",
   "free_to_join": "Tham gia miễn phí",
-  "copied_content_to_clipboard": "Đã sao chép"
+  "copied_content_to_clipboard": "Đã sao chép",
+  "gender_must_be_options": "Giới tính là thông tin bắt buộc",
+  "joined_challenge": "Thử thách đã tham gia",
+  "no_challenge_joined": "Chưa tham gia thử thách"
 }

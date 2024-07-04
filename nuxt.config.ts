@@ -6,7 +6,6 @@ export default defineNuxtConfig({
   css: ['~/assets/main.scss'],
   components: { global: true, dirs: ['~/components'] },
   app: {
-    pageTransition: { name: 'page', mode: 'out-in' },
     head: {
       title: 'Warm Feet',
       charset: 'utf-8',

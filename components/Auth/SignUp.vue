@@ -185,7 +185,7 @@ const schema = object({
   name: string().required(t('required_warning')),
   sex: string()
     .required(t('required_warning'))
-    .oneOf(genderOptions.value.map((item) => item.value)),
+    .oneOf(genderOptions.value.map((item) => item.value), t('gender_must_be_options')),
 })
 
 type Schema = InferType<typeof schema>
@@ -194,7 +194,7 @@ const state = ref({
   password: '',
   confirmPassword: '',
   name: '',
-  sex: '',
+  sex: 'Other',
 })
 
 const isShowPassword = ref(false)
