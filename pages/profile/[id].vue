@@ -57,16 +57,16 @@
       :activity="count"
       :time="getTotalRuningMinute"
     />
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-10">
+    <div class="grid grid-cols-1 lg:grid-cols-3 md:gap-4 gap-y-4 mt-10">
       <div class="col-span-2">
-        <profile-self-activity></profile-self-activity>
+        <ProfileSelfActivity />
       </div>
       <div class="col-span-1">
-        <profile-activity-calendar></profile-activity-calendar>
+        <ProfileActivityCalendar/>
       </div>
     </div>
     <div class="mt-24 text-center">
-      <profile-detail-table></profile-detail-table>
+      <ProfileDetailTable />
     </div>
   </UContainer>
 </template>

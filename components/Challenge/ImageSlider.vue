@@ -1,37 +1,42 @@
 <template>
   <carousel wrap-around :autoplay="40000">
-    <slide v-for="challenge in challenges" :key="challenge.id">
-      <div class="h-700px] w-full object-cover rounded-3xl relative">
-        <img
-            class="rounded-t-3xl"
-            :src="challenge.image"
-        />
-        <div class="absolute bottom-0 bg-white w-full">
-          <h1 class="text-2xl font-semibold text-left">{{ challenge.title }}</h1>
-          <div class="truncate ... max-w-[500px]">{{
-              challenge.description
-            }}
+    <slide v-for="challenge in challenges" :key="challenge.id" class="relative">
+      <div
+        class="slide-cover w-full object-cover rounded-xl h-1/2"
+        :style="{ background: `url(${challenge.image})` }"
+      />
+      <div class="absolute bottom-0 left-0 p-10 w-full md:flex justify-between">
+        <div class="text-left w-full md:w-1/2">
+          <h1
+            class="text-3xl md:text-4xl font-semibold text-left text-slate-100 tracking-wide leading-10 drop-shadow mb-2.5"
+          >
+            <span>{{ challenge.title }}</span>
+          </h1>
+          <div
+            class="text-white text-sm mb-5 md:text-lg leading-4 md:leading-6 font-light md:min-h-[80px] line-clamp-3 text-ellipsis overflow-hidden ..."
+          >
+            {{ challenge.description }}
           </div>
-          <div class="flex items-center justify-between">
-            <NuxtLink
-                :to="`/challenge/${challenge.id}`"
-                class="mt-1 text-md flex items-center gap-2 hover:text-primary-500 hover:translate-x-1 transition-transform"
-            >
-              {{ $t('join') }}
-              <UIcon name="i-heroicons-arrow-right-20-solid"/>
-            </NuxtLink>
-          </div>
+        </div>
+        <div class="flex items-end md:justify-between">
+          <NuxtLink
+            :to="`/challenge/${challenge.id}`"
+            class="mt-1 text-md flex items-center gap-2 font-bold hover:text-primary-600 hover:bg-white hover:translate-x-1 transition-transform bg-primary-600 text-white px-5 py-2.5 rounded-xl shadow-2xl"
+          >
+            {{ $t('join') }}
+            <UIcon name="i-heroicons-arrow-right-20-solid" />
+          </NuxtLink>
         </div>
       </div>
     </slide>
     <template #addons>
-      <navigation/>
-      <pagination/>
+      <navigation />
+      <pagination />
     </template>
   </carousel>
 </template>
 <script setup lang="ts">
-import {Challenge} from '~/types/dto/challenge.dto'
+import { Challenge } from '~/types/dto/challenge.dto'
 
 interface IChallengeImageSlider {
   challenges: Challenge[]
@@ -46,5 +51,4 @@ const challenges = computed(() => props.challenges || [])
   background-color: rgba(160, 160, 160, 0.6);
   border-radius: 50%;
 }
-
 </style>
