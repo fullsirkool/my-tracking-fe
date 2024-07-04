@@ -2,27 +2,32 @@
   <UContainer>
     <div class="mt-10">
       <UCard class="rounded-xl bg-[#f5f5f5] overflow-auto min-h-[300px]">
-        <div
-          class="custom-cover rounded-xl"
-          :style="{ background: `url(${image})` }"
-        ></div>
-        <div class="text-center">
-          <h1 class="text-4xl font-semibold p-4">
-            {{ challengeDetail?.title }}
-          </h1>
+        <div class="md:flex gap-5">
+          <div
+            class="custom-cover rounded-xl flex-1"
+            :style="{ background: `url(${image})` }"
+          ></div>
+          <div class="flex-1">
+            <div class="text-left">
+              <h1 class="text-4xl font-semibold mt-10 mb-5 md:mt-0">
+                {{ challengeDetail?.title }}
+              </h1>
+            </div>
+            <div v-if="challengeDetail?.description" class="min-h-[120px] text-slate-700 text-justify">
+              {{ challengeDetail?.description }}
+            </div>
+            <div class="mt-5 p-2 flex items-center justify-center">
+              <UButton
+                v-if="!isJoinedChallenge"
+                size="xl"
+                @click="handleJoinChallenge"
+              >
+                {{ $t('join_challenge') }}
+              </UButton>
+            </div>
+          </div>
         </div>
-        <div v-if="challengeDetail?.description" class="min-h-[120px]">
-          {{ challengeDetail?.description }}
-        </div>
-        <div class="mt-5 p-2 flex items-center justify-center">
-          <UButton
-            v-if="!isJoinedChallenge"
-            size="xl"
-            @click="handleJoinChallenge"
-          >
-            {{ $t('join_challenge') }}
-          </UButton>
-        </div>
+
       </UCard>
     </div>
     <ChallengeDetailTable></ChallengeDetailTable>
