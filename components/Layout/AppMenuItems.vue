@@ -72,7 +72,7 @@ const logout = () => {
               />{{$t('view_profile')}}
             </NuxtLink>
             <div class="border-b border-slate-100"></div>
-            <CommonLanguageSwitcher></CommonLanguageSwitcher>
+<!--            <CommonLanguageSwitcher></CommonLanguageSwitcher>-->
             <div class="border-b border-slate-100"></div>
             <NuxtLink
               class="inline-flex items-center px-4 py-2 gap-2 cursor-pointer hover:text-primary-600"
