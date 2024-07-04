@@ -30,7 +30,7 @@
 
           <template #totaldistance-data="{ row }">
             <span class="text-gray-900 dark:text-white font-medium text-xl"
-            >{{ number.format(row.distance) }}
+            >{{ row.distance.toFixed(1) }}
             </span>
           </template>
 
