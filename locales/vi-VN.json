@@ -124,5 +124,6 @@
   "min_pace_greate_than_1km": "Khoảng cách nhỏ nhất cần lớn hơn 1km",
   "min_distance_less_than_max": "Khoảng cách nhỏ nhất phải nhỏ hơn khoảng cách lớn nhất",
   "completed_challenge": "Thử thách đã hoàn thành",
-  "uncompleted_challenge": "Thử tách chưa hoàn thành"
+  "uncompleted_challenge": "Thử thách chưa hoàn thành",
+  "select_challenge": "Chọn Thử thách"
 }

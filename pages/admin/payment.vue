@@ -44,10 +44,10 @@ const columns = ref([
   },
 ])
 
-const filter = reactive({
+const filter = reactive<{ query: string, createdDate: string | undefined, challengeId: number | undefined }>({
   query: '',
   createdDate: undefined,
-  challengeName: '',
+  challengeId: undefined,
 })
 
 const fetchPaymentList = async () => {
@@ -82,11 +82,7 @@ watch(filter, () => fetchPaymentList(), { deep: true })
     <div class="h-5"></div>
 
     <!-- Desktop -->
-    <UTable
-      :rows="paymentList"
-      :columns="columns"
-      class="custom-table shadow rounded-xl bg-white hidden md:block"
-    >
+    <UTable :rows="paymentList" :columns="columns" class="custom-table shadow rounded-xl bg-white hidden md:block">
       <template #createdAt-data="{ row }">
         <div>
           {{ dayjs(row.createdAt).format('HH:mm DD-MM-YYYY') }}
@@ -99,11 +95,7 @@ watch(filter, () => fetchPaymentList(), { deep: true })
 
     <!-- Mobile -->
     <div class="md:hidden block">
-      <div
-        v-for="item in paymentList"
-        :key="item.id"
-        class="mb-2.5 border border-slate-200 p-2.5 rounded-xl"
-      >
+      <div v-for="item in paymentList" :key="item.id" class="mb-2.5 border border-slate-200 p-2.5 rounded-xl">
         <div class="flex justify-between">
           <div>
             <div class="font-semibold">
@@ -133,12 +125,8 @@ watch(filter, () => fetchPaymentList(), { deep: true })
 
     <br />
 
-    <UPagination
-      v-model="pagination.page"
-      class="justify-end"
-      :page-count="pagination.size"
-      :total="pagination.totalElements"
-    />
+    <UPagination v-model="pagination.page" class="justify-end" :page-count="pagination.size"
+      :total="pagination.totalElements" />
   </div>
 </template>
 

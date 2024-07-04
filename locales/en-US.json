@@ -124,5 +124,6 @@
   "min_pace_greate_than_1km": "Min distance must greater than 1km",
   "min_distance_less_than_max": "Min distance must less than max distance",
   "completed_challenge": "Completed Challenge",
-  "uncompleted_challenge": "Uncompleted Challenge"
+  "uncompleted_challenge": "Uncompleted Challenge",
+  "select_challenge": "Select Challenge"
 }
