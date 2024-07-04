@@ -28,7 +28,7 @@ const logout = () => {
         <Icon name="system-uicons:create" />
       </NuxtLink>
     </UTooltip>
-    <UTooltip v-if="isAdmin || isUser" :text="$t('view_challenge')">
+    <UTooltip :text="$t('view_challenge')">
       <NuxtLink
         to="/challenge"
         class="text-2xl no-underline text-grey-darkest hover:text-blue-dark inline-flex items-center justify-center w-[45px] h-[45px] rounded-full bg-slate-100 text-primary-600 shadow-xl mx-2"
