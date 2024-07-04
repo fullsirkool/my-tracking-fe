@@ -1,29 +1,42 @@
 <template>
   <carousel wrap-around :autoplay="40000">
-    <slide v-for="challenge in challenges" :key="challenge.id" class="slide__container">
-      <img
-        :src="challenge.image"
-        class="h-[600px] w-full object-cover rounded-3xl"
-      />
-      <div class="slide__container__infor px-10 pb-10 bt-20 rounded text-left flex flex-col rounded-3xl">
-        <h1 class="text-2xl font-semibold">{{ challenge.title }}</h1>
-        <div class="slide__container__description truncate ... max-w-[500px]">{{
-            challenge.description
-          }}</div>
+    <slide v-for="challenge in challenges" :key="challenge.id">
+      <div class="h-700px] w-full object-cover rounded-3xl relative">
+        <img
+            class="rounded-t-3xl"
+            :src="challenge.image"
+        />
+        <div class="absolute bottom-0 bg-white w-full">
+          <h1 class="text-2xl font-semibold text-left">{{ challenge.title }}</h1>
+          <div class="truncate ... max-w-[500px]">{{
+              challenge.description
+            }}
+          </div>
+          <div class="flex items-center justify-between">
+            <NuxtLink
+                :to="`/challenge/${challenge.id}`"
+                class="mt-1 text-md flex items-center gap-2 hover:text-primary-500 hover:translate-x-1 transition-transform"
+            >
+              {{ $t('join') }}
+              <UIcon name="i-heroicons-arrow-right-20-solid"/>
+            </NuxtLink>
+          </div>
+        </div>
       </div>
     </slide>
     <template #addons>
-      <navigation />
-      <pagination />
+      <navigation/>
+      <pagination/>
     </template>
   </carousel>
 </template>
 <script setup lang="ts">
-import { Challenge } from '~/types/dto/challenge.dto'
+import {Challenge} from '~/types/dto/challenge.dto'
 
 interface IChallengeImageSlider {
   challenges: Challenge[]
 }
+
 const props = withDefaults(defineProps<IChallengeImageSlider>(), {})
 const challenges = computed(() => props.challenges || [])
 </script>
@@ -33,24 +46,5 @@ const challenges = computed(() => props.challenges || [])
   background-color: rgba(160, 160, 160, 0.6);
   border-radius: 50%;
 }
-.slide__container {
-  position: relative;
-  &__infor {
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    color: #FFFFFF;
-    background-image: linear-gradient(
-            rgba(48, 51, 57, 0) 0%,
-            rgba(62, 63, 64, 0.9) 75.16%
-    );
-  }
-  &__image {
-    height: 100%;
-  }
-  &__description {
-    width: 60%;
-  }
-}
+
 </style>

@@ -26,7 +26,7 @@
       <span>{{ maxDistanceFormatted }}</span>
     </div>
     <div v-if="minPace" class="flex justify-between md:block mb-2.5">
-      <label class="text-lg">{{ $t('min_pace') }}: </label>
+      <label>{{ $t('min_pace') }}: </label>
       <span>{{ minPaceFormatted }}</span>
     </div>
     <div v-if="maxPace" class="flex justify-between md:block mb-2.5">

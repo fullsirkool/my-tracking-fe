@@ -81,7 +81,7 @@ const { image, challengeDetail } = storeToRefs(challengeStore)
 const { params, fullPath } = useRoute()
 const { id } = params
 
-const openQrDialog = ref<Boolean>(false)
+const openQrDialog = ref<boolean>(false)
 const paymentInfor = ref<TPaymentInfor>({
   qrDataUrl: '',
   paymentCode: 0,
