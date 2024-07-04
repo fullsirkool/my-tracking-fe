@@ -15,7 +15,7 @@
           class="rounded-xl h-[200px] w-full object-cover opacity-90 group-hover:opacity-100"
         />
       </div>
-      <div class="mt-4">
+      <div class="mt-4 text-left">
         <div class="flex items-center gap-2">
           <UIcon name="i-heroicons-calendar-days-solid" />
           <span class="text-sm">{{ getDisplayDate }}</span>

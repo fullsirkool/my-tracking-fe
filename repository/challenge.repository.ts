@@ -94,18 +94,6 @@ export default {
     return data.value
   },
 
-  async findCreatedChallenge(
-    id: string,
-    params: PagingChallengeDto,
-  ): Promise<PagingChallengeResponse | null> {
-    const url = `${BASE_URL}/challenge/user/created/${id}`
-    const { data } = await useFetch<PagingChallengeResponse>(url, {
-      method: 'get',
-      params,
-    })
-    return data.value
-  },
-
   async checkJoinedChallenge(
     id: number,
   ): Promise<CheckedJoinChallengeResponse | null> {

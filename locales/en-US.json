@@ -110,5 +110,8 @@
   "sign_in_with_google": "Sign in with Google",
   "number_field_required": "This field must be number",
   "free_to_join": "Free to join",
-  "copied_content_to_clipboard": "Copied content to clipboard"
+  "copied_content_to_clipboard": "Copied content to clipboard",
+  "gender_must_be_options": "Gender must be male, female, or other",
+  "joined_challenge": "Joined challenge",
+  "no_challenge_joined": "No challenge joined"
 }
