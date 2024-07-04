@@ -46,6 +46,7 @@
   "rules": "Luật Thử Thách",
   "min_pace_and_max_pace_will_be_applied_to_every_single_km": "Tốc độ tối thiểu và tốc độ tối đa sẽ được áp dụng cho mỗi km",
   "completed": "đã hoàn thành",
+  "uncompleted": "chưa hoàn thành",
   "start_date": "Ngày bắt đầu",
   "end_date": "Ngày kết thúc",
   "ended": "Đã kết thúc",
@@ -71,6 +72,7 @@
   "price": "Số tiền",
   "payment": "Thanh toán",
   "search_by_keyword": "Tìm kiếm bằng từ khoá",
+  "search_by_participant": "Tìm kiếm tên theo người tham gia",
   "created_date": "Ngày tạo",
   "created_hour": "Giờ tạo",
   "created_at": "Thời điểm tạo",
@@ -120,5 +122,7 @@
   "end_date_must_after_start_date": "Ngày kết thúc phải muộn hơn ngày bắt đầu",
   "max_pace_greater_than_min_pace": "Pace chậm nhất phải có thời gian dài hơn pace nhanh nhất",
   "min_pace_greate_than_1km": "Khoảng cách nhỏ nhất cần lớn hơn 1km",
-  "min_distance_less_than_max": "Khoảng cách nhỏ nhất phải nhỏ hơn khoảng cách lớn nhất"
+  "min_distance_less_than_max": "Khoảng cách nhỏ nhất phải nhỏ hơn khoảng cách lớn nhất",
+  "completed_challenge": "Thử thách đã hoàn thành",
+  "uncompleted_challenge": "Thử tách chưa hoàn thành"
 }
