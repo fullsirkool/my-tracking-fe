@@ -4,7 +4,6 @@ import { PaymentDto } from '~/types/dto/payment.dto'
 import DatePicker from '~/components/Common/DatePicker.vue'
 
 definePageMeta({
-  // layout: 'home',
   middleware: ['authentication'],
 })
 
@@ -33,19 +32,12 @@ const columns = ref([
     key: 'challenge.title',
     label: t('challenge'),
   },
-  {
-    key: 'completedAt',
-    label: t('completed_at'),
-    align: 'center',
-  },
+
   {
     key: 'createdAt',
     label: t('created_at'),
   },
-  {
-    key: 'paymentType',
-    label: t('type'),
-  },
+
   {
     key: 'amount',
     label: t('amount'),
@@ -53,22 +45,26 @@ const columns = ref([
 ])
 
 const filterTemp = reactive({
-  enabledCreatedDate: false,
-  createdDate: new Date(),
+  createdDate: undefined,
   query: '',
 })
 
 const filter = reactive({
-  enabledCreatedDate: false,
-  createdDate: new Date(),
+  createdDate: undefined,
   query: '',
+})
+
+const calendarLabel = computed(() => {
+  return filterTemp.createdDate
+    ? dayjs(filterTemp.createdDate).format('DD/MM/YYYY')
+    : t('all_time')
 })
 
 const fetchPaymentList = async () => {
   const { data } = await paymentRepository.fetchPaymentList({
     page: pagination.page,
     size: pagination.size,
-    createdAt: filter.enabledCreatedDate
+    createdAt: filter.createdDate
       ? dayjs(filter.createdDate).toISOString()
       : '',
     query: filter.query,
@@ -78,15 +74,12 @@ const fetchPaymentList = async () => {
     paymentList.value = data.data
     pagination.totalElements = data.totalElement
     pagination.totalPages = data.totalPages
-    console.log('pagination.totalPages', pagination.totalPages)
-    console.log('pagination.totalElements', pagination.totalElements)
   }
 }
 
 const onFilter = async () => {
   filter.createdDate = filterTemp.createdDate
   filter.query = filterTemp.query
-  filter.enabledCreatedDate = filterTemp.enabledCreatedDate
   fetchPaymentList()
 }
 
@@ -108,19 +101,15 @@ watch(
       class="bg-white shadow rounded-xl flex flex-col md:flex-row md:items-end p-5 gap-5"
     >
       <div class="flex md:block gap-5 items-center">
-        <UCheckbox
-          v-model="filterTemp.enabledCreatedDate"
-          name="createdDate"
-          :label="$t('created_date')"
-          class="mb-0.5"
-        />
+        <label class="text-sm font-semibold">
+          {{ $t('start_date') }}
+        </label>
 
         <div class="flex items-center gap-5">
           <UPopover :popper="{ placement: 'bottom-start' }">
             <UButton
               icon="i-heroicons-calendar-days-20-solid"
-              :label="dayjs(filterTemp.createdDate).format('DD/MM/YYYY')"
-              :disabled="!filterTemp.enabledCreatedDate"
+              :label="calendarLabel"
             />
 
             <template #panel="{ close }">
@@ -128,7 +117,18 @@ watch(
                 v-model="filterTemp.createdDate"
                 is-required
                 @close="close"
-              />
+              >
+                <template #footer>
+                  <div class="text-center mb-5 px-2.5">
+                    <UButton block @click="() => {
+                      filterTemp.createdDate = undefined;
+                      close()
+                    }">
+                      {{ $t('all_time') }}
+                    </UButton>
+                  </div>
+                </template>
+              </DatePicker>
             </template>
           </UPopover>
         </div>
@@ -163,10 +163,8 @@ watch(
           {{ dayjs(row.createdAt).format('HH:mm DD-MM-YYYY') }}
         </div>
       </template>
-      <template #completedAt-data="{ row }">
-        <div>
-          {{ dayjs(row.completedAt).format('HH:mm DD-MM-YYYY') }}
-        </div>
+      <template #amount-data="{ row }">
+        <div>{{ number.format(row.amount) }} đ</div>
       </template>
     </UTable>
 
@@ -188,10 +186,7 @@ watch(
           </div>
           <div class="text-right">
             <div class="text-primary font-semibold">
-              {{ item.amount }}
-            </div>
-            <div class="bg-primary text-xs text-white px-3 py-0.5 rounded-full">
-              {{ item.paymentType }}
+              {{ number.format(item.amount) }} đ
             </div>
           </div>
         </div>
@@ -202,12 +197,6 @@ watch(
           </span>
           <span>
             {{ dayjs(item.createdAt).format('HH:mm DD-MM-YYYY') }}
-          </span>
-        </div>
-        <div class="text-sm italic flex justify-between">
-          <span>{{ $t('completed_at') }}</span>
-          <span>
-            {{ dayjs(item.completedAt).format('HH:mm DD-MM-YYYY') }}
           </span>
         </div>
       </div>

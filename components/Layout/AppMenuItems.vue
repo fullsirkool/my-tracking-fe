@@ -33,7 +33,7 @@ const logout = () => {
         to="/challenge"
         class="text-2xl no-underline text-grey-darkest hover:text-blue-dark inline-flex items-center justify-center w-[45px] h-[45px] rounded-full bg-slate-100 text-primary-600 shadow-xl mx-2"
       >
-        <Icon name="ep:aim" class="relative" />
+        <Icon name="fluent:run-16-filled" class="relative" />
       </NuxtLink>
     </UTooltip>
 
