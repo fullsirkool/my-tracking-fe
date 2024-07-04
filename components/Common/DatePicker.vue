@@ -1,5 +1,16 @@
 <template>
-  <VDatePicker v-model="date" :attributes="attrs" :max-date="maxDate"/>
+  <VDatePicker v-model="date" :attributes="attrs" :max-date="maxDate">
+    <template v-if="$slots.header" #header>
+      <slot name="header"></slot>
+    </template>
+    
+    <template v-if="$slots.default" #default>
+      <slot></slot>
+    </template>
+    <template v-if="$slots.footer" #footer>
+      <slot name="footer"></slot>
+    </template>
+  </VDatePicker>
 </template>
 <script setup lang="ts">
 const props = defineProps({
@@ -17,8 +28,8 @@ const attrs = ref([
   {
     key: 'today',
     highlight: {
-      color: 'green',
-      fillMode: 'solid',
+      color: 'red',
+      fillMode: 'outline',
     },
     dates: new Date(),
   },
