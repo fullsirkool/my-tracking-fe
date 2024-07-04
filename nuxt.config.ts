@@ -36,12 +36,12 @@ export default defineNuxtConfig({
     langDir: 'locales',
     strategy: 'no_prefix',
     locales: [
-      {
-        code: 'en-US',
-        iso: 'en-US',
-        name: 'English(US)',
-        file: 'en-US.json',
-      },
+      // {
+      //   code: 'en-US',
+      //   iso: 'en-US',
+      //   name: 'English(US)',
+      //   file: 'en-US.json',
+      // },
       {
         code: 'vi-VN',
         iso: 'vi-VN',
