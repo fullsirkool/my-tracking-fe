@@ -2,12 +2,12 @@
   <UContainer>
     <div class="mt-10">
       <UCard class="rounded-xl bg-[#f5f5f5] overflow-auto min-h-[300px]">
-        <div class="md:flex">
+        <div>
           <div
-            class="custom-cover rounded-xl w-1/2"
+            class="custom-cover rounded-xl h-[300px]"
             :style="{ background: `url(${image})` }"
           ></div>
-          <div class="w-1/2 pb-5 pl-5">
+          <div class="md:p-5 md:mt-5">
             <div class="text-left">
               <h1 class="text-4xl font-semibold mt-10 mb-5 md:mt-0">
                 {{ challengeDetail?.title }}
@@ -15,9 +15,9 @@
             </div>
             <div
               v-if="challengeDetail?.description"
-              class="min-h-[120px] text-slate-700 text-justify"
+              class="custom-content min-h-[120px]  text-justify"
             >
-              <div v-html="challengeDetail?.description" class="whitespace-pre" />
+              <div v-html="challengeDetail?.description" />
             </div>
             <div class="mt-5 p-2 flex items-center justify-center">
               <UButton
@@ -168,3 +168,7 @@ watch(challengeDetail, (newVal) => console.log('challengeDetail', newVal), {
   immediate: true,
 })
 </script>
+
+<style>
+
+</style>
