@@ -26,6 +26,9 @@
 <script setup lang="ts">
 import challengeRepository from '~/repository/challenge.repository'
 import { Challenge, PagingChallengeDto } from '~/types/dto/challenge.dto'
+definePageMeta({
+  middleware: ['authentication']
+})
 
 const paging = ref<PagingChallengeDto>({
   page: 1,

@@ -43,7 +43,7 @@ const columns = ref([
   },
 ])
 
-const filter = reactive<PaymentFilter>({
+const filter = ref<PaymentFilter>({
   query: '',
   createdDate: undefined,
   challengeId: undefined,
@@ -53,11 +53,11 @@ const fetchPaymentList = async () => {
   const { data } = await paymentRepository.fetchPaymentList({
     page: pagination.page,
     size: pagination.size,
-    createdAt: filter.createdDate
-      ? dayjs(filter.createdDate).toISOString()
+    createdAt: filter.value.createdDate
+      ? dayjs(filter.value.createdDate).toISOString()
       : '',
-    query: filter.query,
-    challengeId: filter.challengeId,
+    query: filter.value.query,
+    challengeId: filter.value.challengeId,
   })
 
   if (data) {
@@ -77,7 +77,7 @@ watch(filter, () => fetchPaymentList(), { deep: true })
 
 <template>
   <div class="p-5">
-    <PaymentFilter v-model="filter" />
+    <PaymentFilter :model-value="filter" @update:model-value="filter = {...$event}" />
 
     <div class="h-5"></div>
 

@@ -90,7 +90,7 @@ const dayjs = useDayjs()
 
 interface IChallengeCardProps {
   challenge: Challenge
-  highlight: boolean
+  highlight?: boolean
   customClass?: string
 }
 
