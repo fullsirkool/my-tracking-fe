@@ -17,9 +17,7 @@
               v-if="challengeDetail?.description"
               class="min-h-[120px] text-slate-700 text-justify"
             >
-              <div class="break-all">
-                {{ challengeDetail?.description }}
-              </div>
+              <div v-html="challengeDetail?.description" class="whitespace-pre" />
             </div>
             <div class="mt-5 p-2 flex items-center justify-center">
               <UButton
@@ -164,4 +162,9 @@ const handleCompletePayment = (isCompleted: Boolean) => {
 const handleClosePaymentDialog = () => {
   openQrDialog.value = false
 }
+
+watch(challengeDetail, (newVal) => console.log('challengeDetail', newVal), {
+  deep: true,
+  immediate: true,
+})
 </script>
