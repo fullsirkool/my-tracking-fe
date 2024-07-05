@@ -37,7 +37,7 @@
                   :disabled="readonly"
                 ></CommonHourInput>
               </UFormGroup>
-              <UFormGroup :label="$t('start_at')" name="startDate">
+              <UFormGroup :label="$t('run_date')" name="startDate">
                 <UPopover :popper="{ placement: 'bottom-start' }" class="w-fit">
                   <UButton
                     variant="outline"

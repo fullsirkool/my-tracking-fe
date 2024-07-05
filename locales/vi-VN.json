@@ -17,7 +17,7 @@
   "challenge_type": "Kiểu Thử Thách",
   "start_at": "Bắt Đầu",
   "end_at": "Kết Thúc",
-  "image_upload": "Tải Lên Ảnh",
+  "image_upload": "Ảnh bìa thử thách",
   "rule_title": "Tên Luật",
   "min_pace": "Pace nhanh nhất",
   "max_pace": "Pace chậm nhất",
@@ -121,5 +121,6 @@
   "end_date_must_after_start_date": "Ngày kết thúc phải muộn hơn ngày bắt đầu",
   "max_pace_greater_than_min_pace": "Pace chậm nhất phải có thời gian dài hơn pace nhanh nhất",
   "min_pace_greate_than_1km": "Khoảng cách nhỏ nhất cần lớn hơn 1km",
-  "min_distance_less_than_max": "Khoảng cách nhỏ nhất phải nhỏ hơn khoảng cách lớn nhất"
+  "min_distance_less_than_max": "Khoảng cách nhỏ nhất phải nhỏ hơn khoảng cách lớn nhất",
+  "run_date": "Ngày chạy"
 }

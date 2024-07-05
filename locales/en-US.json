@@ -121,5 +121,6 @@
   "end_date_must_after_start_date": "End date must after start date",
   "max_pace_greater_than_min_pace": "Max pace must greater than min pace",
   "min_pace_greate_than_1km": "Min distance must greater than 1km",
-  "min_distance_less_than_max": "Min distance must less than max distance"
+  "min_distance_less_than_max": "Min distance must less than max distance",
+  "run_date": "Run date"
 }
