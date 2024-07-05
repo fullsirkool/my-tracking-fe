@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import paymentRepository from '~/repository/payment.repository'
-import { PaymentDto } from '~/types/dto/payment.dto'
-import DatePicker from '~/components/Common/DatePicker.vue'
+import { PaymentDto, type PaymentFilter } from '~/types/dto/payment.dto'
 
 definePageMeta({
   middleware: ['authentication'],
@@ -44,20 +43,10 @@ const columns = ref([
   },
 ])
 
-const filterTemp = reactive({
-  createdDate: undefined,
+const filter = reactive<PaymentFilter>({
   query: '',
-})
-
-const filter = reactive({
   createdDate: undefined,
-  query: '',
-})
-
-const calendarLabel = computed(() => {
-  return filterTemp.createdDate
-    ? dayjs(filterTemp.createdDate).format('DD/MM/YYYY')
-    : t('all_time')
+  challengeId: undefined,
 })
 
 const fetchPaymentList = async () => {
@@ -68,6 +57,7 @@ const fetchPaymentList = async () => {
       ? dayjs(filter.createdDate).toISOString()
       : '',
     query: filter.query,
+    challengeId: filter.challengeId,
   })
 
   if (data) {
@@ -77,78 +67,17 @@ const fetchPaymentList = async () => {
   }
 }
 
-const onFilter = async () => {
-  filter.createdDate = filterTemp.createdDate
-  filter.query = filterTemp.query
-  fetchPaymentList()
-}
-
-const onKeydown = (event: KeyboardEvent) => {
-  event.key == 'Enter' && onFilter()
-}
-
-await onFilter()
-
 watch(
   () => pagination.page,
   () => fetchPaymentList(),
 )
+
+watch(filter, () => fetchPaymentList(), { deep: true })
 </script>
 
 <template>
   <div class="p-5">
-    <div
-      class="bg-white shadow rounded-xl flex flex-col md:flex-row md:items-end p-5 gap-5"
-    >
-      <div class="flex md:block gap-5 items-center">
-        <label class="text-sm font-semibold">
-          {{ $t('start_date') }}
-        </label>
-
-        <div class="flex items-center gap-5">
-          <UPopover :popper="{ placement: 'bottom-start' }">
-            <UButton
-              icon="i-heroicons-calendar-days-20-solid"
-              :label="calendarLabel"
-            />
-
-            <template #panel="{ close }">
-              <DatePicker
-                v-model="filterTemp.createdDate"
-                is-required
-                @close="close"
-              >
-                <template #footer>
-                  <div class="text-center mb-5 px-2.5">
-                    <UButton block @click="() => {
-                      filterTemp.createdDate = undefined;
-                      close()
-                    }">
-                      {{ $t('all_time') }}
-                    </UButton>
-                  </div>
-                </template>
-              </DatePicker>
-            </template>
-          </UPopover>
-        </div>
-      </div>
-
-      <div class="flex-1 flex items-end gap-5 w-100">
-        <div class="flex-1">
-          <label class="text-sm font-semibold" for="query">
-            {{ $t('search_by_keyword') }}
-          </label>
-          <UInput
-            v-model="filterTemp.query"
-            placeholder="Keyword"
-            name="query"
-            @keydown="onKeydown"
-          />
-        </div>
-        <UButton @click="onFilter">{{ $t('search') }}</UButton>
-      </div>
-    </div>
+    <PaymentFilter v-model="filter" />
 
     <div class="h-5"></div>
 
@@ -193,7 +122,7 @@ watch(
         <br />
         <div class="text-sm italic flex justify-between">
           <span>
-            {{ $t('created_at') }}
+            {{ t('created_at') }}
           </span>
           <span>
             {{ dayjs(item.createdAt).format('HH:mm DD-MM-YYYY') }}

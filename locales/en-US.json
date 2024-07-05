@@ -46,6 +46,7 @@
   "rules": "Rules",
   "min_pace_and_max_pace_will_be_applied_to_every_single_km": "Min pace and max pace will be applied to every single kilometer",
   "completed": "completed",
+  "uncompleted": "Uncompleted",
   "start_date": "Start date",
   "end_date": "End date",
   "ended": "Ended",
@@ -71,6 +72,7 @@
   "price": "Price",
   "payment": "Payment",
   "search_by_keyword": "Search by keyword",
+  "search_by_participant": "Search by participant",
   "created_date": "Created Date",
   "created_hour": "Created Hour",
   "created_at": "Created At",
@@ -124,5 +126,9 @@
   "min_distance_less_than_max": "Min distance must less than max distance",
   "run_date": "Run date",
   "top_challenge": "Top challenge",
-  "new": "New"
+  "new": "New",
+  "completed_challenge": "Completed Challenge",
+  "uncompleted_challenge": "Uncompleted Challenge",
+  "select_challenge": "Select Challenge",
+  "all": "All"
 }

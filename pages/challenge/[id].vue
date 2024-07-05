@@ -2,19 +2,24 @@
   <UContainer>
     <div class="mt-10">
       <UCard class="rounded-xl bg-[#f5f5f5] overflow-auto min-h-[300px]">
-        <div class="md:flex gap-5">
+        <div class="md:flex">
           <div
-            class="custom-cover rounded-xl flex-1"
+            class="custom-cover rounded-xl w-1/2"
             :style="{ background: `url(${image})` }"
           ></div>
-          <div class="flex-1">
+          <div class="w-1/2 pb-5 pl-5">
             <div class="text-left">
               <h1 class="text-4xl font-semibold mt-10 mb-5 md:mt-0">
                 {{ challengeDetail?.title }}
               </h1>
             </div>
-            <div v-if="challengeDetail?.description" class="min-h-[120px] text-slate-700 text-justify">
-              {{ challengeDetail?.description }}
+            <div
+              v-if="challengeDetail?.description"
+              class="min-h-[120px] text-slate-700 text-justify"
+            >
+              <div class="break-all">
+                {{ challengeDetail?.description }}
+              </div>
             </div>
             <div class="mt-5 p-2 flex items-center justify-center">
               <UButton
@@ -27,7 +32,6 @@
             </div>
           </div>
         </div>
-
       </UCard>
     </div>
     <ChallengeDetailTable></ChallengeDetailTable>
