@@ -23,6 +23,7 @@
                 v-model="state.distance"
                 :disabled="readonly"
                 type="number"
+                step="0.01"
               >
                 <template #trailing>
                   <span class="text-gray-400 text-sm">km(s)</span>

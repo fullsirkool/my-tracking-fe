@@ -12,6 +12,7 @@ const isUser = computed(() => userStore.isSignedIn)
 const isAdmin = computed(() => adminStore.isSignedIn)
 
 const logout = () => {
+  localStorage.removeItem("saved-path");
   userStore.logout()
   adminStore.logout()
   location.reload()

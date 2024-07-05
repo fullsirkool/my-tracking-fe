@@ -163,8 +163,12 @@ const onSubmit = async (event: FormSubmitEvent<any>) => {
       refreshTokenCookie.value = refreshToken
       adminStore.logout()
       userStore.setUser(user)
-
-      navigateTo('/')
+      const savedPath = localStorage.getItem('saved-path')
+      if (!savedPath) {
+        navigateTo('/')
+        return
+      }
+      navigateTo(savedPath)
     }
   } catch (error) {
     console.error(error)
@@ -194,7 +198,12 @@ const handleSignInGoogle = async (token: string) => {
     refreshTokenCookie.value = refreshToken
     userStore.setUser(user)
     adminStore.logout()
-    navigateTo('/')
+    const savedPath = localStorage.getItem('saved-path')
+    if (!savedPath) {
+      navigateTo('/')
+      return
+    }
+    navigateTo(savedPath)
   }
 }
 </script>

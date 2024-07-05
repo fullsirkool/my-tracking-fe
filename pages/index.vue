@@ -5,7 +5,7 @@
     >
       <div class="h-fit text-center lg:text-left">
         <div class="font-bold text-4xl lg:text-6xl">
-          Take on challenges, fulfill yourself
+          Race4self - Live4all
         </div>
         <div class="text-h5 my-6 text-xl lg:text-2xl">
           Compete with others in the running challenges to become a better
