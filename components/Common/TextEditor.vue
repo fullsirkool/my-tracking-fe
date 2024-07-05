@@ -4,21 +4,24 @@
       v-if="editor"
       class="te-bar flex gap-1 border border-b-0 border-slate-100 rounded-tl-xl rounded-tr-xl p-1"
     >
-      <UButton variant="ghost"
+      <UButton
+        variant="ghost"
         @click="editor.chain().focus().toggleBold().run()"
         :disabled="!editor.can().chain().focus().toggleBold().run()"
         :class="{ 'is-active': editor.isActive('bold') }"
       >
         <Icon name="mdi:format-bold" width="20" height="20" />
       </UButton>
-      <UButton variant="ghost"
+      <UButton
+        variant="ghost"
         @click="editor.chain().focus().toggleItalic().run()"
         :disabled="!editor.can().chain().focus().toggleItalic().run()"
         :class="{ 'is-active': editor.isActive('italic') }"
       >
         <Icon name="mdi:format-italic" width="20" height="20" />
       </UButton>
-      <UButton variant="ghost"
+      <UButton
+        variant="ghost"
         @click="editor.chain().focus().toggleStrike().run()"
         :disabled="!editor.can().chain().focus().toggleStrike().run()"
         :class="{ 'is-active': editor.isActive('strike') }"
@@ -38,55 +41,64 @@
       <!-- <UButton variant="ghost" @click="editor.chain().focus().clearNodes().run()">
         clear nodes
       </UButton> -->
-      <UButton variant="ghost"
+      <UButton
+        variant="ghost"
         @click="editor.chain().focus().setParagraph().run()"
         :class="{ 'is-active': editor.isActive('paragraph') }"
       >
-        <Icon name="mdi:format-paragraph" width="20" height="20"/>
+        <Icon name="mdi:format-paragraph" width="20" height="20" />
       </UButton>
-      <UButton variant="ghost"
+      <UButton
+        variant="ghost"
         @click="editor.chain().focus().toggleHeading({ level: 1 }).run()"
         :class="{ 'is-active': editor.isActive('heading', { level: 1 }) }"
       >
         <Icon name="gravity-ui:heading-1" width="20" height="20" />
       </UButton>
-      <UButton variant="ghost"
+      <UButton
+        variant="ghost"
         @click="editor.chain().focus().toggleHeading({ level: 2 }).run()"
         :class="{ 'is-active': editor.isActive('heading', { level: 2 }) }"
       >
         <Icon name="gravity-ui:heading-2" width="20" height="20" />
       </UButton>
-      <UButton variant="ghost"
+      <UButton
+        variant="ghost"
         @click="editor.chain().focus().toggleHeading({ level: 3 }).run()"
         :class="{ 'is-active': editor.isActive('heading', { level: 3 }) }"
       >
         <Icon name="gravity-ui:heading-3" width="20" height="20" />
       </UButton>
-      <UButton variant="ghost"
+      <UButton
+        variant="ghost"
         @click="editor.chain().focus().toggleHeading({ level: 4 }).run()"
         :class="{ 'is-active': editor.isActive('heading', { level: 4 }) }"
       >
         <Icon name="gravity-ui:heading-4" width="20" height="20" />
       </UButton>
-      <UButton variant="ghost"
+      <UButton
+        variant="ghost"
         @click="editor.chain().focus().toggleHeading({ level: 5 }).run()"
         :class="{ 'is-active': editor.isActive('heading', { level: 5 }) }"
       >
         <Icon name="gravity-ui:heading-5" width="20" height="20" />
       </UButton>
-      <UButton variant="ghost"
+      <UButton
+        variant="ghost"
         @click="editor.chain().focus().toggleHeading({ level: 6 }).run()"
         :class="{ 'is-active': editor.isActive('heading', { level: 6 }) }"
       >
         <Icon name="gravity-ui:heading-6" width="20" height="20" />
       </UButton>
-      <UButton variant="ghost"
+      <UButton
+        variant="ghost"
         @click="editor.chain().focus().toggleBulletList().run()"
         :class="{ 'is-active': editor.isActive('bulletList') }"
       >
         <Icon name="mdi:format-list-bulleted" width="20" height="20" />
       </UButton>
-      <UButton variant="ghost"
+      <UButton
+        variant="ghost"
         @click="editor.chain().focus().toggleOrderedList().run()"
         :class="{ 'is-active': editor.isActive('orderedList') }"
       >
@@ -128,14 +140,22 @@
 </template>
 
 <script setup>
-// const modelValue = defineModel()
+import Link from '@tiptap/extension-link'
 const props = defineProps({
   modelValue: String,
 })
 
 const emit = defineEmits(['update:model-value'])
 const editor = useEditor({
-  extensions: [TiptapStarterKit],
+  extensions: [
+    Link.configure({
+      openOnClick: true,
+      autolink: true,
+      defaultProtocol: 'https',
+      linkOnPaste: true
+    }),
+    TiptapStarterKit,
+  ],
   onBlur: (event) => {
     console.log('event.editor.getText()', event.editor.getText())
     console.log('event.editor.getHTML()', event.editor.getHTML())

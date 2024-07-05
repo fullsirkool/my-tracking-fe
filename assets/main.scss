@@ -11,6 +11,7 @@
   background-size: cover !important;
   position: relative;
 }
+
 .custom-cover:after {
   content: '';
   display: block;
@@ -25,6 +26,10 @@
     rgba(0, 0, 0, 0.2)
   );
   border-radius: inherit;
+}
+
+.custom-content a {
+  color: rgb(var(--color-primary-600)) !important;
 }
 
 .slide-cover {
