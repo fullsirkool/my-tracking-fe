@@ -9,8 +9,11 @@
       >
         <div>
           <div class="p-4">
-            <h1 class="text-2xl font-semibold text-center">
+            <h1 v-if="!readonly" class="text-2xl font-semibold text-center">
               {{ $t('manual_create_tracklog') }}
+            </h1>
+            <h1 v-else class="text-2xl font-semibold text-center">
+              {{ $t('tracklog_detail') }}
             </h1>
           </div>
 
@@ -22,7 +25,7 @@
                 type="number"
               >
                 <template #trailing>
-                  <span class="text-gray-400 text-sm">{{ $t('m') }}</span>
+                  <span class="text-gray-400 text-sm">km(s)</span>
                 </template>
               </UInput>
             </UFormGroup>
@@ -34,7 +37,7 @@
                   :disabled="readonly"
                 ></CommonHourInput>
               </UFormGroup>
-              <UFormGroup :label="$t('start_at')" name="startDate">
+              <UFormGroup :label="$t('run_date')" name="startDate">
                 <UPopover :popper="{ placement: 'bottom-start' }" class="w-fit">
                   <UButton
                     variant="outline"
@@ -101,9 +104,8 @@ const props = withDefaults(defineProps<IActivityDetailCardProps>(), {
 })
 
 const schema = object({
-  distance: number()
-    .required(t('required_warning'))
-    .integer(t('number_field_required')),
+  distance: string()
+    .required(t('required_warning')).matches(/^\d+(?:[.,]\d+)?$/, t('number_field_required')),
   movingTime: string().required(t('required_warning')),
   startDate: date().required(t('required_warning')),
   file: mixed(),
@@ -130,8 +132,9 @@ const onSubmit = async (event: FormSubmitEvent<Schema>) => {
   console.log(event.data)
   const { distance, startDate, movingTime, file } = event.data
   const imageUrl = await uploadImgage(file)
+  const distanceDisplay = distance.replaceAll(',', '.')
   const payload = {
-    distance,
+    distance: Number(distanceDisplay) * 1000,
     startDate: startDate.toISOString(),
     movingTime,
     imageUrl,
@@ -181,7 +184,7 @@ watch(
         const second = movingTime - hour * 3600 - minute * 60
         const movingTimeStr = `${hour}:${minute}:${second}`
         state.value = {
-          distance,
+          distance: (distance / 1000).toFixed(1),
           movingTime: movingTimeStr,
           startDate: new Date(startDate),
           file: imageUrl,

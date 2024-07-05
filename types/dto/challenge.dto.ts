@@ -40,7 +40,9 @@ export interface CreateChallengeDto {
   description: string
 }
 
-export class PagingChallengeDto extends BasePagingDto {}
+export interface PagingChallengeDto extends BasePagingDto {  
+  availibility?: 'ENDED'|'NOT_ENDED'|''
+}
 
 export class PagingChallengeResponse extends BasePagingResponse<Challenge> {}
 

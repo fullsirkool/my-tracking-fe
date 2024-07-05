@@ -38,4 +38,9 @@ export interface PaymentQueryDto {
   size: number
   createdAt: string
   query: string
+  challengeId?: number
+}
+
+export interface PaymentFilter extends Pick <PaymentQueryDto, 'challengeId'|'query'> {
+  createdDate?: Date
 }

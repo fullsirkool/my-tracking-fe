@@ -87,7 +87,8 @@
   "information": "Information",
   "ticket_price": "Ticket price",
   "description": "Description",
-  "manual_create_tracklog": "Manual Create Tracklog",
+  "manual_create_tracklog": "Manual create activity",
+  "tracklog_detail": "Tracklog detail",
   "hour": "Hour",
   "minute": "Minute",
   "second": "Second",
@@ -123,7 +124,10 @@
   "max_pace_greater_than_min_pace": "Max pace must greater than min pace",
   "min_pace_greate_than_1km": "Min distance must greater than 1km",
   "min_distance_less_than_max": "Min distance must less than max distance",
+  "run_date": "Run date",
+  "top_challenge": "Top challenge",
   "completed_challenge": "Completed Challenge",
   "uncompleted_challenge": "Uncompleted Challenge",
-  "select_challenge": "Select Challenge"
+  "select_challenge": "Select Challenge",
+  "all": "All"
 }
