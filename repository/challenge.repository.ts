@@ -7,7 +7,7 @@ import {
   CreateChallengeDto,
   JoinChallengeResponse,
   ChallengeUserParam,
-  CheckedJoinChallengeResponse,
+  CheckedJoinChallengeResponse, PagingTopChallengeDto,
 } from './../types/dto/challenge.dto'
 import {BaseFetchResponse} from "~/types/dto/base.dto";
 
@@ -43,6 +43,17 @@ export default {
   ): Promise<PagingChallengeResponse | null> {
     const url = `${BASE_URL}/challenge`
     const { data } = await useFetch<PagingChallengeResponse>(url, {
+      method: 'get',
+      params,
+    })
+    return data.value
+  },
+
+  async findTop(
+      params: PagingTopChallengeDto,
+  ): Promise<Challenge[] | null> {
+    const url = `${BASE_URL}/challenge/top`
+    const { data } = await useFetch<Challenge[]>(url, {
       method: 'get',
       params,
     })

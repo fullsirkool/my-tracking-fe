@@ -23,7 +23,7 @@
             </div>
             <div class="mt-5 p-2 flex items-center justify-center">
               <UButton
-                v-if="!isJoinedChallenge"
+                v-if="!isEnded && !isJoinedChallenge"
                 size="xl"
                 @click="handleConfirmJoinChallenge"
               >
@@ -58,11 +58,12 @@ definePageMeta({
 
 const toast = useToast()
 const { t } = useI18n()
+const dayjs = useDayjs()
 
 const challengeStore = useChallengeStore()
 const { user } = useUserStore()
 const { fetchChallengeDetail, fetchChallengeUsers } = challengeStore
-const { image, challengeDetail } = storeToRefs(challengeStore)
+const { image, challengeDetail, endDate } = storeToRefs(challengeStore)
 const { params, fullPath } = useRoute()
 const { id } = params
 
@@ -91,6 +92,10 @@ await useAsyncData('challenge', async () => {
   console.log('😻 ~ awaituseAsyncData ~ checkJoined:', checkJoined)
 
   isJoinedChallenge.value = checkJoined?.joined || false
+})
+
+const isEnded = computed(() => {
+  return dayjs().isAfter(dayjs(endDate))
 })
 
 const handleConfirmJoinChallenge = async () => {

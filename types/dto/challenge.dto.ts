@@ -44,6 +44,8 @@ export interface PagingChallengeDto extends BasePagingDto {
   availibility?: 'ENDED'|'NOT_ENDED'|''
 }
 
+export class PagingTopChallengeDto extends BasePagingDto {}
+
 export class PagingChallengeResponse extends BasePagingResponse<Challenge> {}
 
 export interface ActivityStatistics {
