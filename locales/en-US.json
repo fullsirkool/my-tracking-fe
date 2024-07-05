@@ -71,7 +71,7 @@
   "process": "Process",
   "price": "Price",
   "payment": "Payment",
-  "search_by_keyword": "Search by keyword",
+  "search_by_username": "Search by user's name",
   "search_by_participant": "Search by participant",
   "created_date": "Created Date",
   "created_hour": "Created Hour",
@@ -130,5 +130,7 @@
   "completed_challenge": "Completed Challenge",
   "uncompleted_challenge": "Uncompleted Challenge",
   "select_challenge": "Select Challenge",
-  "all": "All"
+  "all": "All",
+  "no_payments": "No payments",
+  "signin_admin": "Signin Admin"
 }

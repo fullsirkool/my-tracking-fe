@@ -60,12 +60,12 @@ const startDateFormatted = computed(() => {
   if (!startDate) {
     return
   }
-  return dayjs(startDate).format('YYYY-MM-DD')
+  return dayjs(startDate).tz('Asia/Bangkok').format('YYYY-MM-DD')
 })
 const endDateFormatted = computed(() => {
   if (!endDate) {
     return
   }
-  return dayjs(endDate).subtract(1, 'days').format('YYYY-MM-DD')
+  return dayjs(endDate).tz('Asia/Bangkok').subtract(1, 'days').format('YYYY-MM-DD')
 })
 </script>

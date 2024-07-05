@@ -108,8 +108,8 @@ const getShareUrl = computed(() => {
 
 const getDisplayDate = computed(() => {
   const {startDate, endDate} = props.challenge
-  return `${dayjs(startDate).format('DD/MM/YYYY')} - ${dayjs(endDate).format(
-      'DD/MM/YYYY',
+  return `${dayjs(startDate).format('YYYY, DD MMMM ')} - ${dayjs(endDate).format(
+      'YYYY, DD MMMM ',
   )}`
 })
 

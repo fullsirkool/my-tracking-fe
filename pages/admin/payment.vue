@@ -67,6 +67,8 @@ const fetchPaymentList = async () => {
   }
 }
 
+const getEmptyTableStyle = computed(() => ({icon: 'i-heroicons-circle-stack-20-solid', label: t('no_payments')}))
+
 watch(
   () => pagination.page,
   () => fetchPaymentList(),
@@ -86,6 +88,7 @@ watch(filter, () => fetchPaymentList(), { deep: true })
       :rows="paymentList"
       :columns="columns"
       class="custom-table shadow rounded-xl bg-white hidden md:block"
+      :empty-state="getEmptyTableStyle"
     >
       <template #createdAt-data="{ row }">
         <div>

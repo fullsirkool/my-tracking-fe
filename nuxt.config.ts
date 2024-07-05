@@ -24,6 +24,11 @@ export default defineNuxtConfig({
     'nuxt-vuefire',
     "nuxt-tiptap-editor",
   ],
+  dayjs: {
+    locales: ['en', 'vi'], // List of supported locales
+    defaultLocale: 'vi',
+    plugins: ['utc', 'timezone']
+  },
   tiptap: {
     prefix: "Tiptap",
   },

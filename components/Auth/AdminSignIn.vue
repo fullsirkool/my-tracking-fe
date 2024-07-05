@@ -4,7 +4,7 @@
     <h2
       class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900"
     >
-      Sign in to your account
+      {{$t('signin_admin')}}
     </h2>
   </div>
   <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
@@ -17,7 +17,7 @@
       <UFormGroup name="username" size="lg">
         <template #label>
           <label class="text-md font-medium text-gray-900 leading-6">
-            Username
+            {{$t('username')}}
           </label>
         </template>
         <UInput
@@ -30,7 +30,7 @@
       <UFormGroup label="Password" name="password" size="lg">
         <template #label>
           <label class="text-md font-medium text-gray-900 leading-6">
-            Password
+            {{$t('password')}}
           </label>
         </template>
         <UInput
@@ -75,7 +75,7 @@
         block
         :loading="isLoading"
       >
-        Submit
+        {{$t('sign_in')}}
       </UButton>
     </UForm>
   </div>

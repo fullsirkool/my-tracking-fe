@@ -71,7 +71,7 @@
   "process": "Tiến độ",
   "price": "Số tiền",
   "payment": "Thanh toán",
-  "search_by_keyword": "Tìm kiếm bằng từ khoá",
+  "search_by_username": "Tìm kiếm theo tên vận động viên",
   "search_by_participant": "Tìm kiếm tên theo người tham gia",
   "created_date": "Ngày tạo",
   "created_hour": "Giờ tạo",
@@ -130,5 +130,7 @@
   "completed_challenge": "Thử thách đã hoàn thành",
   "uncompleted_challenge": "Thử thách chưa hoàn thành",
   "select_challenge": "Chọn Thử thách",
-  "all": "Tất cả"
+  "all": "Tất cả",
+  "no_payments": "Chưa có thanh toán nào",
+  "signin_admin": "Đăng nhập admin"
 }

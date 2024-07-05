@@ -160,11 +160,11 @@ watch(selectedChallengeOption, (newVal) => {
     <div class="flex-1 flex items-end gap-5 w-100">
       <div class="flex-1">
         <label class="text-sm font-semibold" for="query">
-          {{ t('search_by_keyword') }}
+          {{ t('search_by_username') }}
         </label>
         <UInput
           v-model="filterValue.query"
-          placeholder="Keyword"
+          :placeholder="$t('name')"
           name="query"
           @keydown="onKeydown"
         />
