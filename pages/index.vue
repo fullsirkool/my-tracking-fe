@@ -13,7 +13,7 @@
         </div>
       </div>
       <div class="h-fit sm:p-12 flex items-center justify-center">
-        <ChallengeCard :challenge="challenges[0]" :highlight="true"></ChallengeCard>
+        <ChallengeCard :challenge="highlightChallenge" :highlight="true"></ChallengeCard>
       </div>
     </div>
     <div>
@@ -35,7 +35,7 @@ definePageMeta({
 const {setTopChallenge} = useChallengeStore()
 
 localStorage.setItem('nuxt-color-mode', 'light')
-const highlightChallenge = ref()
+const highlightChallenge = ref<Challenge>()
 
 const {data} = await useAsyncData('challenge', async () => {
       const [topChallenges, newChallenge] = await Promise.all([
@@ -56,6 +56,6 @@ if (data.value?.topChallenges) {
   setTopChallenge(data.value.topChallenges[0])
 }
 if (data.value?.newChallenge) {
-  highlightChallenge.value = data.value?.newChallenge.data[0]
+  highlightChallenge.value = data.value.newChallenge.data[0]
 }
 </script>
