@@ -180,6 +180,13 @@
                   :placeholder="$t('description')"
               />
             </UFormGroup>
+            <UFormGroup
+                class="py-2"
+                :label="$t('description')"
+                name="tiketPrice"
+            >
+              <CommonTextEditor/>
+            </UFormGroup>
           </div>
           <div class="col-span-12 sm:col-span-4">
             <UFormGroup class="py-2" :label="$t('image_upload')" name="file" required>

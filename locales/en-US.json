@@ -123,5 +123,6 @@
   "min_pace_greate_than_1km": "Min distance must greater than 1km",
   "min_distance_less_than_max": "Min distance must less than max distance",
   "run_date": "Run date",
-  "top_challenge": "Top challenge"
+  "top_challenge": "Top challenge",
+  "new": "New"
 }

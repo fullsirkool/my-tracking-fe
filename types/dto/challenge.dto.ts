@@ -42,6 +42,8 @@ export interface CreateChallengeDto {
 
 export class PagingChallengeDto extends BasePagingDto {}
 
+export class PagingTopChallengeDto extends BasePagingDto {}
+
 export class PagingChallengeResponse extends BasePagingResponse<Challenge> {}
 
 export interface ActivityStatistics {

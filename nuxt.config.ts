@@ -22,7 +22,11 @@ export default defineNuxtConfig({
     'nuxt-icon',
     'vue3-carousel-nuxt',
     'nuxt-vuefire',
+    "nuxt-tiptap-editor",
   ],
+  tiptap: {
+    prefix: "Tiptap",
+  },
   colorMode: {
     preference: 'light',
   },
