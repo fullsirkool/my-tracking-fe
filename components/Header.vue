@@ -1,8 +1,8 @@
 <template>
   <nav
-    class="font-sans flex flex-col text-center sm:flex-row sm:text-left sm:justify-between sm:items-center bg-primary-600 sticky top-0 z-20 shadow w-full px-5 py-2"
+    class="font-sans flex text-center justify-center sm:flex-row sm:text-left lg:justify-between sm:items-center bg-primary-600 sticky top-0 z-20 shadow w-full px-5 py-2"
   >
-    <div class="mb-2 sm:mb-0">
+    <div class="mb-0 lg:mb-2">
       <UTooltip :text="$t('home')">
         <NuxtLink
           to="/"

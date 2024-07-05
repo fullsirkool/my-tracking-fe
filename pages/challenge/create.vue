@@ -184,7 +184,7 @@
           <div class="col-span-12 sm:col-span-4">
             <UFormGroup class="py-2" :label="$t('image_upload')" name="file" required>
               <!-- <input type="file" @change="(e) => handleSelectFile(e)"  /> -->
-              <CommonFileUpload v-model="state.file">
+              <CommonFileUpload v-model="state.file"/>
             </UFormGroup>
           </div>
 

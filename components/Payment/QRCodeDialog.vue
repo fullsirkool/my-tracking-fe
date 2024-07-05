@@ -51,7 +51,7 @@
           </a>
         </p>
       </div>
-      <div class="p-2 text-center text-lg">
+      <div class="p-2 text-center text-sm text-red-500">
         <p class="flex items-center justify-center">{{ $t('payment_wait') }}</p>
       </div>
       <div class="text-center pt-2 text-red-500">
