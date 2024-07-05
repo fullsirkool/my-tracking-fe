@@ -3,10 +3,11 @@
     <div class="mt-10">
       <UCard class="rounded-xl bg-[#f5f5f5] overflow-auto min-h-[300px]">
         <div>
-          <div
-            class="custom-cover rounded-xl h-[300px]"
-            :style="{ background: `url(${image})` }"
-          ></div>
+<!--          <div-->
+<!--            class="custom-cover rounded-xl min-h-[500px] h-fit"-->
+<!--            :style="{ background: `url(${image})` }"-->
+<!--          ></div>-->
+          <img :src="image">
           <div class="md:p-5 md:mt-5">
             <div class="text-left">
               <h1 class="text-4xl font-semibold mt-10 mb-5 md:mt-0">

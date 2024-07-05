@@ -252,18 +252,18 @@ const validate = (state: any): FormError[] => {
   if (state.target < 1) {
     errors.push({ path: 'target', message: t('target_warning') })
   }
-  if (state.startDate && state.endDate) {
-    if (!dayjs(state.endDate).isAfter(state.startDate, 'day')) {
-      errors.push({
-        path: 'startDate',
-        message: t('start_date_must_before_end_date'),
-      })
-      errors.push({
-        path: 'endDate',
-        message: t('end_date_must_after_start_date'),
-      })
-    }
-  }
+  // if (state.startDate && state.endDate) {
+  //   if (!dayjs(state.endDate).isAfter(state.startDate, 'day')) {
+  //     errors.push({
+  //       path: 'startDate',
+  //       message: t('start_date_must_before_end_date'),
+  //     })
+  //     errors.push({
+  //       path: 'endDate',
+  //       message: t('end_date_must_after_start_date'),
+  //     })
+  //   }
+  // }
 
   if (state.enableMinPace && state.enableMaxPace) {
     const [minHour, minMinute] = state.minPace.split(':')
