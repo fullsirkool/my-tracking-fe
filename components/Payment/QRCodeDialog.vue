@@ -1,5 +1,11 @@
 <template>
   <UModal v-model="props.isOpen" @close="handleClose">
+    <div class="relative pt-2">
+      <h3 class="text-base font-semibold leading-6 text-gray-900 dark:text-white text-xl text-center">
+        {{$t('payment_infor')}}
+      </h3>
+      <UButton color="gray" variant="ghost" icon="i-heroicons-x-mark-20-solid" class="-my-1 absolute right-2 top-2" @click="handleClose" />
+    </div>
     <div class="p-4">
       <div class="p-4">
         <img :src="paymentInfor.qrDataUrl"/>

@@ -132,5 +132,6 @@
   "select_challenge": "Chọn Thử thách",
   "all": "Tất cả",
   "no_payments": "Chưa có thanh toán nào",
-  "signin_admin": "Đăng nhập admin"
+  "signin_admin": "Đăng nhập admin",
+  "payment_infor": "Thông tin thanh toán"
 }

@@ -132,5 +132,6 @@
   "select_challenge": "Select Challenge",
   "all": "All",
   "no_payments": "No payments",
-  "signin_admin": "Signin Admin"
+  "signin_admin": "Signin Admin",
+  "payment_infor": "Payment information"
 }
