@@ -1,7 +1,8 @@
 <template>
   <div class="relative z-10" :class="customClass">
     <div v-if="highlight"
-         class="bg-red-500 px-4 py-1 absolute z-20 top-0 right-0 text-white flex items-center justify-center rounded-xl highlight-tag ">{{t('new')}}
+         class="bg-red-500 px-4 py-1 absolute z-20 top-0 right-0 text-white flex items-center justify-center rounded-xl highlight-tag ">
+      {{ t('new') }}
     </div>
     <UCard
         class="z-10 rounded-3xl bg-[#f5f5f5] text-[#4B4B4B] max-w-[500px] relative group hover:bg-primary-50 transition-all shadow-none hover:-translate-y-2 duration-300 hover:shadow-xl scale-90 hover:scale-100"
@@ -24,12 +25,15 @@
           <span class="text-sm">{{ getDisplayDate }}</span>
         </div>
         <div class="flex items-center justify-start gap-4">
-          <div class="w-full">
-            <NuxtLink
-                :to="`/challenge/${challenge.id}`"
-                class="font-bold text-xl hover:text-primary-500 transition-colors duration-300"
-            >{{ challenge.title }}
-            </NuxtLink>
+          <div>
+            <div class="h-[55px] line-clamp-2">
+              <NuxtLink
+                  :to="`/challenge/${challenge.id}`"
+                  class="font-bold text-xl hover:text-primary-500 transition-colors duration-300 "
+              >
+                {{ challenge.title }}
+              </NuxtLink>
+            </div>
             <div class="flex items-center justify-between">
               <NuxtLink
                   :to="`/challenge/${challenge.id}`"
