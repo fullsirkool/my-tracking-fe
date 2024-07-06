@@ -5,4 +5,5 @@ export type TPaymentInfor = {
   bankName: string
   ticketPrice: number
   paymentMessage: string
+  accountName: string
 }

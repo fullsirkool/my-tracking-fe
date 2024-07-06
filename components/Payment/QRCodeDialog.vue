@@ -6,12 +6,14 @@
       </h3>
       <UButton color="gray" variant="ghost" icon="i-heroicons-x-mark-20-solid" class="-my-1 absolute right-2 top-2" @click="handleClose" />
     </div>
-    <div class="p-4">
+    <div class="p-4 ">
       <div class="p-4">
         <img :src="paymentInfor.qrDataUrl"/>
       </div>
       <div class="text-center text-lg">
         <p class="flex items-center justify-center">{{ $t('bank_name') }}: {{ paymentInfor.bankName }}
+        </p>
+        <p class="flex items-center justify-center">{{ $t('account_name') }}: {{ paymentInfor.accountName }}
         </p>
         <p class="flex items-center justify-center">{{ $t('account_number') }}: {{ paymentInfor.accountNo }}
           <a

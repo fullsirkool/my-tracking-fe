@@ -40,8 +40,8 @@ export interface CreateChallengeDto {
   description: string
 }
 
-export interface PagingChallengeDto extends BasePagingDto {  
-  availibility?: 'ENDED'|'NOT_ENDED'|''
+export interface PagingChallengeDto extends BasePagingDto {
+  availibility?: 'ENDED' | 'NOT_ENDED' | ''
 }
 
 export class PagingTopChallengeDto extends BasePagingDto {}
@@ -98,6 +98,7 @@ export interface PaymentInfor {
   paymentCode: number
   accountNo: string
   bankName: string
+  accountName: string
   ticketPrice: number
   paymentMessage: string
 }

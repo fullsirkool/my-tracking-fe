@@ -133,5 +133,6 @@
   "all": "All",
   "no_payments": "No payments",
   "signin_admin": "Signin Admin",
-  "payment_infor": "Payment information"
+  "payment_infor": "Payment information",
+  "account_name": "Account name"
 }

@@ -74,6 +74,7 @@ const paymentInfor = ref<TPaymentInfor>({
   bankName: '',
   ticketPrice: 0,
   paymentMessage: '',
+  accountName: ''
 })
 const isConfirmingJoinChallenge = ref(false)
 const isJoinedChallenge = ref(false)
@@ -116,6 +117,7 @@ const handleConfirmJoinChallenge = async () => {
         paymentInfor.value.paymentCode = res.paymentInfor.paymentCode
         paymentInfor.value.accountNo = res.paymentInfor.accountNo
         paymentInfor.value.bankName = res.paymentInfor.bankName
+        paymentInfor.value.accountName = res.paymentInfor.accountName
         paymentInfor.value.ticketPrice = res.paymentInfor.ticketPrice
         paymentInfor.value.paymentMessage = res.paymentInfor.paymentMessage
         openQrDialog.value = true
