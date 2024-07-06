@@ -2,9 +2,13 @@
   <carousel wrap-around :autoplay="40000">
     <slide v-for="challenge in challenges" :key="challenge.id" class="relative">
       <div
-          class="slide-cover w-full object-cover rounded-xl h-1/2"
-          :style="{ background: `url(${challenge.image})` }"
-      />
+          class="slide-cover w-full"
+      >
+        <img
+            :src="challenge.image"
+            class="rounded-xl w-full max-h-[600px] object-cover opacity-90 group-hover:opacity-100 object-[50%_0%]"
+        />
+      </div>
       <div class="absolute bottom-0 left-0 p-10 w-full md:flex justify-between">
         <div class="text-left w-full md:w-1/2">
           <h1

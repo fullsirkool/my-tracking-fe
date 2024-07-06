@@ -15,7 +15,7 @@
       <div class="rounded-xl">
         <img
             :src="challenge.image"
-            class="rounded-xl h-[200px] w-full object-cover opacity-90 group-hover:opacity-100"
+            class="rounded-xl h-[200px] w-full object-cover opacity-90 group-hover:opacity-100 object-[50%_0%]"
         />
       </div>
       <div class="mt-4 text-left">
