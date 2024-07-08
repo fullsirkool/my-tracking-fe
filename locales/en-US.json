@@ -133,6 +133,10 @@
   "all": "All",
   "no_payments": "No payments",
   "signin_admin": "Signin Admin",
+<<<<<<< Updated upstream
   "payment_infor": "Payment information",
   "account_name": "Account name"
+=======
+  "image_upload_tracklog": "Tracklog image"
+>>>>>>> Stashed changes
 }

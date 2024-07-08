@@ -59,7 +59,7 @@
               </UFormGroup>
             </div>
             <div class="col-span-12 sm:col-span-4 p-2">
-              <UFormGroup class="py-2" :label="$t('image_upload')" name="file">
+              <UFormGroup class="py-2" :label="$t('image_upload_tracklog')" name="file">
                 <!-- <input type="file" @change="(e) => handleSelectFile(e)" :disabled="selectedStep.key === 'review'" /> -->
                 <CommonFileUpload
                   v-model="state.file"
