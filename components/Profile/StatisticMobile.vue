@@ -29,9 +29,9 @@ const state = reactive({
 
 <template>
   <UContainer
-    class="md:hidden flex gap-1 z-10 justify-between py-2.5 overflow-x-auto w-full"
+    class="md:hidden grid gap-1 z-10 justify-between py-2.5 overflow-x-auto w-full grid-cols-2"
   >
-    <div v-for="item in state" class="flex-col text-center text-slate-700">
+    <div v-for="item in state" class="grid-span-1 text-center text-slate-700">
       <div
         class="mx-auto text-xl text-primary-600 font-extrabold tracking-widest w-32 flex items-center justify-center"
       >
