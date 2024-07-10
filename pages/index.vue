@@ -13,7 +13,7 @@
         </div>
       </div>
       <div class="h-fit sm:p-12 flex items-center justify-center">
-        <ChallengeCard :challenge="highlightChallenge" :highlight="true"></ChallengeCard>
+        <ChallengeCard :challenge="highlightChallenge" :highlight="true" custom-class="min-w-[500px]"></ChallengeCard>
       </div>
     </div>
     <div>
