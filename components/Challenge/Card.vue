@@ -24,7 +24,7 @@
           <UIcon name="i-heroicons-calendar-days-solid"/>
           <span class="text-sm">{{ getDisplayDate }}</span>
         </div>
-        <div class="flex items-center justify-start gap-4">
+        <div class="">
           <div>
             <div class="h-[55px] line-clamp-2">
               <NuxtLink
