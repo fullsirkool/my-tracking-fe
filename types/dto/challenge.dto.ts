@@ -19,6 +19,12 @@ export type ChallengeDistanceType = {
   challengeId: number
 }
 
+export interface ChallengeGroup {
+  id: number
+  name: string
+  challengeId: number
+}
+
 export interface Challenge {
   id: number
   title: string
@@ -33,6 +39,7 @@ export interface Challenge {
   description: string
   ticketPrice: number
   challengeDistances: ChallengeDistanceType[]
+  challengeGroups: ChallengeGroup[]
 }
 
 export interface DistanceDto {

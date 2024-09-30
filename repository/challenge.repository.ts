@@ -106,7 +106,7 @@ export default {
     return data.value
   },
 
-  async join(id: number): Promise<JoinChallengeResponse | null> {
+  async join(id: number, payload: {groupId?: number}): Promise<JoinChallengeResponse | null> {
     const accessTokenCookie = useCookie('access-token')
     if (!accessTokenCookie.value) {
       navigateTo('/signin')
@@ -115,6 +115,7 @@ export default {
     const { data } = await useFetch<JoinChallengeResponse | null>(url, {
       method: 'post',
       headers: { Authorization: `Bearer ${accessTokenCookie.value}` },
+      body: payload
     })
     return data.value
   },

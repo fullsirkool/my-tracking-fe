@@ -122,7 +122,10 @@ const getChartSeries = computed(() => {
         return 0
       }
       const item = seriesData.shift()
-      return (item?.distance ?? 0 / 1000).toFixed(2)
+      if (item?.distance) {
+        return (item.distance / 1000).toFixed(2)
+      }
+      return 0
     },
   )
   return [

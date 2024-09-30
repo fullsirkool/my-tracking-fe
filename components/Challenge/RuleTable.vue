@@ -1,10 +1,6 @@
 <template>
   <div class="text-slate-700">
-    <div class="flex justify-between md:block mb-2.5">
-      <label>{{ $t('ticket_price') }}: </label>
-      <span v-if="ticketPrice">{{ `${number.format(ticketPrice)} VNĐ` }}</span>
-      <span v-else>{{ $t('free_to_join') }}</span>
-    </div>
+<!--      -->
     <div class="flex justify-between md:block mb-2.5">
       <label>{{ $t('start_date') }}: </label>
       <span>{{ startDateFormatted }}</span>
@@ -13,10 +9,10 @@
       <label>{{ $t('end_date') }}: </label>
       <span>{{ endDateFormatted }}</span>
     </div>
-    <div class="flex justify-between md:block mb-2.5">
-      <label>{{ $t('challenge_type') }}: </label>
-      <span>{{ $t(`${challengeType}`.toLowerCase()) }}</span>
-    </div>
+<!--    <div class="flex justify-between md:block mb-2.5">-->
+<!--      <label>{{ $t('challenge_type') }}: </label>-->
+<!--      <span>{{ $t(`${challengeType}`.toLowerCase()) }}</span>-->
+<!--    </div>-->
     <div v-if="minDistance" class="flex justify-between md:block mb-2.5">
       <label>{{ $t('min_distance') }}: </label>
       <span>{{ minDistanceFormatted }}</span>

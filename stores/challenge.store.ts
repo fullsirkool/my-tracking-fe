@@ -165,6 +165,10 @@ export const useChallengeStore = defineStore('challenge', () => {
 
   const challengeType = computed(() => challengeDetail.value?.challengeType)
 
+  const challengeGroups = computed(() => {
+    console.log('groupppppppp', challengeDetail.value)
+    return challengeDetail.value?.challengeGroups || []
+  })
   return {
     challengeId,
     challengeDetail,
@@ -191,6 +195,7 @@ export const useChallengeStore = defineStore('challenge', () => {
     ticketPrice,
     distances,
     challengeType,
+    challengeGroups,
     fetchChallengeDetail,
     fetchChallengeUsers,
     setTopChallenge,

@@ -3,10 +3,6 @@
     <div class="mt-10">
       <UCard class="rounded-xl bg-[#f5f5f5] overflow-auto min-h-[300px]">
         <div>
-<!--          <div-->
-<!--            class="custom-cover rounded-xl min-h-[500px] h-fit"-->
-<!--            :style="{ background: `url(${image})` }"-->
-<!--          ></div>-->
           <img :src="image">
           <div class="md:p-5 md:mt-5">
             <div class="text-left">
@@ -24,10 +20,11 @@
               <UButton
                 v-if="!isEnded && !isJoinedChallenge"
                 size="xl"
-                @click="handleConfirmJoinChallenge"
+                @click="handleJoinChallenge"
               >
                 {{ $t('join_challenge') }}
               </UButton>
+              <ChallengeSelectGroupDialog :model-value="isShowSelectGroupDialog" :groups="challengeDetail.challengeGroups" @select="handleSelectGroup"/>
             </div>
           </div>
         </div>
@@ -35,12 +32,6 @@
     </div>
     <ChallengeDetailTable></ChallengeDetailTable>
     <ChallengeProgressTable :id="id"></ChallengeProgressTable>
-    <PaymentQRCodeDialog
-      :is-open="openQrDialog"
-      :payment-infor="paymentInfor"
-      @complete="handleCompletePayment"
-      @close="handleClosePaymentDialog"
-    ></PaymentQRCodeDialog>
   </UContainer>
 </template>
 <script setup lang="ts">
@@ -61,23 +52,14 @@ const dayjs = useDayjs()
 
 const challengeStore = useChallengeStore()
 const { user } = useUserStore()
-const { fetchChallengeDetail, fetchChallengeUsers } = challengeStore
-const { image, challengeDetail, endDate } = storeToRefs(challengeStore)
+const { fetchChallengeDetail, fetchChallengeUsers, challengeGroups } = challengeStore
+const { image, challengeDetail, endDate} = storeToRefs(challengeStore)
 const { params, fullPath } = useRoute()
 const { id } = params
 
-const openQrDialog = ref<boolean>(false)
-const paymentInfor = ref<TPaymentInfor>({
-  qrDataUrl: '',
-  paymentCode: 0,
-  accountNo: '',
-  bankName: '',
-  ticketPrice: 0,
-  paymentMessage: '',
-  accountName: ''
-})
 const isConfirmingJoinChallenge = ref(false)
 const isJoinedChallenge = ref(false)
+const isShowSelectGroupDialog = ref(false)
 
 await useAsyncData('challenge', async () => {
   const [_a, _b, checkJoined] = await Promise.all([
@@ -98,30 +80,33 @@ const isEnded = computed(() => {
   return dayjs().isAfter(dayjs(endDate))
 })
 
-const handleConfirmJoinChallenge = async () => {
+const handleJoinChallenge = () => {
   if (isEmpty(user) || !user) {
     localStorage.setItem('saved-path', fullPath)
     navigateTo('/signin')
     return
   }
+  if (challengeDetail.value.challengeType) {
+    console.log('run there')
+    isShowSelectGroupDialog.value = true
+  } else {
+    handleConfirmJoinChallenge()
+  }
+}
+
+const handleSelectGroup = async (groupId: number) => {
+  await handleConfirmJoinChallenge(groupId)
+  isShowSelectGroupDialog.value = false
+}
+
+const handleConfirmJoinChallenge = async (groupId?: number) => {
   isConfirmingJoinChallenge.value = true
-  const res = await challengeRepository.join(+id)
+  const res = await challengeRepository.join(+id, {groupId})
   console.log('res', res)
   if (res) {
     const { status } = res
     isConfirmingJoinChallenge.value = false
     if (status === JoinChallengeStatus.WAITING) {
-      if (res.paymentInfor) {
-        console.log('here')
-        paymentInfor.value.qrDataUrl = res.paymentInfor.qrDataURL
-        paymentInfor.value.paymentCode = res.paymentInfor.paymentCode
-        paymentInfor.value.accountNo = res.paymentInfor.accountNo
-        paymentInfor.value.bankName = res.paymentInfor.bankName
-        paymentInfor.value.accountName = res.paymentInfor.accountName
-        paymentInfor.value.ticketPrice = res.paymentInfor.ticketPrice
-        paymentInfor.value.paymentMessage = res.paymentInfor.paymentMessage
-        openQrDialog.value = true
-      }
     } else if (status === JoinChallengeStatus.COMPLETED) {
       toast.add({
         id: 'copy-challenge',
