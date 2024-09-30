@@ -16,7 +16,8 @@
       <div class="flex items-center justify-end">
         <UPagination
           v-model="paging.page"
-          :total="challenges.length"
+          :page-count="paging.size"
+          :total="paging.totalElement"
           :active-button="{ class: 'bg-primary-500' }"
         />
       </div>
@@ -25,14 +26,16 @@
 </template>
 <script setup lang="ts">
 import challengeRepository from '~/repository/challenge.repository'
-import { Challenge, PagingChallengeDto } from '~/types/dto/challenge.dto'
+import type { Challenge, PagingChallengeDto } from '~/types/dto/challenge.dto'
 definePageMeta({
   middleware: ['authentication']
 })
 
-const paging = ref<PagingChallengeDto>({
+const paging = ref({
   page: 1,
   size: 9,
+  totalPages: 1,
+  totalElement: 0
 })
 const challenges = ref<Challenge[]>([])
 
@@ -40,6 +43,9 @@ const fetchChallenges = async () => {
   const res = await challengeRepository.find(paging.value)
   if (res) {
     challenges.value = res.data
+    paging.value.totalPages = res.totalPages
+    paging.value.totalElement = res.totalElement
+    console.log(paging.value)
   }
 }
 

@@ -5,13 +5,15 @@ export default defineNuxtConfig({
   pages: true,
   css: ['~/assets/main.scss'],
   components: { global: true, dirs: ['~/components'] },
+
   app: {
     head: {
       title: 'Warm Feet',
       charset: 'utf-8',
       viewport: 'width=device-width, initial-scale=1',
-    }
+    },
   },
+
   modules: [
     '@nuxt/ui',
     'dayjs-nuxt',
@@ -22,24 +24,29 @@ export default defineNuxtConfig({
     'nuxt-icon',
     'vue3-carousel-nuxt',
     'nuxt-vuefire',
-    "nuxt-tiptap-editor",
+    'nuxt-tiptap-editor',
   ],
+
   dayjs: {
     locales: ['en', 'vi'], // List of supported locales
     defaultLocale: 'vi',
-    plugins: ['utc', 'timezone']
+    plugins: ['utc', 'timezone'],
   },
+
   tiptap: {
-    prefix: "Tiptap",
+    prefix: 'Tiptap',
   },
+
   colorMode: {
     preference: 'light',
   },
+
   postcss: {
     plugins: {
       'postcss-custom-properties': false,
     },
   },
+
   i18n: {
     /* module options */
     langDir: 'locales',
@@ -60,6 +67,7 @@ export default defineNuxtConfig({
     ],
     defaultLocale: 'vi-VN',
   },
+
   vuefire: {
     auth: {
       enabled: true,
@@ -72,6 +80,7 @@ export default defineNuxtConfig({
       // there could be other properties depending on the project
     },
   },
+
   runtimeConfig: {
     public: {
       STRAVA_CLIENT_ID: process.env.STRAVA_CLIENT_ID,
@@ -80,6 +89,9 @@ export default defineNuxtConfig({
       BASE_URL: process.env.BASE_URL,
       BASE_REDIRECT_URL: process.env.BASE_REDIRECT_URL,
       STRAVA_REDIRECT_URL: process.env.STRAVA_REDIRECT_URL,
+      TIME_ZONE: process.env.TIME_ZONE,
     },
   },
+
+  compatibilityDate: '2024-07-16',
 })

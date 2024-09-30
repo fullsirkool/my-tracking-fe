@@ -18,16 +18,8 @@ import { useUserStore } from '../stores/user.store'
 import { useAdminStore } from '~/stores/admin.store'
 const userStore = useUserStore()
 const adminStore = useAdminStore()
-// const { user } = userStore
 
 const isOpenCompleteModal = ref(false)
-
-// TODO(An): check if it is needed
-// if (user && !user.email) {
-//   isOpenCompleteModal.value = true
-// }
-
-const user = computed(() => userStore.user || adminStore.user)
 </script>
 <style>
 .home-background {
@@ -40,8 +32,8 @@ const user = computed(() => userStore.user || adminStore.user)
   background-size: cover;
   background-color: rgb(255, 255, 255);
   background-position: center center;
-  opacity: 0.3;
+  opacity: 0.5;
   filter: blur(8px);
   -webkit-mask: linear-gradient(rgb(255, 255, 255), transparent);
 }
-</style>../stores/user.store
+</style>

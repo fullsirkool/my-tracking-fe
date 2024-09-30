@@ -9,18 +9,24 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
   const xAccessToken = useCookie('x-access-token')
   const xRefreshToken = useCookie('x-refresh-token')
 
-  const publicPaths = ['/profile/']
   const authUserPaths = ['/signin', '/signup']
   const authAdminPaths = ['/admin/signin']
-  const privateAdminPaths = [
-    '/admin/profile',
-    '/admin/payment',
-    '/challenge/create',
+  
+  const privateAdminRouteName = [
+    "admin-profile",
+    "admin-payment",
+    "admin-athletes",
+    "challenge-create",
+    "challenge-id-edit",
+    "article-create",
+    "article-id-edit"
   ]
-
-  const isSignedIn = computed(
-    () => adminStore.isSignedIn || userStore.isSignedIn,
-  )
+  
+  const privateUserRouteName = [
+    'challenge-id-register-group',
+    'challenge-id-register-individual',
+    'profile-id',
+  ]
 
   if (!userStore.user && (accessToken.value || refreshToken.value)) {
     console.log('has user refresh-token')
@@ -28,7 +34,6 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
   }
 
   if (!adminStore.user && (xAccessToken.value || xRefreshToken.value)) {
-    console.log('has admin refresh-token')
     await adminStore.refreshToken()
   }
 
@@ -36,15 +41,15 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     return navigateTo('/')
   }
 
-  if (userStore.user && to.fullPath === '/profile') {
-    return navigateTo('/profile/' + userStore.user.id)
+  if (!userStore.user && privateUserRouteName.includes(to.name as string)) {
+    return navigateTo('/')
   }
 
   if (adminStore.user && authAdminPaths.some((p) => to.fullPath.includes(p))) {
     return navigateTo('/')
   }
 
-  if (!adminStore.user && privateAdminPaths.some((p) => p === to.fullPath)) {
+  if (!adminStore.user && privateAdminRouteName.includes(to.name as string)) {
     return navigateTo('/')
   }
 })

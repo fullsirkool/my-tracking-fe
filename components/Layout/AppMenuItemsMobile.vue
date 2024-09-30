@@ -20,7 +20,7 @@ const logout = () => {
 
 <template>
   <div
-    class="items-center md:hidden fixed flex flex-col-reverse gap-3 left-3 bottom-3 z-50"
+    class="items-center lg:hidden fixed flex flex-col-reverse gap-3 left-3 bottom-3 z-50"
   >
     <UTooltip v-if="isAdmin" :text="$t('create_challenge')">
       <NuxtLink
@@ -48,6 +48,15 @@ const logout = () => {
       </NuxtLink>
     </UTooltip>
 
+    <UTooltip v-if="isAdmin" :text="$t('athletes')">
+      <NuxtLink
+        to="/admin/athletes"
+        class="text-2xl no-underline text-grey-darkest hover:text-blue-dark inline-flex items-center justify-center w-[45px] h-[45px] rounded-full text-slate-100 bg-primary-600 shadow-xl mx-2"
+      >
+        <Icon name="mdi:accounts-group-outline" class="relative" />
+      </NuxtLink>
+    </UTooltip>
+
     <template v-if="isUser">
       <UPopover class="inline-flex items-center">
         <NuxtLink
@@ -67,14 +76,11 @@ const logout = () => {
               class="inline-flex items-center px-4 py-2 gap-2 cursor-pointer hover:text-primary-600"
               to="/profile"
             >
-              <Icon
-                  name="heroicons:user"
-                  width="1.25rem"
-                  height="1.25rem"
-              />{{$t('view_profile')}}
+              <Icon name="heroicons:user" width="1.25rem" height="1.25rem" />
+              {{ $t('view_profile') }}
             </NuxtLink>
             <div class="border-b border-slate-100"></div>
-<!--            <CommonLanguageSwitcher></CommonLanguageSwitcher>-->
+
             <div class="border-b border-slate-100"></div>
             <NuxtLink
               class="inline-flex items-center px-4 py-2 gap-2 cursor-pointer hover:text-primary-600"
@@ -95,30 +101,13 @@ const logout = () => {
     <template v-else-if="isAdmin">
       <UPopover class="inline-flex items-center">
         <NuxtLink
-          class="text-lg text-grey-darkest hover:text-blue-dark ml-2 bg-transparent inline-flex items-center"
+          class="text-2lg text-grey-darkest hover:text-blue-dark bg-transparent inline-flex justify-center items-center bg-white text-primary-600 w-[45px] h-[45px] rounded-full shadow"
         >
-          <UAvatar
-            alt="Profile"
-            size="lg"
-            class="shadow-md"
-            :src="adminUser.username"
-          />
+          <Icon name="mdi:user" width="1.25rem" height="1.25rem" />
         </NuxtLink>
 
         <template #panel>
           <ul class="flex flex-col w-36">
-            <NuxtLink
-              class="inline-flex items-center px-4 py-2 gap-2 cursor-pointer hover:text-primary-600"
-              to="/admin/profile"
-            >
-              <Icon
-                  name="heroicons:user"
-                  width="1.25rem"
-                  height="1.25rem"
-              />{{$t('view_profile')}}
-            </NuxtLink>
-            <div class="border-b border-slate-100"></div>
-            <CommonLanguageSwitcher></CommonLanguageSwitcher>
             <div class="border-b border-slate-100"></div>
             <NuxtLink
               class="inline-flex items-center px-4 py-2 gap-2 cursor-pointer hover:text-primary-600"

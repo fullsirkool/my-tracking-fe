@@ -1,54 +1,39 @@
 <template>
-  <UContainer>
-    <div
-        class="grid grid-cols-1 lg:grid-cols-2 items-center item py-[50px] lg:pb-[200px]"
-    >
-      <div class="h-fit text-center lg:text-left">
-        <div class="font-bold text-4xl lg:text-6xl">
-          Race4self - Live4all
-        </div>
-        <div class="text-h5 my-6 text-xl lg:text-2xl">
-          Compete with others in the running challenges to become a better
-          version of yourself
-        </div>
-      </div>
-      <div class="h-fit sm:p-12 flex items-center justify-center">
-        <ChallengeCard :challenge="highlightChallenge" :highlight="true" custom-class="min-w-[500px]"></ChallengeCard>
-      </div>
+  <div>
+    <div class="mb-10">
+      <HomeImageSlider :challenges="highlightChallenge"/>
     </div>
     <div>
-      <p class="text-center font-bold text-4xl m-8">{{ $t('top_challenge') }}</p>
-      <ChallengeImageSlider :challenges="challenges"></ChallengeImageSlider>
+      <HomeChallengeList :challenges="challenges"/>
     </div>
-  </UContainer>
+  </div>
 </template>
 <script setup lang="ts">
 import challengeRepository from '~/repository/challenge.repository'
-import {Challenge} from '~/types/dto/challenge.dto'
-import {useChallengeStore} from '~/stores/challenge.store'
+import { type Challenge } from '~/types/dto/challenge.dto'
+import { useChallengeStore } from '~/stores/challenge.store'
 
 definePageMeta({
   layout: 'home',
-  middleware: ['authentication'],
+  middleware: ['authentication']
 })
 
-const {setTopChallenge} = useChallengeStore()
+const { setTopChallenge } = useChallengeStore()
 
 localStorage.setItem('nuxt-color-mode', 'light')
-const highlightChallenge = ref<Challenge>()
+const highlightChallenge = ref<Challenge[]>([])
 
-const {data} = await useAsyncData('challenge', async () => {
-      const [topChallenges, newChallenge] = await Promise.all([
-        challengeRepository.findTop({size: 4, page: 1}),
-        challengeRepository.find({page: 1, size: 1})
-      ])
+const { data } = await useAsyncData('challenge', async () => {
+  const [topChallenges, newChallenge] = await Promise.all([
+    challengeRepository.findTop({ size: 3, page: 1 }),
+    challengeRepository.find({ page: 1, size: 5 }),
+  ])
 
-      return {
-        topChallenges,
-        newChallenge
-      }
-    }
-)
+  return {
+    topChallenges,
+    newChallenge
+  }
+})
 
 const challenges = ref<Challenge[]>([])
 if (data.value?.topChallenges) {
@@ -56,6 +41,7 @@ if (data.value?.topChallenges) {
   setTopChallenge(data.value.topChallenges[0])
 }
 if (data.value?.newChallenge) {
-  highlightChallenge.value = data.value.newChallenge.data[0]
+  console.log(data.value?.newChallenge)
+  highlightChallenge.value = data.value.newChallenge.data
 }
 </script>

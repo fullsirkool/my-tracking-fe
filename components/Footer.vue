@@ -1,4 +1,4 @@
 <template>
-  <div style="height: 150px"></div>
+  <div></div>
 </template>
 <script setup></script>

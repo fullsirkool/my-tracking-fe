@@ -1,4 +1,8 @@
-import { BasePagingDto } from './base.dto'
+export enum PaymentStatus {
+  PENDING = 'PENDING',
+  COMPLETED = 'COMPLETED',
+  REJECTED = 'REJECTED'
+}
 
 interface IChallenge {
   id: number
@@ -25,12 +29,13 @@ export interface PaymentDto {
   userId: number
   challengeId: number
   amount: number
-  isCompleted: boolean
+  status: PaymentStatus
   paymentType: string
   createdAt: Date
   completedAt: Date
   challenge: IChallenge
   user: IUser
+  _count?: any
 }
 
 export interface PaymentQueryDto {
@@ -41,6 +46,16 @@ export interface PaymentQueryDto {
   challengeId?: number
 }
 
-export interface PaymentFilter extends Pick <PaymentQueryDto, 'challengeId'|'query'> {
+export interface PaymentFilter extends Pick <PaymentQueryDto, 'challengeId' | 'query'> {
   createdDate?: Date
+}
+
+export enum PaymentStatusDto {
+  REJECT = 'REJECT',
+  COMPLETE = 'COMPLETE'
+}
+
+export interface UpdatePaymentStatus {
+  paymentId: number;
+  status: PaymentStatusDto
 }

@@ -45,8 +45,14 @@
           </h3>
         </div>
         <div v-if="isProfileOwner" class="p-4">
-          <UButton @click="handleOpenManualCreateDialog">{{ $t('manual_create_tracklog') }}</UButton>
-          <ActivityManualCreateDialog :is-open="isOpenManualDialog" @complete="handleCompleteCreateAcvitiy" @close="handleCloseManualCreateActivityDialog"/>
+          <UButton @click="handleOpenManualCreateDialog">{{
+            $t('manual_create_tracklog')
+          }}</UButton>
+          <ActivityManualCreateDialog
+            :is-open="isOpenManualDialog"
+            @complete="handleCompleteCreateAcvitiy"
+            @close="handleCloseManualCreateActivityDialog"
+          />
         </div>
       </div>
     </div>
@@ -59,21 +65,18 @@
     />
     <div class="grid grid-cols-1 lg:grid-cols-3 md:gap-4 gap-y-4 mt-10">
       <div class="col-span-2">
-        <ProfileSelfActivity/>
+        <ProfileSelfActivity />
       </div>
       <div class="col-span-1">
-        <ProfileActivityCalendar/>
+        <ProfileActivityCalendar />
       </div>
     </div>
     <div class="mt-24 text-center">
-      <ProfileDetailTable/>
+      <ProfileDetailTable />
     </div>
   </UContainer>
 </template>
 <script setup>
-definePageMeta({
-  middleware: ['authentication'],
-})
 import { storeToRefs } from 'pinia'
 import activityRepository from '~/repository/activity.repository'
 import { useProfileStore } from '~/stores/profile.store'
@@ -81,6 +84,10 @@ import { useUserStore } from '~/stores/user.store'
 import bgImage0 from '~/assets/bg-0.avif'
 import bgImage1 from '~/assets/bg-1.avif'
 import bgImage2 from '~/assets/bg-2.avif'
+
+definePageMeta({
+  middleware: ['authentication'],
+})
 
 const profileStore = useProfileStore()
 const {
@@ -103,7 +110,7 @@ const { data } = await useAsyncData('profile', async () => {
       fetchDailyActivityStatistics(),
       activityRepository.fetchStatistics(id),
       fetchMonthlyActivitiesDetail(id),
-      fetchJoinedChallenge({page: 1})
+      fetchJoinedChallenge({ page: 1 }),
     ])
 
   return {
@@ -140,11 +147,7 @@ const showConnectStravaButton = computed(() => {
   if (user.value.stravaId) {
     return false
   }
-  const currentUser = userStore.user
-  if (!currentUser || currentUser.id !== user.value.id) {
-    return false
-  }
-  return true
+  return isProfileOwner.value
 })
 
 const isProfileOwner = computed(() => {

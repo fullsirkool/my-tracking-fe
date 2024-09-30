@@ -1,10 +1,10 @@
 <template>
   <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-    <img src="~/assets/logo.png" class="mx-auto h-20 w-auto"/>
+    <img src="~/assets/logo.png" class="mx-auto h-20 w-auto" />
     <h2
       class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900"
     >
-      {{$t('signin_admin')}}
+      {{ $t('signin_admin') }}
     </h2>
   </div>
   <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
@@ -17,7 +17,7 @@
       <UFormGroup name="username" size="lg">
         <template #label>
           <label class="text-md font-medium text-gray-900 leading-6">
-            {{$t('username')}}
+            {{ $t('username') }}
           </label>
         </template>
         <UInput
@@ -30,7 +30,7 @@
       <UFormGroup label="Password" name="password" size="lg">
         <template #label>
           <label class="text-md font-medium text-gray-900 leading-6">
-            {{$t('password')}}
+            {{ $t('password') }}
           </label>
         </template>
         <UInput
@@ -75,38 +75,33 @@
         block
         :loading="isLoading"
       >
-        {{$t('sign_in')}}
+        {{ $t('sign_in') }}
       </UButton>
     </UForm>
   </div>
 </template>
 
 <script setup lang="ts">
-import type { FormError, FormSubmitEvent } from '#ui/types'
+import type { FormError } from '#ui/types'
 import { useAdminStore } from '~/stores/admin.store'
-import { useAlertStore } from '~/stores/alert.store'
 import { useUserStore } from '~/stores/user.store'
 
-const dayjs = useDayjs()
-const router = useRouter()
 const toast = useToast()
 const adminStore = useAdminStore()
 const userStore = useUserStore()
-const accessTokenExpireTime = dayjs(new Date()).add(2, 'day').toDate()
-const refreshTokenExpireTime = dayjs(new Date()).add(1, 'week').toDate()
 
 const accessTokenCookie = useCookie('x-access-token', {
-  expires: accessTokenExpireTime,
+  maxAge: 60 * 60 * 24 * 2
 })
 const refreshTokenCookie = useCookie('x-refresh-token', {
-  expires: refreshTokenExpireTime,
+  maxAge: 60 * 60 * 24 * 7
 })
 
 const isShowPassword = ref(false)
 const isLoading = ref(false)
 const formState = reactive({
   username: '',
-  password: '',
+  password: ''
 })
 
 const onSubmit = async () => {
@@ -118,21 +113,22 @@ const onSubmit = async () => {
         title: 'Error',
         color: 'red',
         description: 'Invalid username or password',
-        timeout: 2000,
+        timeout: 2000
       })
       return
     }
-
+    
     accessTokenCookie.value = response.data?.accessToken
     refreshTokenCookie.value = response.data?.refreshToken
+    
     userStore.logout()
-    router.push('/')
     toast.add({
       title: 'Success',
       color: 'green',
       description: 'Login successful',
-      timeout: 2000,
+      timeout: 2000
     })
+    navigateTo("/")
   } catch (error: any) {
     console.error(error)
   }

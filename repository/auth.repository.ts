@@ -1,12 +1,15 @@
-import {
+import type {
   AuthResponseDto,
   RenewDto,
   SignInDto,
   SignInGoogleDto,
   SignUpDto,
 } from './../types/dto/auth.dto'
-import { BaseCreateResponse, BaseFetchResponse } from '~/types/dto/base.dto'
-import { UserClaims } from '~/types/dto/user.dto'
+import type {
+  BaseCreateResponse,
+  BaseFetchResponse,
+} from '~/types/dto/base.dto'
+import type { UserClaims } from '~/types/dto/user.dto'
 
 const runtimeConfig = useRuntimeConfig()
 const { BASE_URL } = runtimeConfig.public
@@ -121,7 +124,7 @@ export default {
 
     return {
       data: data.value,
-      error: error.value?.data
+      error: error.value?.data,
     }
   },
 }

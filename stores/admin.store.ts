@@ -2,28 +2,21 @@ import { defineStore } from 'pinia'
 // import authRepository from '~/repository/auth.repository'
 import authAdminRepository from '~/repository/authAdmin.repository'
 // import { UserClaims } from '~/types/dto/user.dto'
-import { AdminInfoDto } from '~/types/dto/admin.dto'
-import { SignInAdminDto } from '~/types/dto/auth.dto'
+import type { AdminInfoDto } from '~/types/dto/admin.dto'
+import type { SignInAdminDto } from '~/types/dto/auth.dto'
 
 export const useAdminStore = defineStore('admin', () => {
   const user = ref<AdminInfoDto | null>(null)
 
   const setUser = (adminInfo: AdminInfoDto) => (user.value = adminInfo)
 
-  const accessTokenCookie = useCookie('x-access-token', {
-    maxAge: 60 * 60 * 24 * 2,
-  })
-  const refreshTokenCookie = useCookie('x-refresh-token', {
-    maxAge: 60 * 60 * 24 * 7,
-  })
-
-  const login = async (payload: SignInAdminDto) => {
-    const data = await authAdminRepository.signIn(payload)
-
-    return data
+  const login = (payload: SignInAdminDto) => {
+    return authAdminRepository.signIn(payload)
   }
 
   const logout = () => {
+    const accessTokenCookie = useCookie('x-access-token')
+    const refreshTokenCookie = useCookie('x-refresh-token')
     accessTokenCookie.value = null
     refreshTokenCookie.value = null
     user.value = null
@@ -31,11 +24,12 @@ export const useAdminStore = defineStore('admin', () => {
 
   const fetchUserInfo = async () => {
     const response = await authAdminRepository.fetchInfo()
-    console.log('fetchUserInfo > admin', response.data)
     response.data && setUser(response.data)
   }
 
   const refreshToken = async () => {
+    const accessTokenCookie = useCookie('x-access-token')
+    const refreshTokenCookie = useCookie('x-refresh-token')
     try {
       if (!refreshTokenCookie.value) throw new Error('No refresh token found')
 

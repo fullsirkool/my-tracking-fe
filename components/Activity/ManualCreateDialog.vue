@@ -59,13 +59,18 @@
               </UFormGroup>
             </div>
             <div class="col-span-12 sm:col-span-4 p-2">
-              <UFormGroup class="py-2" :label="$t('image_upload_tracklog')" name="file">
+              <UFormGroup
+                class="py-2"
+                :label="$t('image_upload_tracklog')"
+                name="file"
+              >
                 <!-- <input type="file" @change="(e) => handleSelectFile(e)" :disabled="selectedStep.key === 'review'" /> -->
                 <CommonFileUpload
                   v-model="state.file"
                   :height="500"
                   :default-image="state.file"
                   :readonly="readonly"
+                  class="w-full"
                 ></CommonFileUpload>
               </UFormGroup>
             </div>
@@ -81,13 +86,13 @@
   </div>
 </template>
 <script setup lang="ts">
-import { FormSubmitEvent } from '@nuxt/ui/dist/runtime/types'
+import type { FormSubmitEvent } from '#ui/types'
 import { date, type InferType, mixed, number, object, string } from 'yup'
 import dayjs from 'dayjs'
 import fileRepository from '~/repository/file.repository'
 import { FileType } from '~/types/enum/file.enum'
 import activityRepository from '~/repository/activity.repository'
-import { ActivityDetail } from '~/types/dto/activity.dto'
+import { type ActivityDetail } from '~/types/dto/activity.dto'
 
 const { t } = useI18n()
 const toast = useToast()
@@ -95,7 +100,7 @@ const emit = defineEmits(['complete', 'close'])
 
 interface IActivityDetailCardProps {
   activity?: ActivityDetail
-  readonly: boolean
+  readonly?: boolean
   isOpen: boolean
 }
 
@@ -106,7 +111,8 @@ const props = withDefaults(defineProps<IActivityDetailCardProps>(), {
 
 const schema = object({
   distance: string()
-    .required(t('required_warning')).matches(/^\d+(?:[.,]\d+)?$/, t('number_field_required')),
+    .required(t('required_warning'))
+    .matches(/^\d+(?:[.,]\d+)?$/, t('number_field_required')),
   movingTime: string().required(t('required_warning')),
   startDate: date().required(t('required_warning')),
   file: mixed(),
@@ -114,7 +120,12 @@ const schema = object({
 
 type Schema = InferType<typeof schema>
 
-const state = ref({
+const state = ref<{
+  distance: number
+  movingTime: string
+  startDate: Date
+  file: undefined | string
+}>({
   distance: 0,
   movingTime: '00:00:00',
   startDate: new Date(),
@@ -185,7 +196,7 @@ watch(
         const second = movingTime - hour * 3600 - minute * 60
         const movingTimeStr = `${hour}:${minute}:${second}`
         state.value = {
-          distance: (distance / 1000).toFixed(1),
+          distance: +(distance / 1000).toFixed(1),
           movingTime: movingTimeStr,
           startDate: new Date(startDate),
           file: imageUrl,

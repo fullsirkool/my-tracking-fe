@@ -14,8 +14,8 @@
       <span>{{ endDateFormatted }}</span>
     </div>
     <div class="flex justify-between md:block mb-2.5">
-      <label>{{ $t('target') }}: </label>
-      <span>{{ targetFormatted }}</span>
+      <label>{{ $t('challenge_type') }}: </label>
+      <span>{{ $t(`${challengeType}`.toLowerCase()) }}</span>
     </div>
     <div v-if="minDistance" class="flex justify-between md:block mb-2.5">
       <label>{{ $t('min_distance') }}: </label>
@@ -33,7 +33,7 @@
       <label>{{ $t('max_pace') }}: </label>
       <span>{{ maxPaceFormatted }}</span>
     </div>
-    <i class="text-sm">
+    <i v-if="maxPace || minPace" class="text-sm">
       *{{ $t('min_pace_and_max_pace_will_be_applied_to_every_single_km') }}
     </i>
   </div>
@@ -54,18 +54,19 @@ const {
   maxPaceFormatted,
   startDate,
   endDate,
-  ticketPrice
+  ticketPrice,
+  challengeType
 } = useChallengeStore()
 const startDateFormatted = computed(() => {
   if (!startDate) {
     return
   }
-  return dayjs(startDate).tz('Asia/Bangkok').format('YYYY-MM-DD')
+  return dayjs(startDate).tz('Asia/Bangkok').format('HH:mm, DD MMMM YYYY')
 })
 const endDateFormatted = computed(() => {
   if (!endDate) {
     return
   }
-  return dayjs(endDate).tz('Asia/Bangkok').subtract(1, 'days').format('YYYY-MM-DD')
+  return dayjs(endDate).tz('Asia/Bangkok').format('HH:mm, DD MMMM YYYY')
 })
 </script>

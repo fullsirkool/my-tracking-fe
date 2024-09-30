@@ -14,7 +14,7 @@ defineProps<{
     <div
       class="shadow rounded-full flex items-center justify-center flex-col text-center p-3 justfiy-center w-32 h-32 border bg-white border-none text-gray-700"
     >
-      <p class="text-red-500 text-4xl font-extrabold">
+      <p class="text-primary-500 text-4xl font-extrabold">
         {{ distance }}
       </p>
 
@@ -23,7 +23,7 @@ defineProps<{
     <div
       class="shadow rounded-full flex items-center justify-center flex-col text-center p-3 justfiy-center w-32 h-32 border bg-white border-none text-gray-700"
     >
-      <p class="text-red-500 text-4xl font-extrabold">
+      <p class="text-primary-500 text-4xl font-extrabold">
         {{ pace }}
       </p>
       {{ $t('pace') }}
@@ -31,13 +31,13 @@ defineProps<{
     <div
       class="shadow rounded-full flex items-center justify-center flex-col text-center p-3 justfiy-center w-32 h-32 border bg-white border-none text-gray-700"
     >
-      <p class="text-red-500 text-4xl font-extrabold">{{ activity }}</p>
+      <p class="text-primary-500 text-4xl font-extrabold">{{ activity }}</p>
       {{ $t('activities') }}
     </div>
     <div
       class="shadow rounded-full flex items-center justify-center flex-col text-center p-3 justfiy-center w-32 h-32 border bg-white border-none text-gray-700"
     >
-      <p class="text-red-500 text-4xl font-extrabold">
+      <p class="text-primary-500 text-4xl font-extrabold">
         {{ time }}
       </p>
       {{ $t('time') }}

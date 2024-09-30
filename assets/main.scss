@@ -33,10 +33,17 @@
 }
 
 .slide-cover {
-  min-height: 60vh;
   background-position: center center !important;
   background-size: cover !important;
   position: relative;
+
+  @media (min-width: 768px) {
+    min-height: 60vh;
+  }
+
+  @media (max-width: 768px) {
+    height: 50vw;
+  }
 }
 
 .slide-cover:after {
@@ -53,4 +60,49 @@
     rgba(0, 0, 0, 1)
   );
   border-radius: inherit;
+}
+
+label.required {
+  &:after {
+    content: '*';
+    color: red;
+    display: inline-block;
+    position: relative;
+    right: -3px;
+  }
+}
+
+.latest-challenge {
+  background: rgb(var(--color-primary-600));
+
+  &::before {
+    height: inherit;
+    width: inherit;
+    background: rgb(var(--color-primary-600));
+    content: '';
+    position: absolute;
+    transform: rotate(30deg);
+  }
+
+  &::after {
+    height: inherit;
+    width: inherit;
+    background: rgb(var(--color-primary-600));
+    content: '';
+    position: absolute;
+    transform: rotate(-30deg);
+  }
+}
+
+@media (max-width: 525px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+.u-modal {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }

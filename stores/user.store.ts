@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import authRepository from '~/repository/auth.repository'
 import userRepository from '~/repository/user.repository'
-import { UserClaims } from '~/types/dto/user.dto'
+import type { UserClaims } from '~/types/dto/user.dto'
 
 export const useUserStore = defineStore('user', () => {
   const user = ref<UserClaims | null>(null)
@@ -50,7 +50,10 @@ export const useUserStore = defineStore('user', () => {
 
   const isSignedIn = computed(() => !!user.value)
 
+  const userId = computed(() => user.value?.id)
+
   return {
+    userId,
     user: readonly(user),
     setUser,
     logout,

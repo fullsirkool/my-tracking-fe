@@ -1,5 +1,5 @@
 <template>
-  <VDatePicker v-model="date" :attributes="attrs" :max-date="maxDate">
+  <VDatePicker v-model="date" :attributes="attrs" mode="dateTime" :timezone="timezone" :max-date="maxDate" :time-accuracy="2">
     <template v-if="$slots.header" #header>
       <slot name="header"></slot>
     </template>
@@ -24,6 +24,10 @@ const props = defineProps({
   },
 })
 const emit = defineEmits(['update:model-value', 'close'])
+
+const runtimeConfig = useRuntimeConfig()
+const { TIME_ZONE } = runtimeConfig.public
+
 const attrs = ref([
   {
     key: 'today',
@@ -34,6 +38,7 @@ const attrs = ref([
     dates: new Date(),
   },
 ])
+const timezone = ref(TIME_ZONE)
 const date = computed({
   get: () => props.modelValue,
   set: (value) => {
@@ -43,3 +48,18 @@ const date = computed({
   },
 })
 </script>
+<style>
+.vc-base-select select {
+  width: 70px
+}
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  background: #D6DADE;
+  width: 8px;
+  padding-right: 8px;
+}
+</style>

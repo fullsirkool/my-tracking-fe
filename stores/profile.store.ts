@@ -1,14 +1,14 @@
 import { defineStore } from 'pinia'
 import activityRepository from '~/repository/activity.repository'
 import userRepository from '~/repository/user.repository'
-import { ActivityDto, ActivityDetail } from '~/types/dto/activity.dto'
-import { UserClaims } from '~/types/dto/user.dto'
-import { Challenge } from '~/types/dto/challenge.dto'
+import type { ActivityDto, ActivityDetail } from '~/types/dto/activity.dto'
+import type { UserClaims } from '~/types/dto/user.dto'
+import type { Challenge } from '~/types/dto/challenge.dto'
 import challengeRepository from '~/repository/challenge.repository'
 
 export const useProfileStore = defineStore('profile', () => {
   const chartDate = ref(new Date())
-  const activities = ref<ActivityDto[] | null>([])
+  const activities = ref<ActivityDto[]>([])
 
   const userId = ref<string>('')
   const user = ref<UserClaims | null>(null)
@@ -24,7 +24,6 @@ export const useProfileStore = defineStore('profile', () => {
   const joinedChallengePageSize = ref(9)
   const totalJoinedChallenge = ref(1)
   const totalJoinedChallengePage = ref(0)
-
 
   const fetchJoinedChallenge = async (params: { page?: number }) => {
     try {
@@ -78,7 +77,7 @@ export const useProfileStore = defineStore('profile', () => {
         date: chartDate.value.toISOString(),
         id: userId.value,
       })
-      activities.value = data
+      activities.value = data ?? []
     } catch (error) {}
   }
 

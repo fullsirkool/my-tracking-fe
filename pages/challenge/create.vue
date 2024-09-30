@@ -1,6 +1,8 @@
 <template>
   <UContainer>
-    <h1 class="font-semibold text-2xl">{{ $t('create_challenge') }}</h1>
+    <h1 class="font-semibold text-2xl text-center my-5">
+      {{ $t('create_challenge') }}
+    </h1>
     <div class="grid grid-cols-12">
       <div class="col-span-2 hidden sm:block"></div>
       <UForm
@@ -19,17 +21,57 @@
             >
               <UInput v-model="state.title" />
             </UFormGroup>
-            <UFormGroup
-              class="py-2"
-              :label="$t('target')"
-              name="target"
-              required
-            >
-              <UInput v-model="state.target" type="number">
-                <template #trailing>
-                  <span class="text-gray-400 text-sm">km(s)</span>
-                </template>
-              </UInput>
+            <UFormGroup class="py-2" name="target" required>
+              <div class="flex flex-col gap-2">
+                <div
+                  v-for="(value, index) in state.targets"
+                  class="flex gap-2 items-center"
+                >
+                  <div>
+                    <div v-if="index === 0" class="text-gray-700 text-sm font-medium mb-0.5">{{ $t('distance') }}</div>
+                    <UInput
+                      v-model="state.targets[index].distance"
+                      type="number"
+                      :placeholder="$t('distance')"
+                    >
+                      <template #trailing>
+                        <span class="text-gray-400 text-sm">km(s)</span>
+                      </template>
+                    </UInput>
+                  </div>
+                  <div>
+                    <div v-if="index === 0" class="text-gray-700 text-sm font-medium mb-0.5">{{ $t('ticket_quantity') }}</div>
+                    <UInput
+                      v-model="state.targets[index].quantity"
+                      type="number"
+                      :placeholder="$t('ticket_quantity')"
+                    />
+                  </div>
+                  <div class="self-end mb-0.5">
+                    <UButton
+                      icon="i-heroicons-plus"
+                      size="2xs"
+                      color="primary"
+                      square
+                      variant="outline"
+                      @click="handleAddTarget(index)"
+                    />
+                  </div>
+                  <div v-if="index != 0" class="self-end mb-0.5">
+                    <UButton
+                      icon="i-heroicons-trash"
+                      size="2xs"
+                      color="primary"
+                      square
+                      variant="outline"
+                      @click="handleRemoveTarget(index)"
+                    />
+                  </div>
+                </div>
+              </div>
+            </UFormGroup>
+            <UFormGroup class="py-2" :label="$t('location')" name="location">
+              <UInput v-model="state.location" />
             </UFormGroup>
             <UFormGroup
               class="py-2"
@@ -42,75 +84,17 @@
                 </template>
               </UInput>
             </UFormGroup>
-            <UFormGroup name="pace">
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-4 py-2">
-                <div>
-                  <label for="" class="font-medium text-gray-700 text-sm">{{
-                    $t('min_pace')
-                  }}</label>
-                  <div class="flex gap-2 items-center">
-                    <CommonMinuteInput
-                      v-model="state.minPace"
-                      :disabled="!state.enableMinPace"
-                    ></CommonMinuteInput>
-                    <UCheckbox v-model="state.enableMinPace" />
-                  </div>
-                </div>
-                <div>
-                  <label for="" class="font-medium text-gray-700 text-sm">{{
-                    $t('max_pace')
-                  }}</label>
-                  <div class="flex gap-2 items-center">
-                    <CommonMinuteInput
-                      v-model="state.maxPace"
-                      :disabled="!state.enableMaxPace"
-                    ></CommonMinuteInput>
-                    <UCheckbox v-model="state.enableMaxPace" />
-                  </div>
-                </div>
-              </div>
+            <UFormGroup
+              class="py-2"
+              :label="$t('challenge_type')"
+              name="challengeType"
+            >
+              <URadioGroup
+                v-model="state.challengeType"
+                :options="challengeTypeOptions"
+              />
             </UFormGroup>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <UFormGroup
-                class="py-2"
-                :label="$t('min_distance')"
-                name="minDistance"
-              >
-                <div class="flex gap-2 items-center">
-                  <UInput
-                    v-model="state.minDistance"
-                    name="input"
-                    placeholder="Min Distance"
-                    :disabled="!state.enableMinDistance"
-                  >
-                    <template #trailing>
-                      <span class="text-gray-400 text-sm">km(s)</span>
-                    </template>
-                  </UInput>
-                  <UCheckbox v-model="state.enableMinDistance" />
-                </div>
-              </UFormGroup>
 
-              <UFormGroup
-                class="py-2"
-                :label="$t('max_distance')"
-                name="maxDistance"
-              >
-                <div class="flex gap-2 items-center">
-                  <UInput
-                    v-model="state.maxDistance"
-                    name="input"
-                    placeholder="Max Distance"
-                    :disabled="!state.enableMaxDistance"
-                  >
-                    <template #trailing>
-                      <span class="text-gray-400 text-sm">km(s)</span>
-                    </template>
-                  </UInput>
-                  <UCheckbox v-model="state.enableMaxDistance" />
-                </div>
-              </UFormGroup>
-            </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               <UFormGroup
                 class="py-2"
@@ -149,13 +133,16 @@
                 </UPopover>
               </UFormGroup>
             </div>
-                        
+
             <UFormGroup
               class="py-2"
               :label="$t('description')"
               name="tiketPrice"
             >
-              <CommonTextEditor v-model="state.description" />
+              <CommonTextEditor
+                ref="textEditor"
+                :model-value="state.description"
+              />
             </UFormGroup>
           </div>
           <div class="col-span-12 sm:col-span-4">
@@ -165,7 +152,12 @@
               name="file"
               required
             >
-              <CommonFileUpload v-model="state.file" />
+              <CommonFileUpload
+                v-model="state.file"
+                :warning-message="$t('upload_image_warning')"
+                :width="327"
+                :height="184"
+              />
             </UFormGroup>
           </div>
         </div>
@@ -185,11 +177,14 @@
   </UContainer>
 </template>
 <script setup lang="ts">
-import type { FormError, FormSubmitEvent } from '@nuxt/ui/dist/runtime/types'
 import challengeRepository from '~/repository/challenge.repository'
 import fileRepository from '~/repository/file.repository'
-import { CreateChallengeDto } from '~/types/dto/challenge.dto'
+import { type CreateChallengeDto } from '~/types/dto/challenge.dto'
 import { FileType } from '~/types/enum/file.enum'
+import { ChallengeType } from '../../types/enum/challenge.enum'
+import { validation } from '~/utils/validation'
+
+type TagetType = { distance: number; quantity: number }
 
 definePageMeta({
   middleware: ['authentication'],
@@ -201,18 +196,21 @@ const toast = useToast()
 const dayjs = useDayjs()
 
 const startDateLabel = computed(() => {
-  return dayjs(state.value.startDate).format('ddd, MMM DD, YYYY')
+  return dayjs(state.value.startDate).format('HH:mm, DD MMMM YYYY')
 })
 const endDateLabel = computed(() => {
-  return dayjs(state.value.endDate).format('ddd, MMM DD, YYYY')
+  return dayjs(state.value.endDate).format('HH:mm, DD MMMM YYYY')
 })
+
+const textEditor = ref<any>(null)
 
 const state = ref({
   title: '',
   ticketPrice: 0,
   startDate: new Date(),
   endDate: new Date(),
-  target: 0,
+  targets: [{ distance: 0, quantity: 0 }],
+  location: '',
   minPace: '04:00',
   maxPace: '15:00',
   enableMinPace: false,
@@ -223,10 +221,25 @@ const state = ref({
   enableMaxDistance: false,
   file: undefined,
   description: '',
+  challengeType: ChallengeType.OFFLINE,
 })
 
-const validate = (state: any): FormError[] => {
-  console.log('validate', state)
+const challengeTypeOptions = ref([
+  {
+    value: ChallengeType.OFFLINE,
+    label: t('offline'),
+  },
+  {
+    value: ChallengeType.VIRTUAL,
+    label: t('virtual'),
+  },
+  {
+    value: ChallengeType.BOTH,
+    label: t('challenge_type_both'),
+  },
+])
+
+const validate = (state: any) => {
   const errors = []
   if (!state.title) {
     errors.push({ path: 'title', message: t('required_warning') })
@@ -246,24 +259,31 @@ const validate = (state: any): FormError[] => {
     errors.push({ path: 'file', message: t('image_size_warning') })
   }
 
-  if (!state.target) {
+  if (!state.targets) {
     errors.push({ path: 'target', message: t('required_warning') })
   }
-  if (state.target < 1) {
-    errors.push({ path: 'target', message: t('target_warning') })
+
+  if (state.targets) {
+    const newSet = new Set(
+      state.targets.map((item: TagetType) => item.distance),
+    )
+    const isInvalidDistance = state.targets.some(
+      (item: TagetType) => !item.distance,
+    )
+    const isInvalidQuantity = state.targets.some(
+      (item: TagetType) => !item.quantity,
+    )
+    const isDuplicated = newSet.size !== state.targets.length
+    if (isInvalidDistance) {
+      errors.push({ path: 'target', message: t('invalid_distance') })
+    }
+    if (isInvalidQuantity) {
+      errors.push({ path: 'target', message: t('invalid_quantity') })
+    }
+    if (isDuplicated) {
+      errors.push({ path: 'target', message: t('distance_is_duplicated') })
+    }
   }
-  // if (state.startDate && state.endDate) {
-  //   if (!dayjs(state.endDate).isAfter(state.startDate, 'day')) {
-  //     errors.push({
-  //       path: 'startDate',
-  //       message: t('start_date_must_before_end_date'),
-  //     })
-  //     errors.push({
-  //       path: 'endDate',
-  //       message: t('end_date_must_after_start_date'),
-  //     })
-  //   }
-  // }
 
   if (state.enableMinPace && state.enableMaxPace) {
     const [minHour, minMinute] = state.minPace.split(':')
@@ -323,15 +343,15 @@ const uploadImgage = async () => {
   }
 }
 
-const submit = async (event: FormSubmitEvent<any>) => {
-  console.log('submit', event)
+const submit = async (event: any) => {
   const image = await uploadImgage()
+  state.value.description = textEditor.value.editor.getHTML()
   const {
     title,
     ticketPrice,
     startDate,
     endDate,
-    target,
+    targets,
     minPace,
     maxPace,
     enableMinPace,
@@ -341,6 +361,8 @@ const submit = async (event: FormSubmitEvent<any>) => {
     enableMinDistance,
     enableMaxDistance,
     description,
+    location,
+    challengeType,
   } = event.data
 
   const payload: CreateChallengeDto = {
@@ -349,19 +371,29 @@ const submit = async (event: FormSubmitEvent<any>) => {
     endDate,
     image,
     ticketPrice,
-    target,
+    targets,
     minPace,
     maxPace,
     minDistance: minDistance * 1000,
     maxDistance: maxDistance * 1000,
     description,
+    location,
+    challengeType,
   }
 
-  if (!target) {
-    delete payload.target
+  if (!targets) {
+    delete payload.targets
+  } else {
+    payload.targets = payload.targets?.map((item) => ({
+      distance: item.distance * 1000,
+      quantity: +item.quantity,
+    }))
   }
   if (!ticketPrice) {
     delete payload.ticketPrice
+  }
+  if (!challengeType) {
+    delete payload.challengeType
   }
   if (!enableMinPace) {
     delete payload.minPace
@@ -395,5 +427,13 @@ const submit = async (event: FormSubmitEvent<any>) => {
     return
   }
   navigateTo('/challenge')
+}
+
+const handleAddTarget = (index: number) => {
+  state.value.targets.splice(index + 1, 0, { distance: 0, quantity: 0 })
+}
+
+const handleRemoveTarget = (index: number) => {
+  state.value.targets.splice(index, 1)
 }
 </script>

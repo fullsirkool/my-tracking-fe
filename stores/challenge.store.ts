@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import challengeRepository from '~/repository/challenge.repository'
-import {
+import type {
   ChallengeDetailDto,
   ChallengeUser,
   Challenge,
@@ -136,7 +136,7 @@ export const useChallengeStore = defineStore('challenge', () => {
     if (!challengeDetail.value) {
       return 0
     }
-    return challengeDetail.value?.rule.target
+    return challengeDetail.value?.rule.maxPace
   })
   const minPaceFormatted = computed(() => {
     if (!challengeDetail.value) {
@@ -160,6 +160,10 @@ export const useChallengeStore = defineStore('challenge', () => {
   })
   const startDate = computed(() => challengeDetail.value?.startDate)
   const endDate = computed(() => challengeDetail.value?.endDate)
+
+  const distances = computed(() => challengeDetail.value?.challengeDistances)
+
+  const challengeType = computed(() => challengeDetail.value?.challengeType)
 
   return {
     challengeId,
@@ -185,6 +189,8 @@ export const useChallengeStore = defineStore('challenge', () => {
     startDate,
     endDate,
     ticketPrice,
+    distances,
+    challengeType,
     fetchChallengeDetail,
     fetchChallengeUsers,
     setTopChallenge,

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="getError" class="text-center">
-      <h1 class="text-red-700">{{ getError.message }}</h1>
+      <h1 class="text-primary-700">{{ getError.message }}</h1>
     </div>
     <div v-else class="text-center">
       <div v-if="getUser">

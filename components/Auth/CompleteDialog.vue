@@ -95,7 +95,7 @@
 </template>
 <script setup lang="ts">
 import { object, string, type InferType } from 'yup'
-import type { FormError, FormSubmitEvent } from '@nuxt/ui/dist/runtime/types'
+import type { FormError, FormSubmitEvent } from '#ui/types'
 import authRepository from '~/repository/auth.repository'
 import { useUserStore } from '~/stores/user.store'
 

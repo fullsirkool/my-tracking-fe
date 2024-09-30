@@ -1,7 +1,7 @@
 <template>
   <UCard class="relative text-[#4B4B4B]" style="box-shadow: none">
     <div class="flex items-center gap-4">
-      <UAvatar size="xl" :src="userActivities.profile_long" alt="Avatar" />
+      <UAvatar size="xl" :src="userActivities?.profile_long" alt="Avatar" />
       <div class="w-full">
         <NuxtLink
           class="hover:text-sky-900 font-semibold"
@@ -42,7 +42,7 @@
 </template>
 <script setup lang="ts">
 import { useChallengeStore } from '~/stores/challenge.store'
-import { ChallengeUser } from '~/types/dto/challenge.dto'
+import { type ChallengeUser } from '~/types/dto/challenge.dto'
 
 interface IChallengeProcessCardProps {
   userActivities: ChallengeUser

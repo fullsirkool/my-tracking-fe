@@ -41,7 +41,7 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { useProfileStore } from '@/stores/profile.store'
-import { DailyActivityDto } from '~/types/dto/activity.dto'
+import type { DailyActivityDto } from '~/types/dto/activity.dto'
 const dayjs = useDayjs()
 const { t } = useI18n()
 
@@ -122,7 +122,7 @@ const getChartSeries = computed(() => {
         return 0
       }
       const item = seriesData.shift()
-      return (item.distance / 1000).toFixed(2)
+      return (item?.distance ?? 0 / 1000).toFixed(2)
     },
   )
   return [

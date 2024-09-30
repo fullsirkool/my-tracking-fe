@@ -1,6 +1,7 @@
 import { ChallengeStatus, ChallengeType } from '../enum/challenge.enum'
 import { BasePagingDto, BasePagingResponse } from './base.dto'
-import { UserClaims } from './user.dto'
+import { type UserClaims } from './user.dto'
+import { TicketDto } from '~/types/dto/ticket.dto'
 
 export interface Rule {
   id: number
@@ -12,11 +13,18 @@ export interface Rule {
   maxDistance: number
 }
 
+export type ChallengeDistanceType = {
+  id: number
+  distance: number
+  challengeId: number
+}
+
 export interface Challenge {
   id: number
   title: string
-  startDate: Date
-  endDate: Date
+  location: string
+  startDate: string
+  endDate: string
   code: string
   challengeType: ChallengeType
   status: ChallengeStatus
@@ -24,6 +32,16 @@ export interface Challenge {
   rule: Rule
   description: string
   ticketPrice: number
+  challengeDistances: ChallengeDistanceType[]
+}
+
+export interface DistanceDto {
+  distance: number
+  quantity: number
+}
+
+export interface UpdateDistanceDto extends DistanceDto{
+  id: number
 }
 
 export interface CreateChallengeDto {
@@ -32,16 +50,23 @@ export interface CreateChallengeDto {
   endDate: Date
   ticketPrice: number | undefined
   image: string | null | undefined
-  target: number | undefined
+  targets: DistanceDto[] | undefined
   minPace: number | undefined
   maxPace: number | undefined
   minDistance: number | undefined
   maxDistance: number | undefined
   description: string
+  location: string
+  challengeType: ChallengeType | undefined
+}
+
+export interface UpdateChallengeDto extends CreateChallengeDto {
+  id: number
+  targets: UpdateDistanceDto[] | undefined
 }
 
 export interface PagingChallengeDto extends BasePagingDto {
-  availibility?: 'ENDED' | 'NOT_ENDED' | ''
+  availability?: 'ENDED' | 'NOT_ENDED' | ''
 }
 
 export class PagingTopChallengeDto extends BasePagingDto {}
@@ -60,8 +85,17 @@ export interface ChallengeUserActivities {
   statistics: ActivityStatistics[]
 }
 
+export interface ChallengeDistance {
+  id: number
+  challengeId: number
+  distance: number
+  quantity: number
+  defaultQuantity: number
+}
+
 export interface ChallengeDetailDto extends Challenge {
   userActivities: ChallengeUserActivities[]
+  challengeDistances: ChallengeDistance[]
 }
 
 export interface ChallengeDailyActivity {
@@ -82,6 +116,7 @@ export interface ChallengeUser {
   target: number
   totaldistance: number
   process: number
+  profile_long?: any
 }
 
 export interface ChallengeUserParam extends BasePagingDto {
@@ -114,5 +149,49 @@ export interface JoinChallengeResponse {
 }
 
 export interface CheckedJoinChallengeResponse {
-    joined: boolean
+  joined: boolean
+}
+
+export enum Gender {
+  MALE = 'MALE',
+  FEMALE = 'FEMALE',
+  OTHER = 'OTHER'
+}
+
+export interface IChallengeRegisterInfo {
+  name: string
+  email: string
+  phoneNumber: string
+  // address: string
+  gender?: Gender
+  raceType: string
+}
+
+export type IChallengeDistanceRegistrationInfo = {
+  distance: number
+  challengeDistanceId: number
+  numberOfPlayer: number
+}
+
+export interface IChallengeIndividualRegisterInfo
+  extends IChallengeRegisterInfo {
+  challengeDistanceId: number
+  address: string
+}
+
+export interface IChallengeGroupRegisterInfo extends IChallengeRegisterInfo {
+  groupName: string
+  challengeDistances: IChallengeDistanceRegistrationInfo[] | ComputedRef<IChallengeDistanceRegistrationInfo[]>
+}
+
+export interface ChallengeIndividualRegisterResponse {}
+
+export interface ChallengeGroupRegisterResponse {}
+
+export interface DeleteChallengeDto {
+  id: number
+}
+
+export interface ChallengePlayer extends TicketDto {
+  challengeDistance: ChallengeDistance
 }
