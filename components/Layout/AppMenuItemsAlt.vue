@@ -115,17 +115,17 @@ const logout = () => {
       </span>
     </NuxtLink>
 
-    <NuxtLink
-      v-if="isAdmin"
-      to="/article/create"
-      class="flex flex-col no-underline text-grey-darkest items-center justify-center p-2"
-      :class="{ active: route.name === 'article-create' }"
-    >
-      <Icon name="mdi:newspaper-plus" width="1.5rem" height="1.5rem" />
-      <span class="text-xs whitespace-nowrap">
-        {{ $t('create_article') }}
-      </span>
-    </NuxtLink>
+<!--    <NuxtLink-->
+<!--      v-if="isAdmin"-->
+<!--      to="/article/create"-->
+<!--      class="flex flex-col no-underline text-grey-darkest items-center justify-center p-2"-->
+<!--      :class="{ active: route.name === 'article-create' }"-->
+<!--    >-->
+<!--      <Icon name="mdi:newspaper-plus" width="1.5rem" height="1.5rem" />-->
+<!--      <span class="text-xs whitespace-nowrap">-->
+<!--        {{ $t('create_article') }}-->
+<!--      </span>-->
+<!--    </NuxtLink>-->
 
     <NuxtLink
       to="/challenge"
@@ -138,55 +138,55 @@ const logout = () => {
       </span>
     </NuxtLink>
 
-    <NuxtLink
-      to="/article"
-      class="flex flex-col no-underline text-grey-darkest items-center justify-center p-2"
-      :class="{ active: ['article', 'article-id'].includes(route.name) }"
-    >
-      <Icon
-        name="mdi:newspaper-variant-outline"
-        width="1.5rem"
-        height="1.5rem"
-      />
-      <span class="text-xs whitespace-nowrap">
-        {{ $t('warm_feet_activity') }}
-      </span>
-    </NuxtLink>
+<!--    <NuxtLink-->
+<!--      to="/article"-->
+<!--      class="flex flex-col no-underline text-grey-darkest items-center justify-center p-2"-->
+<!--      :class="{ active: ['article', 'article-id'].includes(route.name) }"-->
+<!--    >-->
+<!--      <Icon-->
+<!--        name="mdi:newspaper-variant-outline"-->
+<!--        width="1.5rem"-->
+<!--        height="1.5rem"-->
+<!--      />-->
+<!--      <span class="text-xs whitespace-nowrap">-->
+<!--        {{ $t('warm_feet_activity') }}-->
+<!--      </span>-->
+<!--    </NuxtLink>-->
 
-    <NuxtLink
-      v-if="isAdmin"
-      to="/admin/payment"
-      class="flex flex-col no-underline text-grey-darkest items-center justify-center p-2"
-      :class="{ active: route.name === 'admin-payment' }"
-    >
-      <Icon name="fa6-solid:dollar-sign" width="1.5rem" height="1.5rem" />
-      <span class="text-xs whitespace-nowrap">
-        {{ $t('payment') }}
-      </span>
-    </NuxtLink>
+<!--    <NuxtLink-->
+<!--      v-if="isAdmin"-->
+<!--      to="/admin/payment"-->
+<!--      class="flex flex-col no-underline text-grey-darkest items-center justify-center p-2"-->
+<!--      :class="{ active: route.name === 'admin-payment' }"-->
+<!--    >-->
+<!--      <Icon name="fa6-solid:dollar-sign" width="1.5rem" height="1.5rem" />-->
+<!--      <span class="text-xs whitespace-nowrap">-->
+<!--        {{ $t('payment') }}-->
+<!--      </span>-->
+<!--    </NuxtLink>-->
 
-    <NuxtLink
-      v-if="isAdmin"
-      to="/admin/athletes"
-      class="flex flex-col no-underline text-grey-darkest hover:text-blue-dark items-center justify-center p-2"
-      :class="{ active: route.name === 'admin-athletes' }"
-    >
-      <Icon name="mdi:accounts-group-outline" width="1.5rem" height="1.5rem" />
-      <span class="text-xs whitespace-nowrap">
-        {{ $t('athletes') }}
-      </span>
-    </NuxtLink>
-    <NuxtLink
-      v-if="!isAdmin"
-      to="/guide"
-      class="flex flex-col no-underline text-grey-darkest items-center justify-center p-2"
-      :class="{ active: route.name === 'guide' }"
-    >
-      <Icon name="material-symbols:help-outline" width="1.5rem" height="1.5rem" />
-      <span class="text-xs whitespace-nowrap">
-        HDSD
-      </span>
-    </NuxtLink>
+<!--    <NuxtLink-->
+<!--      v-if="isAdmin"-->
+<!--      to="/admin/athletes"-->
+<!--      class="flex flex-col no-underline text-grey-darkest hover:text-blue-dark items-center justify-center p-2"-->
+<!--      :class="{ active: route.name === 'admin-athletes' }"-->
+<!--    >-->
+<!--      <Icon name="mdi:accounts-group-outline" width="1.5rem" height="1.5rem" />-->
+<!--      <span class="text-xs whitespace-nowrap">-->
+<!--        {{ $t('athletes') }}-->
+<!--      </span>-->
+<!--    </NuxtLink>-->
+<!--    <NuxtLink-->
+<!--      v-if="!isAdmin"-->
+<!--      to="/guide"-->
+<!--      class="flex flex-col no-underline text-grey-darkest items-center justify-center p-2"-->
+<!--      :class="{ active: route.name === 'guide' }"-->
+<!--    >-->
+<!--      <Icon name="material-symbols:help-outline" width="1.5rem" height="1.5rem" />-->
+<!--      <span class="text-xs whitespace-nowrap">-->
+<!--        HDSD-->
+<!--      </span>-->
+<!--    </NuxtLink>-->
     <NuxtLink
       to="/"
       class="flex flex-col no-underline text-grey-darkest items-center justify-center p-2"

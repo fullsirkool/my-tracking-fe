@@ -8,7 +8,7 @@ export default defineNuxtConfig({
 
   app: {
     head: {
-      title: 'Warm Feet',
+      title: 'Twendee Tracking',
       charset: 'utf-8',
       viewport: 'width=device-width, initial-scale=1',
     },
@@ -44,6 +44,7 @@ export default defineNuxtConfig({
   postcss: {
     plugins: {
       'postcss-custom-properties': false,
+      tailwindcss: {}
     },
   },
 

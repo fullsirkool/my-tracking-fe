@@ -1,6 +1,6 @@
 <template>
   <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-    <img src="~/assets/logo.png" class="mx-auto h-20 w-auto" />
+    <img src="~/assets/twendee-logo.png" class="mx-auto h-20 w-auto" />
     <h2
       class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900"
     >

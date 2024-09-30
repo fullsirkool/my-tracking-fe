@@ -1,7 +1,7 @@
 <template>
   <div>
     <nav
-      class="font-sans flex text-center justify-center sm:flex-row sm:text-left lg:justify-between sm:items-center bg-primary-600 sticky top-0 z-20 shadow w-full px-5 py-2"
+      class="font-sans flex text-center justify-center sm:flex-row sm:text-left lg:justify-between items-center bg-primary-600 sticky top-0 z-20 shadow w-full px-5 py-2"
     >
       <div class="mb-0 mr-2.5">
         <UTooltip :text="$t('home')">
@@ -16,14 +16,14 @@
               class="relative"
               style="top: -1px"
             />
-            <img src="~/assets/logo.png" />
+            <img src="~/assets/twendee-logo.png" />
           </NuxtLink>
         </UTooltip>
       </div>
       <div
         class="leading-10 text-4xl uppercase font-black text-slate-100 tracking-widest lg:absolute left-1/2 lg:-translate-x-1/2"
       >
-        <NuxtLink to="/"> Warm Feet</NuxtLink>
+        <NuxtLink to="/">Twendee Tracking</NuxtLink>
       </div>
 
       <LayoutAppMenuItems />

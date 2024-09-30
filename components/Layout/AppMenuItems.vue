@@ -21,13 +21,6 @@ const logout = () => {
 
 <template>
   <div class="items-center hidden lg:flex">
-
-    <UTooltip :text="$t('guide')">
-      <NuxtLink
-        to="/guide"
-        class="text-white text-xl font-semibold underline"
-      >{{$t('guide')}}</NuxtLink>
-    </UTooltip>
     
     <UTooltip :text="$t('view_challenge')">
       <NuxtLink
@@ -47,41 +40,23 @@ const logout = () => {
       </NuxtLink>
     </UTooltip>
 
-    <UTooltip :text="$t('warm_feet_activity')">
-      <NuxtLink
-        to="/article"
-        class="text-2xl no-underline text-grey-darkest hover:text-blue-dark inline-flex items-center justify-center w-[45px] h-[45px] rounded-full bg-slate-100 text-primary-600 shadow-xl mx-2"
-      >
-        <Icon name="mdi:newspaper-variant-outline" class="relative" />
-      </NuxtLink>
-    </UTooltip>
+<!--    <UTooltip v-if="isAdmin" :text="$t('athletes')">-->
+<!--      <NuxtLink-->
+<!--        to="/admin/athletes"-->
+<!--        class="text-2xl no-underline text-grey-darkest hover:text-blue-dark inline-flex items-center justify-center w-[45px] h-[45px] rounded-full bg-slate-100 text-primary-600 shadow-xl mx-2"-->
+<!--      >-->
+<!--        <Icon name="mdi:accounts-group-outline" class="relative" />-->
+<!--      </NuxtLink>-->
+<!--    </UTooltip>-->
 
-    <UTooltip v-if="isAdmin" :text="$t('create_article')">
-      <NuxtLink
-        to="/article/create"
-        class="text-2xl no-underline text-grey-darkest hover:text-blue-dark inline-flex items-center justify-center w-[45px] h-[45px] rounded-full bg-slate-100 text-primary-600 shadow-xl mx-2"
-      >
-        <Icon name="mdi:newspaper-plus" />
-      </NuxtLink>
-    </UTooltip>
-
-    <UTooltip v-if="isAdmin" :text="$t('athletes')">
-      <NuxtLink
-        to="/admin/athletes"
-        class="text-2xl no-underline text-grey-darkest hover:text-blue-dark inline-flex items-center justify-center w-[45px] h-[45px] rounded-full bg-slate-100 text-primary-600 shadow-xl mx-2"
-      >
-        <Icon name="mdi:accounts-group-outline" class="relative" />
-      </NuxtLink>
-    </UTooltip>
-
-    <UTooltip v-if="isAdmin" :text="$t('payment')">
-      <NuxtLink
-        to="/admin/payment"
-        class="text-2xl no-underline text-grey-darkest hover:text-blue-dark inline-flex items-center justify-center w-[45px] h-[45px] rounded-full bg-slate-100 text-primary-600 shadow-xl mx-2"
-      >
-        <Icon name="ph:currency-dollar-simple-bold" class="relative" />
-      </NuxtLink>
-    </UTooltip>
+<!--    <UTooltip v-if="isAdmin" :text="$t('payment')">-->
+<!--      <NuxtLink-->
+<!--        to="/admin/payment"-->
+<!--        class="text-2xl no-underline text-grey-darkest hover:text-blue-dark inline-flex items-center justify-center w-[45px] h-[45px] rounded-full bg-slate-100 text-primary-600 shadow-xl mx-2"-->
+<!--      >-->
+<!--        <Icon name="ph:currency-dollar-simple-bold" class="relative" />-->
+<!--      </NuxtLink>-->
+<!--    </UTooltip>-->
 
     <template v-if="isUser">
       <UPopover class="inline-flex items-center">
