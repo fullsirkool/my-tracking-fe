@@ -4,7 +4,7 @@
         class="rounded-2xl bg-[#f5f5f5] overflow-auto min-h-[300px]"
         style="box-shadow: none"
     >
-      <h1 class="text-2xl font-semibold mb-2">{{ t('rank') }}</h1>
+      <h1 class="text-2xl font-semibold mb-2">{{ t('rank_team') }}</h1>
       <div class="flex flex-col gap-8 p-4 items-center">
         <div v-for="item in groups" :key="item.id" class="flex items-end gap-8">
           <label class="text-xl">{{item.name}}</label>

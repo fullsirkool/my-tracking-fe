@@ -30,9 +30,9 @@
         </div>
       </UCard>
     </div>
-    <ChallengeDetailTable></ChallengeDetailTable>
-    <ChallengeGroupRanking/>
-    <ChallengeProgressTable :id="id"></ChallengeProgressTable>
+    <ChallengeDetailTable/>
+    <ChallengeGroupRanking v-show="challengeDetail.challengeType === 'GROUP_VS_GROUP'"/>
+    <ChallengeProgressTable :id="id"/>
   </UContainer>
 </template>
 <script setup lang="ts">
@@ -87,7 +87,7 @@ const handleJoinChallenge = () => {
     navigateTo('/signin')
     return
   }
-  if (challengeDetail.value.challengeType) {
+  if (challengeDetail.value.challengeType === "GROUP_VS_GROUP") {
     console.log('run there')
     isShowSelectGroupDialog.value = true
   } else {
