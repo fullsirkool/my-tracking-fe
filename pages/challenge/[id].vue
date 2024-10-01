@@ -31,6 +31,7 @@
       </UCard>
     </div>
     <ChallengeDetailTable></ChallengeDetailTable>
+    <ChallengeGroupRanking/>
     <ChallengeProgressTable :id="id"></ChallengeProgressTable>
   </UContainer>
 </template>

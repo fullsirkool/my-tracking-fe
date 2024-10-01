@@ -202,3 +202,9 @@ export interface DeleteChallengeDto {
 export interface ChallengePlayer extends TicketDto {
   challengeDistance: ChallengeDistance
 }
+
+export interface ChallengeGroup {
+  id: number
+  name: string
+  totaldistance: number
+}

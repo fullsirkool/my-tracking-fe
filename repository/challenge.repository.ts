@@ -16,7 +16,7 @@ import type {
 } from '~/types/dto/challenge.dto'
 
 import { type BaseFetchResponse } from '~/types/dto/base.dto'
-import {type DeleteChallengeDto} from "~/types/dto/challenge.dto";
+import {ChallengeGroup, type DeleteChallengeDto} from "~/types/dto/challenge.dto";
 import {type BaseUpdateResponse} from "~/types/dto/base.dto";
 
 const runtimeConfig = useRuntimeConfig()
@@ -200,5 +200,13 @@ export default {
       data: data.value,
       error: error.value?.data,
     }
-  }
+  },
+
+  async getGroupStatistic(id: number): Promise<ChallengeGroup[] | null> {
+    const url = `${BASE_URL}/challenge/${id}/group`
+    const { data } = await useFetch<ChallengeGroup[]>(url, {
+      method: 'get',
+    })
+    return data.value
+  },
 }
