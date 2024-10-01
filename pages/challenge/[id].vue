@@ -96,7 +96,6 @@ const handleJoinChallenge = () => {
 
 const handleSelectGroup = async (groupId: number) => {
   await handleConfirmJoinChallenge(groupId)
-  isShowSelectGroupDialog.value = false
 }
 
 const handleConfirmJoinChallenge = async (groupId?: number) => {
@@ -106,6 +105,7 @@ const handleConfirmJoinChallenge = async (groupId?: number) => {
   if (res) {
     const { status } = res
     isConfirmingJoinChallenge.value = false
+    isShowSelectGroupDialog.value = false
     if (status === JoinChallengeStatus.WAITING) {
     } else if (status === JoinChallengeStatus.COMPLETED) {
       toast.add({
@@ -115,10 +115,9 @@ const handleConfirmJoinChallenge = async (groupId?: number) => {
         color: 'green',
         title: t('join_challenge_successfully'),
       })
-      handleClosePaymentDialog()
       setTimeout(() => {
         location.reload()
-      }, 5000)
+      }, 3000)
     }
   }
 }
