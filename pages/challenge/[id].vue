@@ -146,10 +146,6 @@ const handleCompletePayment = (isCompleted: Boolean) => {
   }
 }
 
-const handleClosePaymentDialog = () => {
-  openQrDialog.value = false
-}
-
 watch(challengeDetail, (newVal) => console.log('challengeDetail', newVal), {
   deep: true,
   immediate: true,
