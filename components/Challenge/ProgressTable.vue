@@ -12,32 +12,37 @@
           :columns="columns"
           :ui="{
             th: {
-              size: 'text-sm md:text-md',
+              size: 'text-sm md:text-base',
             },
           }"
           :empty-state="getEmptyTableStyle"
           @update:sort="handleSort"
         >
           <template #name-data="{ row }">
-            <div class="flex items-center gap-3">
-              <UAvatar :src="row.avatar" alt="Avatar" size="md" />
-              <span
-                class="text-gray-900 dark:text-white font-medium text-md md:text-xl"
+            <div>
+              <NuxtLink :to="`/profile/${row.id}`" class="flex items-center gap-3">
+                <UAvatar :src="row.avatar" alt="Avatar" size="md" />
+                <span
+                    class="text-gray-800 dark:text-white font-medium text-base md:text-base"
                 >{{ row.name }}</span
-              >
+                >
+              </NuxtLink>
             </div>
           </template>
-
+          <template #groupname-data="{ row }">
+            <span class="text-gray-800 dark:text-white font-medium text-base">
+              {{ row.groupname }}
+            </span>
+          </template>
           <template #totaldistance-data="{ row }">
-            <span class="text-gray-900 dark:text-white font-medium text-xl">
-              {{ row.distance.toFixed(1) }}
-              <!-- {{ JSON.stringify(row) }} -->
+            <span class="text-gray-800 dark:text-white font-medium text-base">
+              {{ row.distance.toFixed(1) }} km
             </span>
           </template>
 
           <template #target-data="{ row }">
-            <span class="text-gray-900 dark:text-white font-medium text-xl"
-              >{{ number.format(row.target) }}
+            <span class="text-gray-800 dark:text-white font-medium text-base"
+              >{{ number.format(row.target) }} km
             </span>
           </template>
 
@@ -100,13 +105,13 @@ const columns = [
   },
   {
     key: 'totaldistance',
-    label: t('distance') + ' (km)',
+    label: t('completed'),
     sortable: true,
     class: 'min-w-[170px] md:min-w-auto',
   },
   {
     key: 'target',
-    label: t('target') + ' (km)',
+    label: t('target'),
     class: 'min-w-[100px] md:min-w-auto',
   },
   {
