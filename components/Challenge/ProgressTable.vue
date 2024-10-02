@@ -125,7 +125,8 @@ const rows = computed(() => {
   if (!challengeUsers.value) return []
   const res = challengeUsers.value.map((user, index) => {
     return {
-      idx: index + 1,
+      id: index + 1,
+      groupname: user.groupname,
       name: user.name,
       avatar: user.profilelong,
       distance: user.totaldistance / 1000,
