@@ -95,6 +95,10 @@ const columns = [
     label: t('name'),
   },
   {
+    key: 'groupname',
+    label: t('group'),
+  },
+  {
     key: 'totaldistance',
     label: t('distance') + ' (km)',
     sortable: true,
