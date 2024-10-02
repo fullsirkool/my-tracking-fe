@@ -130,7 +130,7 @@ const rows = computed(() => {
   if (!challengeUsers.value) return []
   const res = challengeUsers.value.map((user, index) => {
     return {
-      id: index + 1,
+      id: user.id,
       groupname: user.groupname,
       name: user.name,
       avatar: user.profilelong,
