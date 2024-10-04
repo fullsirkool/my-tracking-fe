@@ -12,7 +12,7 @@ export const useChallengeStore = defineStore('challenge', () => {
   const challengeDetail = ref<ChallengeDetailDto>()
   const challengeUsers = ref<ChallengeUser[]>()
   const challengeUsersPage = ref(1)
-  const challengeUsersPageSize = ref(9)
+  const challengeUsersPageSize = ref(11)
   const totalChallengeUsers = ref(0)
   const totalChallengeUsersPage = ref(1)
   const topChallenge = ref<Challenge>()
@@ -39,6 +39,7 @@ export const useChallengeStore = defineStore('challenge', () => {
     size?: number
     sort?: string
   }) => {
+    console.log('init param', params)
     if (params?.id) {
       challengeId.value = params.id
     }
@@ -60,6 +61,8 @@ export const useChallengeStore = defineStore('challenge', () => {
         console.log(params.sort)
         param.sort = params.sort
       }
+
+      console.log('param', param, challengeUsersPageSize.value)
 
       const res = await challengeRepository.findChallengeUser(
         challengeId.value,

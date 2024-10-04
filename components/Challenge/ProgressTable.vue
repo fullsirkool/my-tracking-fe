@@ -92,7 +92,7 @@ const challengeStore = useChallengeStore()
 const { challengeUsers, challengeUsersPageSize, totalChallengeUsers } =
   storeToRefs(challengeStore)
 const page = ref(1)
-const sort = ref({ column: null, direction: 'desc' })
+const sort = ref<{column: string | null, direction: string}>({ column: 'totaldistance', direction: 'desc' })
 
 const columns = [
   {
@@ -102,6 +102,7 @@ const columns = [
   {
     key: 'groupname',
     label: t('group'),
+    sortable: true,
   },
   {
     key: 'totaldistance',
@@ -160,25 +161,29 @@ const colorProcess = (value: number) => {
 }
 
 const handleChangePage = async (pageNumber: number) => {
-  await challengeStore.fetchChallengeUsers({
-    page: pageNumber,
-  })
-}
-
-const handleSort = async (sort: {
-  column: string | null
-  direction: 'asc' | 'desc'
-}) => {
-  page.value = 1
-  if (!sort.column) {
+  if (!sort.value.column) {
     await challengeStore.fetchChallengeUsers({
-      page: page.value,
+      page: pageNumber,
     })
     return
   }
+
   await challengeStore.fetchChallengeUsers({
-    page: page.value,
-    sort: `${sort.column},${sort.direction}`,
+    page: pageNumber,
+    sort: `${sort.value.column},${sort.value.direction}`,
   })
+}
+
+const handleSort = async (sortData: {
+  column: string | null
+  direction: 'asc' | 'desc'
+}) => {
+  const cloneSort = {...sortData}
+  if (cloneSort.column === 'groupname') {
+    cloneSort.column = 'groupid'
+  }
+  page.value = 1
+  sort.value = cloneSort
+  handleChangePage(page.value)
 }
 </script>
