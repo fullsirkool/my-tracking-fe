@@ -73,7 +73,8 @@ const isOpenDetailDialog = ref(false)
 
 const getDateFormated = computed(() => {
   const { startDateLocal, timezone } = props.activity
-  return dayjs(startDateLocal).tz(timezone).format('HH:mm A, DD/MM/YYYY')
+  console.log('getDateFormated', startDateLocal, timezone )
+  return dayjs.tz(startDateLocal, timezone).format('HH:mm A, DD/MM/YYYY')
 })
 
 const getMovingTimeFormatted = computed(() => {
